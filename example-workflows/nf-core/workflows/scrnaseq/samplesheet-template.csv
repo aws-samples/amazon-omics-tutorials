@@ -1,0 +1,4 @@
+sample,fastq_1,fastq_2,expected_cells,seq_center
+Sample_X,s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-scrnaseq/testdata/cellranger/Sample_X_S1_L001_R1_001.fastq.gz,s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-scrnaseq/testdata/cellranger/Sample_X_S1_L001_R2_001.fastq.gz,"5000","Broad Institute"
+Sample_Y,s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-scrnaseq/testdata/cellranger/Sample_Y_S1_L001_R1_001.fastq.gz,s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-scrnaseq/testdata/cellranger/Sample_Y_S1_L001_R2_001.fastq.gz,"5000","CRG Barcelona"
+Sample_Y,s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-scrnaseq/testdata/cellranger/Sample_Y_S1_L002_R1_001.fastq.gz,s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-scrnaseq/testdata/cellranger/Sample_Y_S1_L002_R2_001.fastq.gz,"5000","CRG Barcelona"

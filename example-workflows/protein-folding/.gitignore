@@ -1,0 +1,14 @@
+.venv
+.vscode
+data/*
+*__pycache__*
+*.DS_Store*
+scratch.txt
+.deploy.sh
+.build
+scratch.txt
+analysis/*/results
+cfn/omics-protein-folding-packaged.yaml
+code.zip
+wdl/*.zip
+build*/

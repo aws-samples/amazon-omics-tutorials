@@ -1,0 +1,8 @@
+{
+    "container_builder": {
+        "source_uris": [
+            "s3://my-bucket-1",
+            "s3://my-bucket-2/path/to/source"
+        ]
+    }
+}

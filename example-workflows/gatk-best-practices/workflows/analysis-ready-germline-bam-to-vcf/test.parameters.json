@@ -1,0 +1,4 @@
+{
+  "input_bam": "s3://aws-genomics-static-{{region}}/omics-data/bam/ERR194159-30x.hg38.bam",
+  "input_bam_index": "s3://aws-genomics-static-{{region}}/omics-data/bam/ERR194159-30x.hg38.bai"
+}

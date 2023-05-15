@@ -1,0 +1,18 @@
+{
+  "sample_name": {
+    "description": "Name of the sample to which the objects in 'flowcell_unmapped_bams_list' belong (applied to final BAM file)",
+    "optional": false
+  },
+  "fastq_pairs": {
+    "description": "An array of objects each of which contains a 'read_group' (the name of the read group that produced the fastq pair), fastq_1' and 'fastq_2' which are URIs of the pair of fastq files and 'platform' e.g. 'illumina' or 'solid'.",
+    "optional": false
+  },
+  "ecr_registry": {
+    "description": "ecr registry for container images (e.g. <account-id>.dkr.ecr.<region>.amazonaws.com",
+    "optional": false
+  },
+  "aws_region": {
+    "description": "aws region (e.g. us-east-1). must match were source data is located and where workflow is executed",
+    "optional": false
+  }
+}
