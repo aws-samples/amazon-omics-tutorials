@@ -1,0 +1,3 @@
+engine: WDL
+name: analyis-ready-germline-bam-to-vcf
+main: haplotypecaller-gvcf-gatk4.wdl

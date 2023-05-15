@@ -1,0 +1,3 @@
+{
+    "fasta_path": "s3://aws-genomics-static-{{region}}/omics-data/protein-folding/test_data/8D4O_A/fasta/target.fasta"
+}

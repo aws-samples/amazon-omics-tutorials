@@ -1,0 +1,34 @@
+{
+  "tumor_reads": {
+    "description": "Analysis ready BAM file of tumor reads",
+    "optional": false
+  },
+  "tumor_reads_index": {
+    "description": "Index of analysis ready BAM file of tumor reads",
+    "optional": false
+  },
+  "normal_reads": {
+    "description": "Analysis ready BAM file of normal reads",
+    "optional": false
+  },
+  "normal_reads_index": {
+    "description": "Index of analysis ready BAM file of normal reads",
+    "optional": false
+  },
+  "gnomad": {
+    "description": "gnomad vcf database",
+    "optional": false
+  },
+  "gnomad_idx": {
+    "description": "gnomad vcf database index",
+    "optional": false
+  },
+  "ecr_registry": {
+    "description": "ecr registry for container images (e.g. <account-id>.dkr.ecr.<region>.amazonaws.com",
+    "optional": false
+  },
+  "aws_region": {
+    "description": "aws region (e.g. us-east-1). must match were source data is located and where workflow is executed",
+    "optional": false
+  }
+}

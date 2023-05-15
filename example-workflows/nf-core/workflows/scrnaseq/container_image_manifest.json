@@ -1,0 +1,19 @@
+{
+    "manifest": [
+        "nfcore/cellranger:7.0.0",
+        "quay.io/biocontainers/bioconductor-alevinqc:1.12.1--r41h9f5acd7_0",
+        "quay.io/biocontainers/fastqc:0.11.9--0",
+        "quay.io/biocontainers/gffread:0.12.1--h8b12597_0",
+        "quay.io/biocontainers/gffread:0.12.7--hd03093a_1",
+        "quay.io/biocontainers/kb-python:0.27.2--pyhdfd78af_0",
+        "quay.io/biocontainers/mulled-v2-1fa26d1ce03c295fe2fdcf85831a92fbcbd7e8c2:afaaa4c6f5b308b4b6aa2dd8e99e1466b2a6b0cd-0",
+        "quay.io/biocontainers/multiqc:1.13--pyhdfd78af_0",
+        "quay.io/biocontainers/python:3.8.3",
+        "quay.io/biocontainers/python:3.9--1",
+        "quay.io/biocontainers/scanpy:1.7.2--pyhdfd78af_0",
+        "quay.io/biocontainers/simpleaf:0.5.2--h9f5acd7_0",
+        "quay.io/biocontainers/star:2.7.10a--h9ee0642_0",
+        "satijalab/seurat:4.1.0",
+        "ubuntu:20.04"
+    ]
+}

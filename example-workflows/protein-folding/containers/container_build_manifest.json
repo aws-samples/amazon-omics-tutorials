@@ -1,0 +1,20 @@
+{
+    "manifest": [
+        {
+            "source_uri": "{{staging_uri}}/containers/alphafold-data",
+            "target_image": "alphafold-data:omics"
+        },
+        {
+            "source_uri": "{{staging_uri}}/containers/alphafold-predict",
+            "target_image": "alphafold-predict:omics"
+        },
+        {
+            "source_uri": "{{staging_uri}}/containers/esmfold",
+            "target_image": "esmfold:omics"
+        },
+        {
+            "source_uri": "{{staging_uri}}/containers/protein-utils",
+            "target_image": "protein-utils:omics"
+        }
+    ]
+}

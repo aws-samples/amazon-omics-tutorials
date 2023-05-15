@@ -1,0 +1,18 @@
+{
+    "fasta_path": {
+        "description": "Input file in FASTA format. Only single-chain inputs are supported at this time.",
+        "optional": false
+    },
+    "max_length": {
+        "description": "maximum amino acid length of target (default: 800)",
+        "optional": true
+    },
+    "ecr_registry": {
+      "description": "ecr registry for container images (e.g. <account-id>.dkr.ecr.<region>.amazonaws.com",
+      "optional": false
+    },
+    "aws_region": {
+      "description": "aws region (e.g. us-east-1). must match were source data is located and where workflow is executed",
+      "optional": false
+    }
+}

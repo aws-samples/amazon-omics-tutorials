@@ -1,0 +1,64 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::aws-genomics-static-{{region}}/*",
+                "arn:aws:s3:::{{staging_uri}}/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::aws-genomics-static-{{region}}"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::{{output_uri}}/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:DescribeLogStreams",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": [
+                "arn:aws:logs:{{region}}:{{account_id}}:log-group:/aws/omics/WorkflowLog:log-stream:*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogGroup"
+            ],
+            "Resource": [
+                "arn:aws:logs:{{region}}:{{account_id}}:log-group:/aws/omics/WorkflowLog:*"
+            ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+              "ecr:BatchGetImage",
+              "ecr:GetDownloadUrlForLayer",
+              "ecr:BatchCheckLayerAvailability"
+          ],
+          "Resource": [
+              "arn:aws:ecr:{{region}}:{{account_id}}:repository/*"
+          ]
+      }
+    ]
+}    

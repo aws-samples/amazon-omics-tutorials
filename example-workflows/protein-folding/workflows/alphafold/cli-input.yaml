@@ -1,0 +1,4 @@
+engine: WDL
+name: alphafold
+main: alphafold-600.wdl
+storageCapacity: 4800
