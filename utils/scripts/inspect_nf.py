@@ -24,7 +24,7 @@ from textwrap import dedent
 import boto3
 
 
-from .nf import *
+from nf import *
 
 
 parser = argparse.ArgumentParser()
