@@ -117,9 +117,12 @@ def test_parse_workflow():
             from_dict={"name": "FOO", "container": "foo:fizz"}),
         "bar": NextflowProcess(
             from_dict={"name": "BAR", "container": "bar:buzz"}),
+        "has_comments": NextflowProcess(
+            from_dict={"name": "HAS_COMMENTS", "container": "foo:fizz"}),
     }
 
     assert procs['happy'] in workflow.processes
     assert procs['no_container'] in workflow.processes
     assert procs['foo'] in workflow.processes
     assert procs['bar'] in workflow.processes
+    assert procs['has_comments'] in workflow.processes

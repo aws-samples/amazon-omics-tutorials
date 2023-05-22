@@ -43,11 +43,16 @@ def parse_processes(contents, nf_file=None):
     # contents is the content of a single nf_file
     # an nf_file can have multiple process definitions
 
+    # remove all comments since they interfere with token parsing
+    _contents = re.sub('/\\*.*\\*/', '', contents, flags=re.DOTALL)
+    _contents = [re.sub('(.*)//.*', '\\1', line) for line in _contents.split('\n')]
+    _contents = '\n'.join(_contents)
+    
     _processes = []
 
     # capture the name of processes and their definitions
     pattern = 'process([\\w\\s]+?)\\{(.+?)\\}(?=\\s+process|\\s*\\Z)'
-    matches = re.findall(pattern, contents, flags=re.MULTILINE|re.DOTALL)
+    matches = re.findall(pattern, _contents, flags=re.MULTILINE|re.DOTALL)
 
     if matches:
         _processes = [
@@ -246,7 +251,6 @@ class NextflowProcess:
 
 
 def find_docker_uri(container:str) -> dict:
-    print(container)
     # check if provided a quoted string and strip bounding quotes
     match = re.match("^(['\"])", container)
     if match:
