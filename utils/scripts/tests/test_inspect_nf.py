@@ -25,6 +25,7 @@ def test_parse_process_happy(nf_workflow):
 
     procs = parse_processes(nf_workflow[nf_file])
 
+    assert procs
     assert procs == [NextflowProcess(from_dict={
         "name": "HAPPY",
         "container": "image:tag"
@@ -38,6 +39,7 @@ def test_parse_process_no_container(nf_workflow):
     with pytest.warns(UserWarning, match="has no container directive"):
         procs = parse_processes(nf_workflow[nf_file])
     
+    assert procs
     assert procs == [NextflowProcess(from_dict={
         "name": "NO_CONTAINER",
         "container": None
@@ -50,6 +52,7 @@ def test_parse_process_multiple(nf_workflow):
 
     procs = parse_processes(nf_workflow[nf_file])
 
+    assert procs
     assert procs == [
         NextflowProcess(from_dict={
             "name": "FOO",
@@ -60,6 +63,14 @@ def test_parse_process_multiple(nf_workflow):
             "container": "bar:buzz"
         }),
     ]
+
+def test_parse_process_gunzip(nf_workflow):
+    nf_file = path.join(WORKING_DIR, 'workflow', 'processes', 'gunzip', 'main.nf')
+    assert nf_file in nf_workflow
+
+    procs = parse_processes(nf_workflow[nf_file])
+    assert procs
+
 
 
 def test_find_docker_uri_simple():
@@ -94,6 +105,7 @@ def test_parse_workflow():
         "image:tag",
         "foo:fizz",
         "bar:buzz",
+        "ubuntu:20.04"
     ])
 
     procs = {

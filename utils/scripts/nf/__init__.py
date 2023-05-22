@@ -46,7 +46,7 @@ def parse_processes(contents, nf_file=None):
     _processes = []
 
     # capture the name of processes and their definitions
-    pattern = 'process([\\w\\s]+?)\\{(.+?)\\}(?=[\\s]+process|\\Z)'
+    pattern = 'process([\\w\\s]+?)\\{(.+?)\\}(?=\\s+process|\\s*\\Z)'
     matches = re.findall(pattern, contents, flags=re.MULTILINE|re.DOTALL)
 
     if matches:
@@ -246,6 +246,7 @@ class NextflowProcess:
 
 
 def find_docker_uri(container:str) -> dict:
+    print(container)
     # check if provided a quoted string and strip bounding quotes
     match = re.match("^(['\"])", container)
     if match:
