@@ -7,8 +7,8 @@ import warnings
 
 __NF_DIRECTIVES : str = """
     accelerator,afterScript,
-    beforeScript,cache,clusterOptions,conda,
-    container,containerOptions,cpus,
+    beforeScript,
+    cache,clusterOptions,conda,container,containerOptions,cpus,
     debug,disk,
     echo,errorstrategy,executor,ext,
     fair,
