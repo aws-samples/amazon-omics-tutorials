@@ -3,7 +3,7 @@ from os import path
 
 import pytest
 
-from ..inspect_nf import *
+from ..nf import *
 
 
 WORKING_DIR = path.dirname(path.realpath(__file__))
