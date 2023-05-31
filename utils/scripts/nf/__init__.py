@@ -170,7 +170,7 @@ class NextflowWorkflow:
             ecr_registry = f"{response['registryId']}.dkr.ecr.{session.region_name}.amazonaws.com"
 
         process_configs = []
-        _tpl = "withName: '(.+:)?::process.name::' { container = \"${ ([params.ecr_registry, '::process.container.uri::'] - '').join('/') }\" }"
+        _tpl = "withName: '(.+:)?::process.name::' { container = '::process.container.uri::' }"
         for process in self.processes:
             if process.container:
                 container_uri = self._get_ecr_image_name(
@@ -198,6 +198,11 @@ class NextflowWorkflow:
 
             conda {
                 enabled = false
+            }
+
+            docker {
+                enabled = true
+                registry = params.ecr_registry
             }
             
             process {
