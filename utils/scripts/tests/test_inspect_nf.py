@@ -71,6 +71,15 @@ def test_parse_process_gunzip(nf_workflow):
     procs = parse_processes(nf_workflow[nf_file])
     assert procs
 
+def test_parse_process_cellranger_count(nf_workflow):
+    nf_file = path.join(WORKING_DIR, 'workflow', 'processes', 'cellranger', 'count', 'main.nf')
+    assert nf_file in nf_workflow
+
+    procs = parse_processes(nf_workflow[nf_file])
+    assert procs
+
+    proc = procs[0]
+    assert proc.container == "nfcore/cellranger:7.1.0"
 
 
 def test_find_docker_uri_simple():
@@ -105,7 +114,8 @@ def test_parse_workflow():
         "image:tag",
         "foo:fizz",
         "bar:buzz",
-        "ubuntu:20.04"
+        "ubuntu:20.04",
+        "nfcore/cellranger:7.1.0"
     ])
 
     procs = {

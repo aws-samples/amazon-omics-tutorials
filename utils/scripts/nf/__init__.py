@@ -26,6 +26,11 @@ __NF_PROCESS_SYNTAX : str = """
     input,output,when,script,shell,exec,stub
 """
 
+# limit this set to keywords used in control structures
+__GROOVY_KEYWORDS : str = """
+    assert,def,do,for,if,switch,try,while
+"""
+
 
 def __nf_tokenize(tokens):
     _tokens = re.sub(r'[\s\n]+', '', tokens, re.DOTALL | re.MULTILINE)
@@ -37,6 +42,7 @@ def __nf_tokenize(tokens):
 
 NF_DIRECTIVES : list = __nf_tokenize(__NF_DIRECTIVES)
 NF_PROCESS_SYNTAX : list = __nf_tokenize(__NF_PROCESS_SYNTAX)
+GROOVY_KEYWORDS : list = __nf_tokenize(__GROOVY_KEYWORDS)
 
 
 def parse_processes(contents, nf_file=None):
@@ -61,7 +67,7 @@ def parse_processes(contents, nf_file=None):
         ]
     
     # capture all directive and stanza definitions
-    tokens = NF_DIRECTIVES + NF_PROCESS_SYNTAX
+    tokens = NF_DIRECTIVES + NF_PROCESS_SYNTAX + GROOVY_KEYWORDS
     for ix, _proc in enumerate(_processes):
         for token in tokens:
             _token = token
