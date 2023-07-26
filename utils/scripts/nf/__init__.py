@@ -163,7 +163,7 @@ class NextflowWorkflow:
             
     def get_omics_config(self, session=None, substitutions=None, namespace_config=None) -> str:
         """
-        generates nextflow.config contents to use when running on Amazon Omics
+        generates nextflow.config contents to use when running on AWS HealthOmics
 
         :param: session: boto3 session
         :param: namespace_config: dictionary that maps public registries to image repository namespaces

@@ -1,7 +1,7 @@
 #!/bin/env python3
 """
 Script to inspect a Nextflow workflow definition and generate resources
-to help migrate it to run on Amazon Omics.
+to help migrate it to run on AWS HealthOmics.
 
 Specifically designed to handle NF-Core based workflows, but in theory could
 handle any Nextflow workflow definition.

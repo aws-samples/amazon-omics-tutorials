@@ -1,6 +1,6 @@
-# AWS Omics Protein Workflows
+# AWS HealthOmics Protein Workflows
 
-This folder contains example WDL based workflows that use AlphaFold and ESM Fold tooling for use with Amazon Omics.
+This folder contains example WDL based workflows that use AlphaFold and ESM Fold tooling for use with AWS HealthOmics.
 
 These are provided AS-IS and are intended to demonstrate conventions, patterns, and best practices for writing workflows for scale. They are intended as starting points that you can customize to fit your specific requirements.
 
@@ -35,7 +35,7 @@ This will do the following:
 - Initialize `make`
 - Configure and deploy the `omx-ecr-helper` CDK app
 
-  Workflows that run in Amazon Omics must have containerized tooling sourced from ECR private image repositories. These workflows use 4 unique container images. The `omx-ecr-helper` is a CDK application that automates building container images from source.
+  Workflows that run in AWS HealthOmics must have containerized tooling sourced from ECR private image repositories. These workflows use 4 unique container images. The `omx-ecr-helper` is a CDK application that automates building container images from source.
 
 - Copy container image source to a staging location in S3
 - Create a manifest of container images to build
@@ -43,7 +43,7 @@ This will do the following:
 
 ## Step 2: Testing
 
-Use the steps below to verify execution of these pipelines Amazon Omics as needed. Data for these tests are available in the following regions:
+Use the steps below to verify execution of these pipelines AWS HealthOmics as needed. Data for these tests are available in the following regions:
 
 - us-east-1
 - us-west-2
@@ -65,8 +65,8 @@ If this is the first time running any workflow, `make` will perform the followin
 
 1. Create AWS IAM roles and permissions policies required for workflow runs
 2. Create an Amazon S3 bucket for staging workflow definition bundles and workflow execution outputs
-3. Create a zip bundle for the workflow that is registered with Amazon Omics
-4. Start an Amazon Omics Workflow run for the workflow with test parameters
+3. Create a zip bundle for the workflow that is registered with AWS HealthOmics
+4. Start an AWS HealthOmics Workflow run for the workflow with test parameters
 
 Additional artifacts produced by the build process will be generated in `build/`.
 
@@ -83,7 +83,7 @@ make clean
 
 - No cost resources:
     - The `omx-ecr-helper` CDK app is serverless and does not incur costs when idle.
-    - Omics Workflows do not incur costs when not running
+    - HealthOmics Workflows do not incur costs when not running
 
 - Resources with costs
     - Amazon ECR Private repositories for container images have a storage cost - see [Amazon ECR pricing](https://aws.amazon.com/ecr/pricing/) for more details

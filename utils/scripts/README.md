@@ -1,10 +1,10 @@
-# Utility scripts for Amazon Omics
+# Utility scripts for AWS HealthOmics
 
-These are scripts that support using Amazon Omics
+These are scripts that support using AWS HealthOmics
 
 ## [inspect_nf](./inspect_nf.py)
 
-Python script that inspects a Nextflow workflow definition and generates resources to help migrate it to run on Amazon Omics.
+Python script that inspects a Nextflow workflow definition and generates resources to help migrate it to run on AWS HealthOmics.
 
 Specifically designed to handle NF-Core based workflows, but in theory could handle any Nextflow workflow definition.
 
@@ -46,8 +46,8 @@ Python script that computes the cost of a workflow run breaking out details for 
 **Note:** Cost calculation for workflows that leverage GPUs will be a lower estimate. The instance matching cannot distinguish between tasks that use NVIDIA Tesla T4 vs NVIDIA A10G accelerators and will default to the lowest cost option.
 
 What it does:
-- retrieves regional Amazon Omics pricing using the [AWS Price List bulk API](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/using-ppslong.html)
-- retrieves workflow details from Amazon Omics
+- retrieves regional AWS HealthOmics pricing using the [AWS Price List bulk API](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/using-ppslong.html)
+- retrieves workflow details from AWS HealthOmics
 - matches run task resources (e.g. CPU and Memory) to `omics.*` instances via pricing SKUs
 
 Usage:
@@ -56,7 +56,7 @@ Usage:
 usage: compute_pricing.py [-h] [--profile PROFILE] [--region REGION] [--offering OFFERING] run_id
 
 positional arguments:
-  run_id               Omics workflow run-id to analyze
+  run_id               HealthOmics workflow run-id to analyze
 
 optional arguments:
   -h, --help           show this help message and exit

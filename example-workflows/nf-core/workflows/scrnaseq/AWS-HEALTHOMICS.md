@@ -1,6 +1,6 @@
-# Migrating to Amazon Omics Workflows
+# Migrating to AWS HealthOmics Workflows
 
-The following are the **MINIMAL** steps needed to migrate and test the Nextflow [nf-core/scrnaseq v2.1.0](https://github.com/nf-core/scrnaseq/tree/2.1.0) workflow (the version of the pipeline in this repo) to run on Amazon Omics Workflows while retaining as much in-built Nextflow and NF-core functionality as possible. Successful execution of the workflow (with 14 underlying tasks) was verified in `us-west-2` using documented test data.
+The following are the **MINIMAL** steps needed to migrate and test the Nextflow [nf-core/scrnaseq v2.1.0](https://github.com/nf-core/scrnaseq/tree/2.1.0) workflow (the version of the pipeline in this repo) to run on AWS HealthOmics Workflows while retaining as much in-built Nextflow and NF-core functionality as possible. Successful execution of the workflow (with 14 underlying tasks) was verified in `us-west-2` using documented test data.
 
 ## Step 0: Assumptions and prerequisites
 
@@ -38,7 +38,7 @@ python3 ~/amazon-omics-tutorials/utils/scripts/inspect_nf.py
 
 ### Deploy the `omx-ecr-helper` CDK app
 
-Workflows that run in Amazon Omics must have containerized tooling sourced from ECR private image repositories. This workflow uses 14 unique container images. The `omx-ecr-helper` is a CDK application that automates converting container images from public repositories like Quay.io, ECR-Public, and DockerHub to ECR private image repositories.
+Workflows that run in AWS HealthOmics must have containerized tooling sourced from ECR private image repositories. This workflow uses 14 unique container images. The `omx-ecr-helper` is a CDK application that automates converting container images from public repositories like Quay.io, ECR-Public, and DockerHub to ECR private image repositories.
 
 ```
 cd ~/amazon-omics-tutorials/utils/cdk/omx-ecr-helper
@@ -64,7 +64,7 @@ Add the following to the bottom of the file:
 includeConfig 'conf/omics.config'
 ```
 
-### Enable schema validation for Omics related parameters
+### Enable schema validation for HealthOmics related parameters
 
 In the `nextflow_schema.json` file under `definitions.generic_options.properties` add:
 
@@ -125,7 +125,7 @@ These are the minimal paramters needed to run the workflow as determined by:
 
 ## Step 3: Testing
 
-The steps below verify that the migrated pipeline will run on Omics using a minimal test dataset. Test completion time depends on the data size used. For the set documented below, the workflow completed in ~1hr.
+The steps below verify that the migrated pipeline will run on HealthOmics using a minimal test dataset. Test completion time depends on the data size used. For the set documented below, the workflow completed in ~1hr.
 
 ### Clone the nf-core/test-datasets repository and checkout the `scrnaseq` branch
 
@@ -183,13 +183,13 @@ aws s3 sync ./test-datasets s3://<mybucket>/test-datasets/nf-core-scrnaseq --exc
 These parameters completely circumvent the need to use iGenomes references and thereby minimize the need to make a copy of iGenomes. The trade-off is that the workflow will take longer to run as it will need to compute a reference index.
 
 
-### Bundle and register the workflow with Omics
+### Bundle and register the workflow with HealthOmics
 
 The following sequence of shell commands does the following:
 
 1. Bundles the workflow definition (excluding the `.git/` folder into a Zip file).
-2. Uploads the zip file to an S3 staging location. This is required because the zip bundle exceeds the 4MiB size limit for direct upload to Amazon Omics via the AWS CLI.
-3. Registers the workflow definition with Amazon Omics and waits for it to become active.
+2. Uploads the zip file to an S3 staging location. This is required because the zip bundle exceeds the 4MiB size limit for direct upload to AWS HealthOmics via the AWS CLI.
+3. Registers the workflow definition with AWS HealthOmics and waits for it to become active.
 
 ```
 cd ~
@@ -213,7 +213,7 @@ aws omics wait workflow-active --id "${workflow_id}"
 aws omics get-workflow --id "${workflow_id}" > "workflow-${workflow_name}.json"
 ```
 
-### Start a test run of the workflow in Omics
+### Start a test run of the workflow in HealthOmics
 
 ```
 workflow_name="nf-core-scrnaseq"
@@ -226,11 +226,11 @@ aws omics start-run \
     --parameters file://${workflow_name}/test.parameters.json
 ```
 
-You can then monitor the progress of the workflow via the [Amazon Omics Console](https://console.aws.amazon.com/omics/home#/runs). The workflow should complete in ~1hr.
+You can then monitor the progress of the workflow via the [AWS HealthOmics Console](https://console.aws.amazon.com/omics/home#/runs). The workflow should complete in ~1hr.
 
 ## Congrats!
 
-The above process should take no more than 1-2hrs to complete and at the end you will have successfully run the nf-core/scrnaseq workflow using Amazon Omics. From this point you can further customize the workflow as needed.
+The above process should take no more than 1-2hrs to complete and at the end you will have successfully run the nf-core/scrnaseq workflow using AWS HealthOmics. From this point you can further customize the workflow as needed.
 
 
 ## Further reading: migration details

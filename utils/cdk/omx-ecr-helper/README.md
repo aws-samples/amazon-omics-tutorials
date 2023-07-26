@@ -1,6 +1,6 @@
-# Omics ECR Helper
+# HealthOmics ECR Helper
 
-This is a simple serverless application that helps automate preparing containers for use with [Amazon Omics](https://aws.amazon.com/omics/) Workflows that performs two key functions:
+This is a simple serverless application that helps automate preparing containers for use with [AWS HealthOmics](https://aws.amazon.com/omics/) Workflows that performs two key functions:
 
 1. `container-puller`: Retrieves container images from public registries like (Amazon ECR Public, Quay.io, DockerHub) and stages them in [Amazon ECR](https://aws.amazon.com/ecr/) Private image repositories in your AWS account
 2. `container-builder`: Builds ECR Private container images from source bundles staged in S3
@@ -15,7 +15,7 @@ Under the hood, it this application leverages [AWS Step Functions](https://aws.a
 
 ## Usage
 
-Deploy the [AWS CloudFormation](https://aws.amazon.com/cloudformation/) stacks used by the application in each region you intend to run Amazon Omics Workflows using the following:
+Deploy the [AWS CloudFormation](https://aws.amazon.com/cloudformation/) stacks used by the application in each region you intend to run AWS HealthOmics Workflows using the following:
 
 ```bash
 # install package dependencies
@@ -164,7 +164,7 @@ task task1 {
 }
 ```
 
-Then create and run your workflow using Amazon Omics.
+Then create and run your workflow using AWS HealthOmics.
 
 
 ## How it works
@@ -200,7 +200,7 @@ Third, the EventBridge rule triggers a Lambda function that applies the required
 }
 ```
 
-Currently, Amazon Omics checks for the existence of ECR image repositories and specific image URIs before launching ECS tasks. This pre-check means you need to "prime" container images into ECR Private prior to a running a workflow that depends on them the first time, even if pull-through caching is enabled.
+Currently, AWS HealthOmics checks for the existence of ECR image repositories and specific image URIs before launching ECS tasks. This pre-check means you need to "prime" container images into ECR Private prior to a running a workflow that depends on them the first time, even if pull-through caching is enabled.
 
 The priming process is automated by submitting a container image manifest to a StepFunctions state machine that calls a CodeBuild Project that retrieves container image URIs.
 

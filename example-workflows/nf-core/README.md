@@ -1,6 +1,6 @@
-# Example Nextflow (NF-Core) workflows for Amazon Omics
+# Example Nextflow (NF-Core) workflows for AWS HealthOmics
 
-This folder contains example Nextflow based workflows from NF-Core modified to run on Amazon Omics.
+This folder contains example Nextflow based workflows from NF-Core modified to run on AWS HealthOmics.
 
 These are provided AS-IS and are intended to demonstrate conventions, patterns, and best practices for writing workflows for scale. They are intended as starting points that you can customize to fit your specific requirements.
 
@@ -24,7 +24,7 @@ pip install -r requirements.txt
 
 ## Step 1: Testing
 
-Use the steps below to verify execution of these pipelines Amazon Omics as needed. Data for these tests are currently available in the following regions:
+Use the steps below to verify execution of these pipelines AWS HealthOmics as needed. Data for these tests are currently available in the following regions:
 
 - us-east-1
 - us-west-2
@@ -46,13 +46,13 @@ If this is the first time running any workflow, `make` will perform the followin
 
 1. Configure and deploy the `omx-ecr-helper` CDK app
 
-   Workflows that run in Amazon Omics must have containerized tooling sourced from ECR private image repositories. Each of these workflows use several (>10) container images. The `omx-ecr-helper` is a CDK application that automates converting container images from public repositories like Quay.io, ECR-Public, and DockerHub to ECR private image repositories.
+   Workflows that run in AWS HealthOmics must have containerized tooling sourced from ECR private image repositories. Each of these workflows use several (>10) container images. The `omx-ecr-helper` is a CDK application that automates converting container images from public repositories like Quay.io, ECR-Public, and DockerHub to ECR private image repositories.
 
 2. Run a Step functions state machine from `omx-ecr-helper` to pull container images used by these workflows into ECR Private Repositories
 3. Create AWS IAM roles and permissions policies required for workflow runs
 4. Create an Amazon S3 bucket for staging workflow definition bundles and workflow execution outputs
-5. Create a zip bundle for the workflow that is registered with Amazon Omics
-6. Start an Amazon Omics Workflow run for the workflow with test parameters
+5. Create a zip bundle for the workflow that is registered with AWS HealthOmics
+6. Start an AWS HealthOmics Workflow run for the workflow with test parameters
 
 Additional artifacts produced by the build process will be generated in `build/`.
 
@@ -69,7 +69,7 @@ make clean
 
 - No cost resources:
     - The `omx-ecr-helper` CDK app is serverless and does not incur costs when idle.
-    - Omics Workflows do not incur costs when not running
+    - HealthOmics Workflows do not incur costs when not running
 
 - Resources with costs
     - Amazon ECR Private repositories for container images have a storage cost - see [Amazon ECR pricing](https://aws.amazon.com/ecr/pricing/) for more details
@@ -103,4 +103,4 @@ are added and populated based on the AWS profile used during the build process (
 
 ### Migration details
 
-Additional details on modifications applied to run each workflow on Amazon Omics is available in `AMAZON-OMICS.md` files.
+Additional details on modifications applied to run each workflow on AWS HealthOmics is available in `AMAZON-OMICS.md` files.
