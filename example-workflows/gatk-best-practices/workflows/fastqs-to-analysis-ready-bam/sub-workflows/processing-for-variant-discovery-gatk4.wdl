@@ -72,7 +72,7 @@ workflow PreProcessingForVariantDiscovery_GATK4 {
                                             ]
 
 
-  String gatk_docker = ecr_registry + "/ecr-public/aws-genomics/broadinstitute/gatk:4.2.6.1-corretto-8"
+  String gatk_docker = ecr_registry + "/ecr-public/aws-genomics/broadinstitute/gatk:4.2.6.1-corretto-11"
   String gotc_docker = ecr_registry + "/ecr-public/aws-genomics/broadinstitute/genomes-in-the-cloud:2.5.7-2021-06-09_16-47-48Z"
   String python_docker = ecr_registry + "/ecr-public/docker/library/python:3.9"
   String base_file_name = sample_name + "." + ref_name
