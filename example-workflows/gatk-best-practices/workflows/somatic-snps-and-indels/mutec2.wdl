@@ -93,6 +93,7 @@ workflow Mutect2 {
 
         # runtime
         String ecr_registry
+        String aws_region
         Int scatter_count=50
 
         Int small_task_cpu = 2
