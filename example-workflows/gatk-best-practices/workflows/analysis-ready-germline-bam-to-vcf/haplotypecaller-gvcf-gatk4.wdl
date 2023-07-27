@@ -32,12 +32,12 @@ workflow HaplotypeCallerGvcf_GATK4 {
         String aws_region
     }
 
-    String src_bucket_name = "aws-genomics-static-" + aws_region
+    String src_bucket_name = "omics-" + aws_region
 
-    File ref_dict="s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Homo_sapiens_assembly38.dict"
-    File ref_fasta="s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta"
-    File ref_fasta_index="s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.fai"
-    File scattered_calling_intervals_archive="s3://" + src_bucket_name + "/omics-data/intervals/intervals.tar.gz"
+    File ref_dict="s3://" + src_bucket_name + "/broad-references/hg38/v0/Homo_sapiens_assembly38.dict"
+    File ref_fasta="s3://" + src_bucket_name + "/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta"
+    File ref_fasta_index="s3://" + src_bucket_name + "/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.fai"
+    File scattered_calling_intervals_archive="s3://" + src_bucket_name + "/intervals/intervals.tar.gz"
 
     Boolean make_gvcf = true
     Boolean make_bamout = false
