@@ -107,7 +107,7 @@ workflow Mutect2 {
     File ref_fai="s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.fai"
     File ref_dict="s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Homo_sapiens_assembly38.dict"
 
-    String gatk_docker = ecr_registry + "/ecr-public/aws-genomics/broadinstitute/gatk:4.2.6.1" 
+    String gatk_docker = ecr_registry + "/ecr-public/aws-genomics/broadinstitute/gatk:4.2.6.1-corretto-11" 
     Runtime standard_runtime = Runtime {"gatk_docker": gatk_docker,
                                         "cpu": small_task_cpu,
                                         "machine_mem": small_task_mem * 1024,

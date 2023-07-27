@@ -41,7 +41,7 @@ workflow HaplotypeCallerGvcf_GATK4 {
 
     Boolean make_gvcf = true
     Boolean make_bamout = false
-    String gatk_docker = ecr_registry + "/ecr-public/aws-genomics/broadinstitute/gatk:4.2.6.1"
+    String gatk_docker = ecr_registry + "/ecr-public/aws-genomics/broadinstitute/gatk:4.2.6.1-corretto-11"
     String utils_docker = ecr_registry + "/ecr-public/ubuntu/ubuntu:20.04"
     String gatk_path = "/gatk/gatk"
 
