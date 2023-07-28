@@ -18,9 +18,6 @@ parser.add_argument(
 subparsers = parser.add_subparsers(dest='subcommand')
 
 parser_config = subparsers.add_parser('config')
-parser_ecr = subparsers.add_parser('ecr')
-parser_ecr.add_argument(
-    'image_name', type=str, help="name of image to build (e.g. 'tool:tag')")
 
 parser_s3 = subparsers.add_parser('s3')
 parser_iam = subparsers.add_parser('iam')
