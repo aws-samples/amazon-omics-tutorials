@@ -1,8 +1,8 @@
 {
-  "tumor_reads": "s3://aws-genomics-static-{{region}}/omics-data/tumor-normal/bams/SRR2089363.hg38.bam",
-  "tumor_reads_index": "s3://aws-genomics-static-{{region}}/omics-data/tumor-normal/bams/SRR2089363.hg38.bai",
-  "normal_reads": "s3://aws-genomics-static-{{region}}/omics-data/tumor-normal/bams/SRR2089364.hg38.bam",
-  "normal_reads_index": "s3://aws-genomics-static-{{region}}/omics-data/tumor-normal/bams/SRR2089364.hg38.bai",
-  "gnomad": "s3://aws-genomics-static-{{region}}/omics-data/gnomad/v3.1.2/gnomad.genomes.v3.1.2.sites.af-only.vcf.gz",
-  "gnomad_idx": "s3://aws-genomics-static-{{region}}/omics-data/gnomad/v3.1.2/gnomad.genomes.v3.1.2.sites.af-only.vcf.gz.tbi"
+  "tumor_reads": "s3://omics-{{region}}/sample-inputs/5562080/SRR2089363.hg38.bam",
+  "tumor_reads_index": "s3://omics-{{region}}/sample-inputs/5562080/SRR2089363.hg38.bai",
+  "normal_reads": "s3://omics-{{region}}/sample-inputs/5562080/SRR2089364.hg38.bam",
+  "normal_reads_index": "s3://omics-{{region}}/sample-inputs/5562080/SRR2089364.hg38.bai",
+  "gnomad": "s3://omics-{{region}}/gnomad/v3.1.2/gnomad.genomes.v3.1.2.sites.af-only.vcf.gz",
+  "gnomad_idx": "s3://omics-{{region}}/gnomad/v3.1.2/gnomad.genomes.v3.1.2.sites.af-only.vcf.gz.tbi"
 }
