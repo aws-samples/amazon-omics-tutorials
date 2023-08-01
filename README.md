@@ -1,14 +1,14 @@
-![Amazon Omics](./assets/amazon-omics-banner_600px.png)
+![AWS HealthOmics](./assets/aws-healthomics-banner_600px.png)
 
-# Amazon Omics Tutorials
+# AWS HealthOmics Tutorials
 
-Example code that demonstrates how to store, process, and query genomic and biological datasets using Amazon Omics
+Example code that demonstrates how to store, process, and query genomic and biological datasets using AWS HealthOmics
 
 ## Background
 
-[Amazon Omics]() helps healthcare and life sciences customers store, query, analyze, and generate insights from genomic and other biological data to improve human health.
+[AWS HealthOmics](https://aws.amazon.com/omics/) helps healthcare and life sciences customers store, query, analyze, and generate insights from genomic and other biological data to improve human health.
 
-This repository contains resources (e.g. code scripts, jupyter notebooks, etc) that demonstrate the usage of Amazon Omics.
+This repository contains resources (e.g. code scripts, jupyter notebooks, etc) that demonstrate the usage of AWS HealthOmics.
 
 ## Setup
 
@@ -20,11 +20,11 @@ The quickest setup to run example notebooks includes:
 
 ## Tutorials
 ### Storage
-* [Using Omics Storage with genomics references and readsets](./notebooks/200-omics_storage.ipynb): Get acquainted with Omics storage by creating reference and sequence stores, importing data from FASTQ and CRAM files, and downloading readsets.
+* [Using HealthOmics Storage with genomics references and readsets](./notebooks/200-omics_storage.ipynb): Get acquainted with HealthOmics storage by creating reference and sequence stores, importing data from FASTQ and CRAM files, and downloading readsets.
 ### Workflows
-* [Running WDL and Nextflow pipelines with Omics Workflows](./notebooks/200-omics_workflows.ipynb): Learn how to create, run, and debug WDL and Nextflow based pipelines that process data from Omics Storage and Amazon S3 using Omics Workflows.
+* [Running WDL and Nextflow pipelines with HealthOmics Workflows](./notebooks/200-omics_workflows.ipynb): Learn how to create, run, and debug WDL and Nextflow based pipelines that process data from HealthOmics Storage and Amazon S3 using HealthOmics Workflows.
 ### Analytics
-* [Querying annotations and variants with Omics Analytics](./notebooks/200-omics_analytics.ipynb): Get started with Omics Analytics by importing variant and annotation data from VCF, TSV, and GFF files, and performing genome scale analysis queries using Amazon Athena.
+* [Querying annotations and variants with HealthOmics Analytics](./notebooks/200-omics_analytics.ipynb): Get started with HealthOmics Analytics by importing variant and annotation data from VCF, TSV, and GFF files, and performing genome scale analysis queries using Amazon Athena.
 
 ## License
 

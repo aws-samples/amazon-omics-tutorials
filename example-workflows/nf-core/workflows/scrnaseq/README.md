@@ -15,9 +15,9 @@
 [![Get help on Slack](http://img.shields.io/badge/slack-nf--core%20%23scrnaseq-4A154B?labelColor=000000&logo=slack)](https://nfcore.slack.com/channels/scrnaseq)[![Follow on Twitter](http://img.shields.io/badge/twitter-%40nf__core-1DA1F2?labelColor=000000&logo=twitter)](https://twitter.com/nf_core)[![Watch on YouTube](http://img.shields.io/badge/youtube-nf--core-FF0000?labelColor=000000&logo=youtube)](https://www.youtube.com/c/nf-core)
 
 ## :warning: !! IMPORTANT !! :warning:
-This is a point in time copy of the [NF-Core / scrnaseq workflow at version 2.1.0](https://nf-co.re/scrnaseq/2.1.0) that has been modified to run on [Amazon Omics](https://aws.amazon.com/omics/) and was the basis for the set of scRNASeq [Ready2Run workflows](https://console.aws.amazon.com/omics/home#/readyWorkflows). More details of how this workflow was modified from its upstream source can be found in the [AMAZON-OMICS.md](./AMAZON-OMICS.md) file.
+This is a point in time copy of the [NF-Core / scrnaseq workflow at version 2.1.0](https://nf-co.re/scrnaseq/2.1.0) that has been modified to run on [AWS HealthOmics](https://aws.amazon.com/omics/) and was the basis for the set of scRNASeq [Ready2Run workflows](https://console.aws.amazon.com/omics/home#/readyWorkflows). More details of how this workflow was modified from its upstream source can be found in the [AWS-HEALTHOMICS.md](./AWS-HEALTHOMICS.md) file.
 
-If you need assistance using running this workflow on Amazon Omics, reach out to your [AWS account team](https://aws.amazon.com/contact-us/).
+If you need assistance using running this workflow on AWS HealthOmics, reach out to your [AWS account team](https://aws.amazon.com/contact-us/).
 
 For assistance developing the workflow - i.e. modifying the tooling and processes used - reach out to the NF-Core community (e.g. the [scrnaseq channel in the NF-Core Slack](https://nfcore.slack.com/channels/scrnaseq)).
 ## Introduction

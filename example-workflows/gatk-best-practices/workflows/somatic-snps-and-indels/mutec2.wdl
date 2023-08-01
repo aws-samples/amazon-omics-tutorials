@@ -93,6 +93,7 @@ workflow Mutect2 {
 
         # runtime
         String ecr_registry
+        String aws_region
         Int scatter_count=50
 
         Int small_task_cpu = 2
@@ -102,12 +103,12 @@ workflow Mutect2 {
         Int filter_alignment_artifacts_mem = 9216
     }
 
-    String src_bucket_name = "aws-genomics-static-" + aws_region
-    File ref_fasta="s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta"
-    File ref_fai="s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.fai"
-    File ref_dict="s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Homo_sapiens_assembly38.dict"
+    String src_bucket_name = "omics-" + aws_region
+    File ref_fasta="s3://" + src_bucket_name + "/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta"
+    File ref_fai="s3://" + src_bucket_name + "/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.fai"
+    File ref_dict="s3://" + src_bucket_name + "/broad-references/hg38/v0/Homo_sapiens_assembly38.dict"
 
-    String gatk_docker = ecr_registry + "/ecr-public/aws-genomics/broadinstitute/gatk:4.2.6.1" 
+    String gatk_docker = ecr_registry + "/ecr-public/aws-genomics/broadinstitute/gatk:4.2.6.1-corretto-11" 
     Runtime standard_runtime = Runtime {"gatk_docker": gatk_docker,
                                         "cpu": small_task_cpu,
                                         "machine_mem": small_task_mem * 1024,

@@ -38,7 +38,7 @@ workflow ConvertPairedFastQsToUnmappedBamWf {
         String ecr_registry
     }
 
-    String gatk_docker = ecr_registry + "/ecr-public/aws-genomics/broadinstitute/gatk:4.2.6.1"
+    String gatk_docker = ecr_registry + "/ecr-public/aws-genomics/broadinstitute/gatk:4.2.6.1-corretto-11"
     String gatk_path = "/gatk/gatk"
 
 

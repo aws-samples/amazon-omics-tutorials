@@ -3,26 +3,26 @@
   "fastq_pairs": [
     {
       "read_group": "C0L01ACXX.1",
-      "fastq_1": "s3://aws-genomics-static-{{region}}/omics-data/fastq/ERR194159/C0L01ACXX.1.R1.fastq.gz",
-      "fastq_2": "s3://aws-genomics-static-{{region}}/omics-data/fastq/ERR194159/C0L01ACXX.1.R2.fastq.gz",
+      "fastq_1": "s3://omics-{{region}}/sample-inputs/9500764/C0L01ACXX.1.5-percent.R1.fastq.gz",
+      "fastq_2": "s3://omics-{{region}}/sample-inputs/9500764/C0L01ACXX.1.5-percent.R2.fastq.gz",
       "platform": "illumina"
     },
     {
       "read_group": "C0L01ACXX.2",
-      "fastq_1": "s3://aws-genomics-static-{{region}}/omics-data/fastq/ERR194159/C0L01ACXX.2.R1.fastq.gz",
-      "fastq_2": "s3://aws-genomics-static-{{region}}/omics-data/fastq/ERR194159/C0L01ACXX.2.R2.fastq.gz",
+      "fastq_1": "s3://omics-{{region}}/sample-inputs/9500764/C0L01ACXX.2.5-percent.R1.fastq.gz",
+      "fastq_2": "s3://omics-{{region}}/sample-inputs/9500764/C0L01ACXX.2.5-percent.R2.fastq.gz",
       "platform": "illumina"
     },
     {
       "read_group": "C0L01ACXX.3",
-      "fastq_1": "s3://aws-genomics-static-{{region}}/omics-data/fastq/ERR194159/C0L01ACXX.3.R1.fastq.gz",
-      "fastq_2": "s3://aws-genomics-static-{{region}}/omics-data/fastq/ERR194159/C0L01ACXX.3.R2.fastq.gz",
+      "fastq_1": "s3://omics-{{region}}/sample-inputs/9500764/C0L01ACXX.3.5-percent.R1.fastq.gz",
+      "fastq_2": "s3://omics-{{region}}/sample-inputs/9500764/C0L01ACXX.3.5-percent.R2.fastq.gz",
       "platform": "illumina"
     },
     {
       "read_group": "C0M7LACXX.7",
-      "fastq_1": "s3://aws-genomics-static-{{region}}/omics-data/fastq/ERR194159/C0M7LACXX.7.R1.fastq.gz",
-      "fastq_2": "s3://aws-genomics-static-{{region}}/omics-data/fastq/ERR194159/C0M7LACXX.7.R2.fastq.gz",
+      "fastq_1": "s3://omics-{{region}}/sample-inputs/9500764/C0M7LACXX.7.5-percent.R1.fastq.gz",
+      "fastq_2": "s3://omics-{{region}}/sample-inputs/9500764/C0M7LACXX.7.5-percent.R2.fastq.gz",
       "platform": "illumina"
     }
   ]

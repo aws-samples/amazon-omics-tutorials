@@ -1,4 +1,4 @@
 {
-  "input_bam": "s3://aws-genomics-static-{{region}}/omics-data/bam/ERR194159-30x.hg38.bam",
-  "input_bam_index": "s3://aws-genomics-static-{{region}}/omics-data/bam/ERR194159-30x.hg38.bai"
+  "input_bam": "s3://omics-{{region}}/sample-inputs/5454617/ERR194159.hg38.5-percent.bam",
+  "input_bam_index": "s3://omics-{{region}}/sample-inputs/5454617/ERR194159.hg38.5-percent.bai"
 }

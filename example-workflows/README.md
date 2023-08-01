@@ -1,8 +1,8 @@
-# Example workflows for Amazon Omics
+# Example workflows for AWS HealthOmics
 
-This folder contains example WDL and Nextflow workflows that run on Amazon Omics.
+This folder contains example WDL and Nextflow workflows that run on AWS HealthOmics.
 
-These are provided AS-IS and are intended to demonstrate conventions, patterns, and best practices for writing workflows for scale on Amazon Omics. They are intended as starting points that you can customize to fit your specific requirements.
+These are provided AS-IS and are intended to demonstrate conventions, patterns, and best practices for writing workflows for scale on AWS HealthOmics. They are intended as starting points that you can customize to fit your specific requirements.
 
 ## Prerequisites
 - Required tooling:

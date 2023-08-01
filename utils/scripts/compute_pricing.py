@@ -15,7 +15,7 @@ parser = ArgumentParser()
 parser.add_argument('--profile', type=str, help="AWS profile to use")
 parser.add_argument('--region', type=str, help="AWS region to use")
 parser.add_argument('--offering', type=str, help="path to pricing offer JSON")
-parser.add_argument('run_id', type=str, help="Omics workflow run-id to analyze")
+parser.add_argument('run_id', type=str, help="HealthOmics workflow run-id to analyze")
 
 
 def get_pricing(offering=None, client=None):

@@ -1,6 +1,6 @@
 {
   "input_cram": {
-    "description": "The S3 URI or Omics Storage URI of the cram file to convert to bam format",
+    "description": "The S3 URI or HealthOmics Storage URI of the cram file to convert to bam format",
     "optional": false
   },
   "sample_name": {

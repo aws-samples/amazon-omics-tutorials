@@ -15,14 +15,12 @@ from zipfile import ZipFile, ZIP_DEFLATED
 
 
 import boto3
-from python_on_whales import DockerClient
 import yaml
 
 
 CONFIG_DEFAULTS = {
     'profile': None,
     'region': None,
-    'whale_client': 'docker',
     'allow_ecr_overwrite': True,
     'staging_uri': None,
     'output_uri': None,
@@ -101,139 +99,6 @@ class Builder:
         
         self._write_artifact({"output_uri": cfg['output_uri']}, 'build/s3-output-uri')
         self._write_artifact({"staging_uri": cfg['staging_uri']}, 'build/s3-staging-uri')
-    
-    @staticmethod
-    def ecr_get_login(client):    
-        auth = client.get_authorization_token()['authorizationData'][0]
-        username, password = b64decode(auth['authorizationToken']).decode().split(':')
-
-        return {'username': username, 'password': password, 'server': auth['proxyEndpoint']}
-
-    def build_ecr(self, image_name) -> None:
-        repo_name, tag_name = image_name.split(":")
-
-        cfg = self.config
-        session = self.session
-        region_name = cfg['region']
-        assets_dir = self._assets_dir
-        
-        allow_ecr_overwrite = cfg['allow_ecr_overwrite']
-        whale_client = cfg['whale_client']
-        whale = DockerClient(client_call=[whale_client]) if whale_client else DockerClient()
-
-        ecr = session.client('ecr')
-        registry = cfg['ecr_registry']
-
-        # check if image repository exists
-        # create if not found
-        repo_details = None
-        try:
-            response = ecr.describe_repositories(
-                repositoryNames = [repo_name]
-            )
-            repo_details = response['repositories'][0]
-            print(f"ecr repository for '{repo_name}' found in registry {registry}")
-
-        except ecr.exceptions.RepositoryNotFoundException as e:
-            print(f"creating ecr repository for '{repo_name}' found in registry {registry}")
-            repo_details = ecr.create_repository(
-                repositoryName=repo_name
-            )
-        
-        # check if repository has required policy for omics access
-        with open(os.path.join(assets_dir, 'omics-ecr-repo-policy.json'), 'r') as f:
-            required_policy = json.load(f)
-        
-        set_repo_policy = False
-        try:
-            policy_details = ecr.get_repository_policy(
-                repositoryName=repo_name
-            )
-            existing_policy = json.loads(policy_details['policyText'])
-
-            if json.dumps(existing_policy) == json.dumps(required_policy):
-                print(f"a permissions policy already exists on ecr repository '{repo_name}' in {registry}")
-                if allow_ecr_overwrite:
-                    print(f"overwriting permissions policy")
-                    set_repo_policy = True
-                else:
-                    warnings.warn(f'.. allow_ecr_overwite = False ::: you should check that existing repo policy is correct')
-
-        except ecr.exceptions.RepositoryPolicyNotFoundException:
-            set_repo_policy = True
-
-        if set_repo_policy:
-            print(f"setting permissions policy on ecr repository '{region_name}' in registry {registry}")
-            policy_details = ecr.set_repository_policy(
-                repositoryName=repo_name,
-                policyText=json.dumps(required_policy)
-            )
-
-        # check if image exists in repository
-        # push if not found
-        push_image = False
-        try:
-            response = ecr.describe_images(
-                repositoryName=repo_name,
-                imageIds=[{'imageTag': tag_name}]
-            )
-            image_details = response['imageDetails'][0]
-
-            print(f"ecr image '{image_name}' exists in registry {registry}")
-
-            # check if the imageDigests match
-            # note: it seems only nerdctl based tooling (e.g. finch) create repo digests in image builds
-            # docker does not, so this check might not be all that effective. the local digest will always return 'null'
-            # and thus always trigger 'push_image'
-            
-            # expect that container build information exists before this script is run
-            with open(f'build/container-{repo_name}', 'r') as f:
-                container = json.load(f)
-                local_digest = container[0]['RepoDigests']
-            
-            # experimental: use python-on-whales to get container digest information
-            # local_digest = whale.image.inspect(image_name).repo_digests
-
-            if local_digest:
-                local_digest = local_digest[0].split('@')[1]
-                remote_digest = image_details['imageDigest']
-
-                if local_digest != remote_digest:
-                    print(f"local and ecr images for '{image_name}' have different digests")
-                    if allow_ecr_overwrite:
-                        print(f"overwriting image in ecr")
-                        push_image = True
-                    else:
-                        warnings.warn(f'.. allow_ecr_overwite = False ::: image will not be pushed')
-                else:
-                    print(f"noop: local and ecr images for '{image_name}' have the same digest")
-            else:
-                push_image = True
-
-        except ecr.exceptions.ImageNotFoundException:
-            push_image = True
-        
-        if push_image:
-            print(f"pushing '{registry}/{image_name}'")
-            whale.tag(image_name, f"{registry}/{image_name}")
-
-            login = Builder.ecr_get_login(ecr)
-            whale.login(**login)
-            whale.push(f"{registry}/{image_name}")
-
-            # update image details
-            response = ecr.describe_images(
-                repositoryName=repo_name,
-                imageIds=[{'imageTag': tag_name}]
-            )
-            image_details = response['imageDetails'][0]
-
-        # create artifacts for this build stage
-        self._write_artifact({'ecr_registry': registry}, 'build/ecr-registry')
-        for artifact, details in zip(
-            ['repo', 'image', 'policy'],
-            [repo_details, image_details, policy_details]):
-            self._write_artifact(details, f"build/ecr-{artifact}-{repo_name}")
 
     def build_iam(self) -> None:
         cfg = self.config

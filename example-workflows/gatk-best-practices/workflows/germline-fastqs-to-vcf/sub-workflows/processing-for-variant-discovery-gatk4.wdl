@@ -49,31 +49,31 @@ workflow PreProcessingForVariantDiscovery_GATK4 {
     String aws_region
   }
 
-  String src_bucket_name = "aws-genomics-static-" + aws_region
+  String src_bucket_name = "omics-" + aws_region
   
   String ref_name = "hg38"
-  File ref_fasta = "s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta"
-  File ref_fasta_index = "s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.fai"
-  File ref_dict = "s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Homo_sapiens_assembly38.dict"
-  File ref_alt = "s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.64.alt"
-  File ref_sa = "s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.64.sa"
-  File ref_ann = "s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.64.ann"
-  File ref_bwt = "s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.64.bwt"
-  File ref_pac = "s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.64.pac"
-  File ref_amb = "s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.64.amb"
-  File dbSNP_vcf = "s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Homo_sapiens_assembly38.dbsnp138.vcf"
-  File dbSNP_vcf_index = "s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Homo_sapiens_assembly38.dbsnp138.vcf.idx"
+  File ref_fasta = "s3://" + src_bucket_name + "/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta"
+  File ref_fasta_index = "s3://" + src_bucket_name + "/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.fai"
+  File ref_dict = "s3://" + src_bucket_name + "/broad-references/hg38/v0/Homo_sapiens_assembly38.dict"
+  File ref_alt = "s3://" + src_bucket_name + "/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.64.alt"
+  File ref_sa = "s3://" + src_bucket_name + "/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.64.sa"
+  File ref_ann = "s3://" + src_bucket_name + "/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.64.ann"
+  File ref_bwt = "s3://" + src_bucket_name + "/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.64.bwt"
+  File ref_pac = "s3://" + src_bucket_name + "/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.64.pac"
+  File ref_amb = "s3://" + src_bucket_name + "/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.64.amb"
+  File dbSNP_vcf = "s3://" + src_bucket_name + "/broad-references/hg38/v0/Homo_sapiens_assembly38.dbsnp138.vcf"
+  File dbSNP_vcf_index = "s3://" + src_bucket_name + "/broad-references/hg38/v0/Homo_sapiens_assembly38.dbsnp138.vcf.idx"
   Array[File] known_indels_sites_VCFs = [
-                                        "s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz",
-                                        "s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Homo_sapiens_assembly38.known_indels.vcf.gz"
+                                        "s3://" + src_bucket_name + "/broad-references/hg38/v0/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz",
+                                        "s3://" + src_bucket_name + "/broad-references/hg38/v0/Homo_sapiens_assembly38.known_indels.vcf.gz"
                                         ]
   Array[File] known_indels_sites_indices = [
-                                            "s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi",
-                                            "s3://" + src_bucket_name + "/omics-data/broad-references/hg38/v0/Homo_sapiens_assembly38.known_indels.vcf.gz.tbi"
+                                            "s3://" + src_bucket_name + "/broad-references/hg38/v0/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi",
+                                            "s3://" + src_bucket_name + "/broad-references/hg38/v0/Homo_sapiens_assembly38.known_indels.vcf.gz.tbi"
                                             ]
 
-  String gatk_docker = ecr_registry + "/ecr-public/aws-genomics/broadinstitute/gatk:4.2.6.1"
-  String gotc_docker = ecr_registry + "/ecr-public/aws-genomics/broadinstitute/genomes-in-the-cloud:2.5.7-2021-06-09_16-47-48Z"
+  String gatk_docker = ecr_registry + "/ecr-public/aws-genomics/broadinstitute/gatk:4.2.6.1-corretto-11"
+  String gotc_docker = ecr_registry + "/ecr-public/aws-genomics/broadinstitute/genomes-in-the-cloud:2.5.7-2021-06-09_16-47-48Z-corretto-11"
   String python_docker = ecr_registry + "/ecr-public/docker/library/python:3.9"
   String base_file_name = sample_name + "." + ref_name
 
