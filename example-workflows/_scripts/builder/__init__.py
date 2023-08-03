@@ -15,6 +15,7 @@ from zipfile import ZipFile, ZIP_DEFLATED
 
 
 import boto3
+import botocore
 import yaml
 
 
@@ -280,11 +281,19 @@ class Builder:
 
         # wait for workflow to be active
         # let the build fail if there's an error here
-        waiter = omics.get_waiter('workflow_active')
-        waiter.wait(id=workflow_id)
+        try:
+            waiter = omics.get_waiter('workflow_active')
+            waiter.wait(id=workflow_id)
 
-        workflow = omics.get_workflow(id=workflow_id)
-        self._write_artifact(workflow, f'build/workflow-{workflow_name}')
+            workflow = omics.get_workflow(id=workflow_id)
+            self._write_artifact(workflow, f'build/workflow-{workflow_name}')
+        except botocore.exceptions.WaiterError as e:
+            response = omics.get_workflow(id=workflow_id)
+            cause = response['statusMessage']
+
+            print(f"Encountered the following error: {e}\n\nCause:\n{cause}")
+
+            raise RuntimeError
         
     def build_samplesheet(self, workflow_name) -> None:
         # this is only used for nf-core based workflows
