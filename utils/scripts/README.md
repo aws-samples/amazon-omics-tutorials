@@ -43,12 +43,11 @@ optional arguments:
 
 Python script that computes the cost of a workflow run breaking out details for individual tasks and run storage.
 
-**Note:** Cost calculation for workflows that leverage GPUs will be a lower estimate. The instance matching cannot distinguish between tasks that use NVIDIA Tesla T4 vs NVIDIA A10G accelerators and will default to the lowest cost option.
-
 What it does:
 - retrieves regional AWS HealthOmics pricing using the [AWS Price List bulk API](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/using-ppslong.html)
-- retrieves workflow details from AWS HealthOmics
-- matches run task resources (e.g. CPU and Memory) to `omics.*` instances via pricing SKUs
+- retrieves workflow run details from AWS HealthOmics
+- matches reported run task `omics.*` instance types to pricing SKUs
+- prints a JSON summary of the run's costs
 
 Usage:
 
