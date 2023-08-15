@@ -56,51 +56,6 @@ def get_pricing(offering=None, client=None):
     return pricing
 
 
-def parse_instance(sku):
-    if not sku['attributes'].get('gpu'):
-        sku['attributes']['gpu'] = 0
-    elif not isinstance(sku['attributes']['gpu'], int):
-        sku['attributes']['gpu'] = int(sku['attributes']['gpu'])
-
-    if not isinstance(sku['attributes']['vcpu'], int):
-        sku['attributes']['vcpu'] = int(sku['attributes']['vcpu'])
-    
-    if not isinstance(sku['attributes']['memory'], int):
-        sku['attributes']['memory'] = int(sku['attributes']['memory'].split()[0])
-    
-    if not isinstance(sku['priceDimensions']['pricePerUnit']['USD'], float):
-        sku['priceDimensions']['pricePerUnit']['USD'] = float(sku['priceDimensions']['pricePerUnit']['USD'])
-
-    return sku
-
-
-def match_instance(pricing, vcpu, memory_gib, gpu=0):
-    instances = [
-        parse_instance(sku) 
-        for sku in pricing.values() 
-        if sku['attributes']['resourceType'].startswith('omics')]
-
-    instances = [
-        instance 
-        for instance in instances 
-        if instance['attributes']['gpu'] >= gpu \
-            and instance['attributes']['vcpu'] >= vcpu \
-            and instance['attributes']['memory'] >= memory_gib]
-    
-    instances = sorted(
-        instances, 
-        key=lambda x: (
-            x['attributes']['gpu'], 
-            x['attributes']['vcpu'], 
-            x['attributes']['memory'],
-            x['priceDimensions']['pricePerUnit']['USD'],
-        ))
-    
-    matched_instance = instances[0]
-
-    return matched_instance['attributes']['resourceType'], matched_instance['priceDimensions']['pricePerUnit']['USD']
-
-
 def get_run_info(run_id, client=None):
     if not client:
         client = boto3.client('omics')
@@ -137,7 +92,7 @@ def get_run_cost(run_id, storage_gib=1200, client=None, offering=None):
     for task in run['tasks']:
         if not task.get('gpus'):
             task['gpus'] = 0
-        omics_instance, usd_per_hour = match_instance(pricing, task['cpus'], task['memory'], task['gpus'])
+        usd_per_hour = float(pricing[task['instanceType']]['priceDimensions']['pricePerUnit']['USD'])
         duration_hr = task['duration'].seconds / 3600
         task_costs += [{
             "name": task['name'],
@@ -147,7 +102,7 @@ def get_run_cost(run_id, storage_gib=1200, client=None, offering=None):
                 "gpus": task['gpus']
             },
             "duration_hr": duration_hr,
-            "instance": omics_instance,
+            "instance": task['instanceType'],
             "usd_per_hour": usd_per_hour,
             "cost": duration_hr * usd_per_hour
         }]
