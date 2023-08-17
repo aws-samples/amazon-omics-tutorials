@@ -86,14 +86,14 @@ def get_run_cost(run_id, storage_gib=1200, client=None, offering=None):
     STORAGE_USD_PER_GIB_PER_HR = float(pricing['Run Storage']['priceDimensions']['pricePerUnit']['USD'])
 
     run = get_run_info(run_id, client=client)
-    run_duration_hr = run['duration'].seconds / 3600
+    run_duration_hr = run['duration'].total_seconds() / 3600
 
     task_costs = []
     for task in run['tasks']:
         if not task.get('gpus'):
             task['gpus'] = 0
         usd_per_hour = float(pricing[task['instanceType']]['priceDimensions']['pricePerUnit']['USD'])
-        duration_hr = task['duration'].seconds / 3600
+        duration_hr = task['duration'].total_seconds() / 3600
         task_costs += [{
             "name": task['name'],
             "resources": {
