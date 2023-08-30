@@ -221,6 +221,17 @@ export class ContainerPullerStack extends cdk.Stack {
                                         ],
                                         resultPath: '$.repository.created'
                                     })
+                                    // multiple images targeting the same repository creates a race condition
+                                    // catch the "repository already exists error"
+                                    .addCatch(
+                                        new sfn.Pass(this, 'ECR Repository Already Exists', {
+                                            parameters: { "image.$": "$.image" }
+                                        }).next(ProcessImageURI),
+                                        { 
+                                            errors: [ "Ecr.RepositoryAlreadyExistsException" ],
+                                            resultPath: "$.error"
+                                        }
+                                    )
                                     .next(ProcessImageURI)
                                 )
                                 .next(
