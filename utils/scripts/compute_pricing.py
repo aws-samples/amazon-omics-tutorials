@@ -77,14 +77,15 @@ def get_run_info(run_id, client=None):
     return run
 
 
-def get_run_cost(run_id, storage_gib=1200, client=None, offering=None):
+MINIMUM_STORAGE_CAPACITY_GIB=1200
+def get_run_cost(run_id, storage_gib=MINIMUM_STORAGE_CAPACITY_GIB, client=None, offering=None):
     
     if not client:
         client = boto3.client('omics')
     
     pricing = get_pricing(offering=offering, client=client)
     STORAGE_USD_PER_GIB_PER_HR = float(pricing['Run Storage']['priceDimensions']['pricePerUnit']['USD'])
-
+    
     run = get_run_info(run_id, client=client)
     run_duration_hr = run['duration'].total_seconds() / 3600
 
@@ -112,6 +113,9 @@ def get_run_cost(run_id, storage_gib=1200, client=None, offering=None):
         pass
     else:
         storage_gib = run['storageCapacity']
+    
+    if storage_gib < MINIMUM_STORAGE_CAPACITY_GIB:
+        storage_gib = MINIMUM_STORAGE_CAPACITY_GIB
         
     storage_cost = run_duration_hr * storage_gib * STORAGE_USD_PER_GIB_PER_HR
     total_task_costs = sum([tc['cost'] for tc in task_costs])
