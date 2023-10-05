@@ -36,6 +36,7 @@ task wes_hla {
             --base hla \
             --locus-list ~{locus_list} \
             --index_dir ~{basename(index, ".tar.gz")} \
+            --verbose \
             --out-dir output
     >>>
 
