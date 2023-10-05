@@ -44,7 +44,8 @@ class Builder:
         cfg = CONFIG_DEFAULTS
         cfg |= { key: config['default'].get(key) for key in CONFIG_DEFAULTS if config['default'].get(key) }
 
-        session = boto3.Session(profile_name=cfg['profile'], region_name=cfg['region'])
+        #session = boto3.Session(profile_name=cfg['profile'], region_name=cfg['region'])
+        session = boto3.Session(region_name=cfg['region'])
         account_id = session.client('sts').get_caller_identity()['Account']
         profile_name = session.profile_name
         region_name = session.region_name
@@ -61,6 +62,9 @@ class Builder:
         
         if not cfg['ecr_registry']:
             cfg['ecr_registry'] = f'{account_id}.dkr.ecr.{region_name}.amazonaws.com'
+        
+        if account_id not in cfg:
+            cfg['account_id'] = account_id
         
         self.session = session
         self.account_id = account_id
@@ -337,12 +341,14 @@ class Builder:
         ecr_registry = {'ecr_registry': cfg['ecr_registry']}        
         staging_uri = cfg['staging_uri']
         output_uri = cfg['output_uri']
+        account_id = cfg['account_id']
 
         with open(f'workflows/{workflow_name}/test.parameters.json', 'r') as f:
             test_parameters = f.read()
 
         test_parameters = test_parameters.replace('{{region}}', region_name)
         test_parameters = test_parameters.replace('{{staging_uri}}', staging_uri)
+        test_parameters = test_parameters.replace('{{account_id}}', account_id)
         test_parameters = json.loads(test_parameters)
 
         test_parameters |= ecr_registry | {"aws_region": region_name}

@@ -1,0 +1,5 @@
+{
+    "input": "{{staging_uri}}/samplesheet-rnaseq.csv",
+    "fasta": "s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-rnaseq/reference/genome.fa",
+    "gtf": "s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-rnaseq/reference/genes.gtf"
+}

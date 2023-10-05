@@ -1,0 +1,22 @@
+{
+    "reads1": {
+        "description": "s3 path to read1 of pair"
+    },
+    "reads2": {
+        "description": "s3 path to read2 of pair"
+    },
+    "index": {
+        "description": "s3 path to reference indicies tarball"
+    },
+    "locus_list":{
+	    "description": "lists of desired locus (example A,B,C,DRB1,DPB1,DQB1)"
+    },
+    "ecr_registry": {
+        "description": "ecr registry for container images (e.g. <account-id>.dkr.ecr.<region>.amazonaws.com",
+        "optional": false
+    },
+    "aws_region": {
+        "description": "aws region (e.g. us-east-1). must match were source data is located and where workflow is executed",
+        "optional": false
+    }
+}

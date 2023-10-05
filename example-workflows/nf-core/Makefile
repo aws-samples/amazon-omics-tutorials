@@ -8,7 +8,7 @@ build/sfn-container-puller-%: build/config.json build/omx-ecr-helper
 # nf-core workflows use samplesheets as input the S3URIs therein need to be regionalized accordingly
 # the samplesheet itself needs to be staged in S3
 build/samplesheet-%.csv build/samplesheet-%-uri: build/config.json build/s3-staging-uri
-	python $(scripts)/build.py -c $(config) samplesheet $*
+	python3 $(scripts)/build.py -c $(config) samplesheet $*
 
 run-%: build/config.json build/sfn-container-puller-% build/workflow-% build/s3-output-uri build/iam-workflow-role build/samplesheet-%-uri
-	python $(scripts)/build.py -c $(config) run $*
+	python3 $(scripts)/build.py -c $(config) run $*

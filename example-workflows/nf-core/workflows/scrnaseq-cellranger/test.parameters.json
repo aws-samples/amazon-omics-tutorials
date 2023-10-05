@@ -1,0 +1,7 @@
+{
+    "input": "{{staging_uri}}/samplesheet-scrnaseq-cellranger.csv",
+    "fasta": "s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-scrnaseq/reference/GRCm38.p6.genome.chr19.fa",
+    "gtf": "s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-scrnaseq/reference/gencode.vM19.annotation.chr19.gtf",
+    "aligner": "cellranger",
+    "protocol": "10XV2"
+}

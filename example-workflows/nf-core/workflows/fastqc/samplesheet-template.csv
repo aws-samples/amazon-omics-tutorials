@@ -1,0 +1,5 @@
+sample,fastq_1,fastq_2
+SAMPLE1_PE,s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-module-fastqc/sample1_R1.fastq.gz,s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-module-fastqc/sample1_R2.fastq.gz
+SAMPLE2_PE,s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-module-fastqc/sample2_R1.fastq.gz,s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-module-fastqc/sample2_R2.fastq.gz
+SAMPLE3_SE,s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-module-fastqc/sample1_R1.fastq.gz,
+SAMPLE3_SE,s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-module-fastqc/sample2_R1.fastq.gz,
