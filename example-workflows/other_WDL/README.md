@@ -138,20 +138,8 @@ aws s3 sync ./containers s3://my-staging-bucket/containers
 {
     "manifest": [
         {
-            "source_uri": "s3://my-staging-bucket/containers/alphafold-data/",
-            "target_image": "alphafold-data:omics"
-        },
-        {
-            "source_uri": "s3://my-staging-bucket/containers/alphafold-predict/",
-            "target_image": "alphafold-predict:omics"
-        },
-        {
-            "source_uri": "s3://my-staging-bucket/containers/esmfold/",
-            "target_image": "esmfold:omics"
-        },
-        {
-            "source_uri": "s3://my-staging-bucket/containers/protein-utils/",
-            "target_image": "protein-utils:omics"
+            "source_uri": "{{staging_uri}}/containers/hisat-genotype",
+            "target_image": "hisat-genotype:latest"
         }
     ]
 }
