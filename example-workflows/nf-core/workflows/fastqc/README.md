@@ -6,11 +6,14 @@
 [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
 [![Launch on Nextflow Tower](https://img.shields.io/badge/Launch%20%F0%9F%9A%80-Nextflow%20Tower-%234256e7)](https://tower.nf/launch?pipeline=https://github.com/omicsqc/omicsqc)
 
+## :warning: !! IMPORTANT !! :warning:
+This is a custom workflow with built using [NF-Core / modules / fastqc](https://nf-co.re/modules/fastqc) and [NF-Core / modules / multiqc](https://nf-co.re/modules/multiqc) and has been modified to run on [AWS HealthOmics](https://aws.amazon.com/omics/) and can be used to create a Private Workflow with AWS HealthOmics. More details of how this workflow was modified from its upstream source can be found in the [AWS-HEALTHOMICS.md](./AWS-HEALTHOMICS.md) file.
+
 ## Introduction
 
 <!-- TODO nf-core: Write a 1-2 sentence summary of what data the pipeline is for and what it does -->
 
-**omicsqc/omicsqc** is a bioinformatics best-practice analysis pipeline for test workflow fastqc.
+**omicsqc/omicsqc** is a bioinformatics best-practice analysis pipeline for FASTQ quality control.
 
 The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It uses Docker/Singularity containers making installation trivial and results highly reproducible. The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. Where possible, these processes have been submitted to and installed from [nf-core/modules](https://github.com/nf-core/modules) in order to make them available to all nf-core pipelines, and to everyone within the Nextflow community!
 

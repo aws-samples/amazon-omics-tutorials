@@ -1,13 +1,14 @@
-
-This workflow is built by using the [Ensembl VEP](https://nf-co.re/modules/ensemblvep_download) nf-core module as a process and a custom workflow file to call this process. 
-
 ## Table of contents
 
 - [Table of contents](#table-of-contents)
+- [:warning: !! IMPORTANT !! :warning:](#warning--important--warning)
 - [Using existing modules](#using-existing-modules)
 - [Adding new modules](#adding-new-modules)
 - [Help](#help)
 - [Citation](#citation)
+
+## :warning: !! IMPORTANT !! :warning:
+This is a custom workflow with built using [NF-Core / modules / ensemblevep_download](https://nf-co.re/modules/ensemblvep_download) and has been modified to run on [AWS HealthOmics](https://aws.amazon.com/omics/) and can be used to create a Private Workflow with AWS HealthOmics. 
 
 ## Using existing modules
 

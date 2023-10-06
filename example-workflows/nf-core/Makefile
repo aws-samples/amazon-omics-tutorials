@@ -3,7 +3,7 @@ include ../_scripts/common.mk
 # nf-core workflows use containers that can be pulled with omx-ecr-helper
 # container manifests are specific to each workflow
 build/sfn-container-puller-%: build/config.json build/omx-ecr-helper
-	python $(scripts)/build.py -c $(config) sfn -t container-puller -n $* workflows/$*/container_image_manifest.json
+	python3 $(scripts)/build.py -c $(config) sfn -t container-puller -n $* workflows/$*/container_image_manifest.json
 
 # nf-core workflows use samplesheets as input the S3URIs therein need to be regionalized accordingly
 # the samplesheet itself needs to be staged in S3
