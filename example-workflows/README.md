@@ -25,6 +25,10 @@ Example workflows are in the following groups. Additional details for each group
 - [GATK Best Practice workflows](./gatk-best-practices/)
 - [NF-Core workflows](./nf-core/)
 - [Protein folding workflows](./protein-folding/)
+- [Other WDL workflows](./other_WDL/)
+  - [HISAT-Genotype HLA Caller](./other_WDL/workflows/HISAT-genotype/)
+- [Other Nextflow workflows](./other_nextflow/)
+  - [VEP](./other_nextflow/workflows/vep/)
 
 
 ## General usage
@@ -43,7 +47,11 @@ make run-{workflow_name}
 ```
 
 See README files in each workflow group for any special cases.
-
+> CURRENT EXCEPTIONS:
+>  
+>  - HISAT-Genotype HLA Caller 
+>
+> Use instructions for set up provided in the README for these workflows
 
 ## Further reading
 

@@ -1,0 +1,6 @@
+{
+    "reads1":"s3://aws-genomics-static-{{region}}/omics-data/test-datasets/HISAT-genotype/NA12891.novaseq.wes_agilent.50x.R1.fastq.gz",
+    "reads2":"s3://aws-genomics-static-{{region}}/omics-data/test-datasets/HISAT-genotype/NA12891.novaseq.wes_agilent.50x.R1.fastq.gz",
+    "index":"s3://aws-genomics-static-{{region}}/omics-data/test-datasets/HISAT-genotype/indicies.tar.gz",
+    "locus_list":"A,B,C,DRB1,DPB1,DQB1"
+}

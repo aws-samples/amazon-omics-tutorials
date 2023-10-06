@@ -17,12 +17,15 @@ Under the hood, it this application leverages [AWS Step Functions](https://aws.a
 
 Deploy the [AWS CloudFormation](https://aws.amazon.com/cloudformation/) stacks used by the application in each region you intend to run AWS HealthOmics Workflows using the following:
 
+> **_NOTE:_**  
+> Ensure you are in the same directory where this file is located
+
 ```bash
 # install package dependencies
 npm install
 
-# in your default region
-cdk deploy --all
+# in your default region (specify profile if other than 'default')
+cdk deploy --all --profile <aws-profile>
 
 ```
 

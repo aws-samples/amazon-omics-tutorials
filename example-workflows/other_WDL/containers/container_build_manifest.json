@@ -1,0 +1,8 @@
+{
+    "manifest": [
+        {
+            "source_uri": "{{staging_uri}}/containers/hisat-genotype",
+            "target_image": "hisat-genotype:latest"
+        }
+    ]
+}

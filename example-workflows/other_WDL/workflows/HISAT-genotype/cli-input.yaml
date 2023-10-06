@@ -1,0 +1,4 @@
+engine: WDL
+name: hisat-genotype
+main: hla_from_fastq.wdl
+storageCapacity: 1200

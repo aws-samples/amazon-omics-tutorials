@@ -1,0 +1,15 @@
+{
+	"input": {
+		"description": "S3 URI to samplesheet.csv. Rows therein point to S3 URIs for fastq data"
+	},
+	"fasta": {
+		"description": "S3 URI of reference FASTA file"
+	},
+	"ecr_registry": {
+		"description": "Amazon ECR registry for container images (e.g. '<account-id>.dkr.ecr.<region>.amazonaws.com')"
+	},
+    "aws_region": {
+        "description": "AWS region used for execution",
+        "optional": true
+    }
+}

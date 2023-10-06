@@ -20,20 +20,20 @@ build/:
 	mkdir -p build
 
 build/config.json: build/
-	python ${scripts}/build.py -c $(config) config
+	python3 ${scripts}/build.py -c $(config) config
 
 build/omx-ecr-helper: build/config.json
 	sed 's#{{staging_uri}}#$(staging_uri)#g' $(assets)/omx-ecr-helper-config.json > $(cdk_app_config)
 	export CDK_APP_CONFIG=$(cdk_app_config); export CDK_DEPLOY_REGION=$(region); cdk deploy --all --require-approval never --profile $(profile) $(cdk_app) $(cdk_out)
 
 build/workflow-%: build/config.json build/s3-staging-uri
-	python $(scripts)/build.py -c $(config) workflow $*
+	python3 $(scripts)/build.py -c $(config) workflow $*
 
 build/s3-output-uri build/s3-staging-uri: build/config.json
-	python $(scripts)/build.py -c $(config) s3
+	python3 $(scripts)/build.py -c $(config) s3
 
 build/iam-workflow-role: build/config.json
-	python $(scripts)/build.py -c $(config) iam
+	python3 $(scripts)/build.py -c $(config) iam
 
 .PHONY: clean test
 

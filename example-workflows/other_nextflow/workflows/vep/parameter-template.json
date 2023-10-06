@@ -1,0 +1,28 @@
+{
+	"vep_species": {
+		"description": "Species for your data. This can be the latin name e.g. homo_sapiens or any Ensembl alias e.g. mouse"
+	},
+	"ecr_registry": {
+		"description": "Amazon ECR registry for container images (e.g. '<account-id>.dkr.ecr.<region>.amazonaws.com')"
+	},
+	"vep_cache_version": {
+		"description": "Use a different cache version than the assumed default (the VEP version)."
+	},
+	"vep_genome": {
+		"description": "Reference Assembly and version for the species, e.g. GRCh38"
+	},
+	"vcf": {
+		"description": "input VCF"
+	},
+	"id": {
+		"description": "Raw input data as a string. May be used, for example, to input a single rsID or HGVS notation quickly to vep. Default: null",
+		"optional": true
+	},
+	"vep_cache": {
+		"description": "cache directory to use"
+	},
+    "aws_region": {
+        "description": "AWS region used for execution",
+        "optional": true
+    }
+}
