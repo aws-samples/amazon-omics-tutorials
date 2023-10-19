@@ -12,6 +12,7 @@ These are provided AS-IS and are intended to demonstrate conventions, patterns, 
     - Python 3.9 or higher
     - Python packages: see `_scripts/requirements.txt`
     - make
+    - CDK should be bootstrapped to your account and region. See https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html
 
 ```bash
 cd _scripts/
@@ -47,11 +48,7 @@ make run-{workflow_name}
 ```
 
 See README files in each workflow group for any special cases.
-> CURRENT EXCEPTIONS:
->  
->  - HISAT-Genotype HLA Caller 
->
-> Use instructions for set up provided in the README for these workflows
+
 
 ## Further reading
 

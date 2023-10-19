@@ -136,3 +136,45 @@ def test_parse_workflow():
     assert procs['foo'] in workflow.processes
     assert procs['bar'] in workflow.processes
     assert procs['has_comments'] in workflow.processes
+
+def test_nextflow_config_not_exists():
+    project_path = path.join(WORKING_DIR, 'workflow')
+    workflow = NextflowWorkflow(project_path)
+    with pytest.raises(FileNotFoundError):
+        workflow.docker_registry()
+
+def test_nextflow_config_exists():
+    project_path = path.join(WORKING_DIR, 'workflow_with_config')
+    workflow = NextflowWorkflow(project_path)
+    workflow.nextflow_config = path.join(project_path, 'nextflow.config')
+    assert workflow.docker_registry == 'quay.io'
+
+    project_path = path.join(WORKING_DIR, 'workflow_with_config')
+    workflow = NextflowWorkflow(project_path)
+
+    assert workflow.containers == sorted([
+        "image:tag",
+        "foo:fizz",
+        "bar:buzz",
+        "ubuntu:20.04",
+        "nfcore/cellranger:7.1.0"
+    ])
+
+    procs = {
+        "happy": NextflowProcess(
+            from_dict={"name": "HAPPY", "container": "image:tag"}),
+        "no_container": NextflowProcess(
+            from_dict={"name": "NO_CONTAINER", "container": None}),
+        "foo": NextflowProcess(
+            from_dict={"name": "FOO", "container": "foo:fizz"}),
+        "bar": NextflowProcess(
+            from_dict={"name": "BAR", "container": "bar:buzz"}),
+        "has_comments": NextflowProcess(
+            from_dict={"name": "HAS_COMMENTS", "container": "foo:fizz"}),
+    }
+    print(workflow._get_ecr_image_name(procs['happy'].container))
+    assert procs['happy'] in workflow.processes
+    assert procs['no_container'] in workflow.processes
+    assert procs['foo'] in workflow.processes
+    assert procs['bar'] in workflow.processes
+    assert procs['has_comments'] in workflow.processes

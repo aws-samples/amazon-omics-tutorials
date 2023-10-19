@@ -44,8 +44,7 @@ class Builder:
         cfg = CONFIG_DEFAULTS
         cfg |= { key: config['default'].get(key) for key in CONFIG_DEFAULTS if config['default'].get(key) }
 
-        #session = boto3.Session(profile_name=cfg['profile'], region_name=cfg['region'])
-        session = boto3.Session(region_name=cfg['region'])
+        session = boto3.Session(profile_name=cfg.get('profile'), region_name=cfg.get('region'))  
         account_id = session.client('sts').get_caller_identity()['Account']
         profile_name = session.profile_name
         region_name = session.region_name
