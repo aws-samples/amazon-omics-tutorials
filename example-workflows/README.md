@@ -12,6 +12,7 @@ These are provided AS-IS and are intended to demonstrate conventions, patterns, 
     - Python 3.9 or higher
     - Python packages: see `_scripts/requirements.txt`
     - make
+    - CDK should be bootstrapped to your account and region. See https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html
 
 ```bash
 cd _scripts/

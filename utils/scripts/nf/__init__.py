@@ -158,7 +158,7 @@ class NextflowWorkflow:
         for uri in self.containers:
             if substitutions and uri in substitutions:
                 uri = substitutions.get(uri)
-            if self.docker_registry is not None:
+            if self.docker_registry:
                 uri = "/".join([self.docker_registry, uri])
             uris.add(uri)
         
@@ -168,7 +168,7 @@ class NextflowWorkflow:
         if substitutions and uri in substitutions:
             uri = substitutions.get(uri)
 
-        if self.docker_registry is not None:
+        if self.docker_registry:
             uri = "/".join([self.docker_registry, uri])
 
         if namespace_config:
