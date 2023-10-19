@@ -27,7 +27,7 @@ build/omx-ecr-helper: build/config.json
 	sed 's#{{staging_uri}}#$(staging_uri)#g' $(assets)/omx-ecr-helper-config.json > $(cdk_app_config)
 	export CDK_APP_CONFIG=$(cdk_app_config)
 	export CDK_DEPLOY_REGION=$(region)
-	if [[ $(profile) -eq $(default_profile_name) ]]; then \
+	if [[ $(profile) == $(default_profile_name) ]]; then \
 			cdk deploy --all --require-approval never  $(cdk_app) $(cdk_out); \
 	else \
 			cdk deploy --all --require-approval never --profile $(profile) $(cdk_app) $(cdk_out); \
