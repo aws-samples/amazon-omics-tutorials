@@ -2,7 +2,7 @@ SHELL = /bin/bash
 
 scripts = ../_scripts
 assets = ../_scripts/assets
-config = ../_conf/default.ini.omicsee
+config = ../_conf/default.ini
 
 omx_ecr_helper = $(shell jq -r '.omx_ecr_helper' build/config.json)
 profile = $(shell jq -r '.profile' build/config.json)
