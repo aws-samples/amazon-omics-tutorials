@@ -1,0 +1,7 @@
+{
+    "manifest": [
+        "quay.io/biocontainers/biocontainers/python:3.8.3",
+        "quay.io/biocontainers/multiqc:1.13--pyhdfd78af_0",
+        "quay.io/biocontainers/fastqc:0.11.9--0"
+    ]
+}

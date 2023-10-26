@@ -1,0 +1,8 @@
+{
+    "input": "{{staging_uri}}/samplesheet-taxprofiler.csv",
+    "databases": "s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-taxprofiler/databases/database-{{region}}.csv",
+    "hostremoval_reference": "s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-taxprofiler/hostremoval_reference/genome.fasta",
+    "krona_taxonomy_directory": "s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-taxprofiler/krona/krona_taxonomy.tab",
+    "run_malt": true,
+    "run_motus": true
+}

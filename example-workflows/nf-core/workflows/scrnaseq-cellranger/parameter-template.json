@@ -1,0 +1,31 @@
+{
+        "input": {
+                "description": "samplesheet with sample name and path to paired FASTQs"   
+        },
+        "fasta": {
+                "description": "Path to reference FASTA"
+        },
+        "gtf": {
+                "description": "Path to reference GTF file"
+        },
+        "protocol": {
+                "description": "Protocol used for sequencing e.g. 10XV2 (default)"
+        },
+        "cellranger_index": {
+                "description": "Path to Reference bundle for cell ranger",
+                "optional": true
+        },
+        "aligner": {
+                "description": "name of tool used for alignment, e.g. cellranger",
+                "optional": true
+        },
+        "ecr_registry": {
+                "description": "Amazon ECR registry for container images (e.g. '<account-id>.dkr.ecr.<region>.amazonaws.com')",
+                "optional": false
+        },
+        "aws_region": {
+            "description": "AWS region used for execution",
+            "optional": true
+        }
+        
+}

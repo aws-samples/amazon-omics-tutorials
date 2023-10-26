@@ -9,6 +9,7 @@
     "eu.gcr.io": { "namespace": "gcr", "pull_through": false },
     "asia.gcr.io": { "namespace": "gcr", "pull_through": false },
     "pkg.dev": { "namespace": "gar", "pull_through": false },
+    "nvcr.io": { "namespace": "nvcr", "pull_through": false},
     
     "ghcr.io": { "namespace": "ghcr", "pull_through": false },
     "mcr.microsoft.com": { "namespace": "mcr", "pull_through": false },

@@ -1,0 +1,15 @@
+repository_type: pipeline
+lint:
+  files_exist:
+  - CODE_OF_CONDUCT.md
+  - assets/nf-core-omicsqc_logo_light.png
+  - docs/images/nf-core-omicsqc_logo_light.png
+  - docs/images/nf-core-omicsqc_logo_dark.png
+  - .github/ISSUE_TEMPLATE/config.yml
+  - .github/workflows/awstest.yml
+  - .github/workflows/awsfulltest.yml
+  nextflow_config:
+  - manifest.name
+  - manifest.homePage
+  multiqc_config:
+  - report_comment

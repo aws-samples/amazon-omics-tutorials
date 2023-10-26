@@ -38,7 +38,7 @@ parser.add_argument(
 )
 parser.add_argument(
     '-n', '--namespace-config', type=str,
-    help="JSON file with public registry to ecr repository namespace mappings. This should be the same as what is used by omx-ecr-helper."
+    help="JSON file with public registry to ecr repository namespace mappings. This should be the same as what is used by omx-ecr-helper. (e.g. omx-ecr-helper/lib/lambda/parse-image-uri/public_registry_properties.json)"
 )
 parser.add_argument(
     '--output-manifest-file', type=str,

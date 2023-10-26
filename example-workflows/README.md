@@ -12,6 +12,7 @@ These are provided AS-IS and are intended to demonstrate conventions, patterns, 
     - Python 3.9 or higher
     - Python packages: see `_scripts/requirements.txt`
     - make
+    - CDK should be bootstrapped to your account and region. See https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html
 
 ```bash
 cd _scripts/
@@ -25,6 +26,10 @@ Example workflows are in the following groups. Additional details for each group
 - [GATK Best Practice workflows](./gatk-best-practices/)
 - [NF-Core workflows](./nf-core/)
 - [Protein folding workflows](./protein-folding/)
+- [Other WDL workflows](./other_WDL/)
+  - [HISAT-Genotype HLA Caller](./other_WDL/workflows/HISAT-genotype/)
+- [Other Nextflow workflows](./other_nextflow/)
+  - [VEP](./other_nextflow/workflows/vep/)
 
 
 ## General usage

@@ -1,0 +1,8 @@
+{
+	"vep_species": "homo_sapiens",
+	"vep_cache_version": "110",
+	"vep_genome": "GRCh38",
+	"vcf": "s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nfcore-module-vep/NA12878.hg38.g.vcf.gz",
+	"id": "NA12878",
+	"vep_cache": "s3://aws-genomics-static-{{region}}/omics-tutorials/data/databases/vep/"
+}

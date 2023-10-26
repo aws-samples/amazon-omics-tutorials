@@ -1,0 +1,4 @@
+{
+    "input": "{{staging_uri}}/samplesheet-fastqc.csv",
+    "fasta": "s3://aws-genomics-static-{{region}}/omics-data/test-datasets/nf-core-module-fastqc/genome.fa"
+}

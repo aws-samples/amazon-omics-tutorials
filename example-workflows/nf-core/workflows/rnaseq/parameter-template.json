@@ -1,0 +1,402 @@
+{
+    "input": {
+        "optional": false,
+        "description": "(string)Path to comma-separated file containing information about the samples in the experiment."
+    },
+    "ecr_registry": {
+        "optional": false,
+        "description": "(string)Name of ECR private registry containing docker containers."
+    },
+    "genome": {
+        "optional": true,
+        "description": "(string[NCBI GRCh38:GRCh38|Ensembl GRCh37:GRCh37|Ensembl GRCm38:GRCm38|UCSC hg38:hg38|UCSC hg19:hg19|UCSC mm10:mm10]:GRCh38)Name of iGenomes reference."
+    },
+    "aligner": {
+        "optional": true,
+        "description": "(string[star_salmon|star_rsem|hisat2]:star_salmon)Specifies the alignment algorithm to use."
+    },
+    "pseudo_aligner": {
+        "optional": true,
+        "description": "(string[salmon])Specifies the pseudo aligner to use. Runs in addition to '--aligner'."
+    },
+    "multiqc_title": {
+        "optional": true,
+        "description": "(string)MultiQC report title. Printed as page header, used for filename if not otherwise specified."
+    },
+    "save_merged_fastq": {
+        "optional": true,
+        "description": "(boolean)Save FastQ files after merging re-sequenced libraries in the results directory."
+    },
+    "with_umi": {
+        "optional": true,
+        "description": "(boolean)Enable UMI-based read deduplication."
+    },
+    "umitools_extract_method": {
+        "optional": true,
+        "description": "(string[string|regex]:string)UMI pattern to use."
+    },
+    "skip_umi_extract": {
+        "optional": true,
+        "description": "(boolean)Skip the UMI extraction from the read in case the UMIs have been moved to the headers in advance of the pipeline run."
+    },
+    "umitools_bc_pattern": {
+        "optional": true,
+        "description": "(string)The UMI barcode pattern to use e.g. 'NNNNNN' indicates that the first 6 nucleotides of the read are from the UMI."
+    },
+    "umitools_bc_pattern2": {
+        "optional": true,
+        "description": "(string)The UMI barcode pattern to use if the UMI is located in read 2."
+    },
+    "umi_discard_read": {
+        "optional": true,
+        "description": "(integer[R1:1|R2:2])After UMI barcode extraction discard either R1 or R2 by setting this parameter to 1 or 2, respectively."
+    },
+    "umitools_umi_separator": {
+        "optional": true,
+        "description": "(string)The character that separates the UMI in the read name. Most likely a colon if you skipped the extraction with UMI-tools and used other software."
+    },
+    "umitools_grouping_method": {
+        "optional": true,
+        "description": "(string[unique|percentile|cluster|adjacency|directional]:directional)Method to use to determine read groups by subsuming those with similar UMIs."
+    },
+    "umitools_dedup_stats": {
+        "optional": true,
+        "description": "(boolean)Generate output stats when running \"umi_tools dedup\"."
+    },
+    "save_umi_intermeds": {
+        "optional": true,
+        "description": "(boolean)If this option is specified, intermediate FastQ and BAM files produced by UMI-tools are also saved in the results directory."
+    },
+    "bbsplit_fasta_list": {
+        "optional": true,
+        "description": "(string)Path to comma-separated file containing a list of reference genomes to filter reads against with BBSplit. You have to also explicitly set `--skip_bbsplit false` if you want to use BBSplit."
+    },
+    "bbsplit_index": {
+        "optional": true,
+        "description": "(string)Path to directory or tar.gz archive for pre-built BBSplit index."
+    },
+    "save_bbsplit_reads": {
+        "optional": true,
+        "description": "(boolean)If this option is specified, FastQ files split by reference will be saved in the results directory."
+    },
+    "skip_bbsplit": {
+        "optional": true,
+        "description": "(boolean:true)Skip BBSplit for removal of non-reference genome reads."
+    },
+    "remove_ribo_rna": {
+        "optional": true,
+        "description": "(boolean)Enable the removal of reads derived from ribosomal RNA using SortMeRNA."
+    },
+    "ribo_database_manifest": {
+        "optional": true,
+        "description": "(string)Text file containing paths to fasta files (one per line) that will be used to create the database for SortMeRNA."
+    },
+    "save_non_ribo_reads": {
+        "optional": true,
+        "description": "(boolean)If this option is specified, intermediate FastQ files containing non-rRNA reads will be saved in the results directory."
+    },
+    "fasta": {
+        "optional": true,
+        "description": "(string)Path to FASTA genome file."
+    },
+    "gtf": {
+        "optional": true,
+        "description": "(string)Path to GTF annotation file."
+    },
+    "gff": {
+        "optional": true,
+        "description": "(string)Path to GFF3 annotation file."
+    },
+    "gene_bed": {
+        "optional": true,
+        "description": "(string)Path to BED file containing gene intervals. This will be created from the GTF file if not specified."
+    },
+    "transcript_fasta": {
+        "optional": true,
+        "description": "(string)Path to FASTA transcriptome file."
+    },
+    "additional_fasta": {
+        "optional": true,
+        "description": "(string)FASTA file to concatenate to genome FASTA file e.g. containing spike-in sequences."
+    },
+    "splicesites": {
+        "optional": true,
+        "description": "(string)Splice sites file required for HISAT2."
+    },
+    "star_index": {
+        "optional": true,
+        "description": "(string)Path to directory or tar.gz archive for pre-built STAR index."
+    },
+    "hisat2_index": {
+        "optional": true,
+        "description": "(string)Path to directory or tar.gz archive for pre-built HISAT2 index."
+    },
+    "rsem_index": {
+        "optional": true,
+        "description": "(string)Path to directory or tar.gz archive for pre-built RSEM index."
+    },
+    "salmon_index": {
+        "optional": true,
+        "description": "(string)Path to directory or tar.gz archive for pre-built Salmon index."
+    },
+    "hisat2_build_memory": {
+        "optional": true,
+        "description": "(string:200.GB)Minimum memory required to use splice sites and exons in the HiSAT2 index build process."
+    },
+    "gencode": {
+        "optional": true,
+        "description": "(boolean)Specify if your GTF annotation is in GENCODE format."
+    },
+    "gtf_extra_attributes": {
+        "optional": true,
+        "description": "(string:gene_name)By default, the pipeline uses the `gene_name` field to obtain additional gene identifiers from the input GTF file when running Salmon."
+    },
+    "gtf_group_features": {
+        "optional": true,
+        "description": "(string:gene_id)Define the attribute type used to group features in the GTF file when running Salmon."
+    },
+    "featurecounts_group_type": {
+        "optional": true,
+        "description": "(string:gene_biotype)The attribute type used to group feature types in the GTF file when generating the biotype plot with featureCounts."
+    },
+    "featurecounts_feature_type": {
+        "optional": true,
+        "description": "(string:exon)By default, the pipeline assigns reads based on the 'exon' attribute within the GTF file."
+    },
+    "save_reference": {
+        "optional": true,
+        "description": "(boolean)If generated by the pipeline save the STAR index in the results directory."
+    },
+    "igenomes_base": {
+        "optional": true,
+        "description": "(string)Directory / URL base for iGenomes references."
+    },
+    "igenomes_ignore": {
+        "optional": true,
+        "description": "(boolean)Do not load the iGenomes reference config."
+    },
+    "trimmer": {
+        "optional": true,
+        "description": "(string[trimgalore|fastp]:trimgalore)Specifies the trimming tool to use."
+    },
+    "extra_trimgalore_args": {
+        "optional": true,
+        "description": "(string)Extra arguments to pass to Trim Galore! command in addition to defaults defined by the pipeline."
+    },
+    "extra_fastp_args": {
+        "optional": true,
+        "description": "(string)Extra arguments to pass to fastp command in addition to defaults defined by the pipeline."
+    },
+    "min_trimmed_reads": {
+        "optional": true,
+        "description": "(integer:10000)Minimum number of trimmed reads below which samples are removed from further processing. Some downstream steps in the pipeline will fail if this threshold is too low."
+    },
+    "test_data_base": {
+        "optional": true,
+        "description": "(string)Base path / URL for data used in the test profiles"
+    },
+    "skip_trimming": {
+        "optional": true,
+        "description": "(boolean)Skip the adapter trimming step."
+    },
+    "save_trimmed": {
+        "optional": true,
+        "description": "(boolean)Save the trimmed FastQ files in the results directory."
+    },
+    "bam_csi_index": {
+        "optional": true,
+        "description": "(boolean)Create a CSI index for BAM files instead of the traditional BAI index. This will be required for genomes with larger chromosome sizes."
+    },
+    "star_ignore_sjdbgtf": {
+        "optional": true,
+        "description": "(boolean)When using pre-built STAR indices do not re-extract and use splice junctions from the GTF file."
+    },
+    "salmon_quant_libtype": {
+        "optional": true,
+        "description": "(string[A|U|SF|SR|IS|IU|ISF|ISR|OS|OU|OSF|OSR|MS|MU|MSF|MSR])Override Salmon library type inferred based on strandedness defined in meta object."
+    },
+    "min_mapped_reads": {
+        "optional": true,
+        "description": "(number:5)Minimum percentage of uniquely mapped reads below which samples are removed from further processing."
+    },
+    "seq_center": {
+        "optional": true,
+        "description": "(string)Sequencing center information to be added to read group of BAM files."
+    },
+    "stringtie_ignore_gtf": {
+        "optional": true,
+        "description": "(boolean)Perform reference-guided de novo assembly of transcripts using StringTie i.e. dont restrict to those in GTF file."
+    },
+    "extra_star_align_args": {
+        "optional": true,
+        "description": "(string)Extra arguments to pass to STAR alignment command in addition to defaults defined by the pipeline."
+    },
+    "extra_salmon_quant_args": {
+        "optional": true,
+        "description": "(string)Extra arguments to pass to Salmon quant command in addition to defaults defined by the pipeline."
+    },
+    "save_unaligned": {
+        "optional": true,
+        "description": "(boolean)Where possible, save unaligned reads from either STAR, HISAT2 or Salmon to the results directory."
+    },
+    "save_align_intermeds": {
+        "optional": true,
+        "description": "(boolean)Save the intermediate BAM files from the alignment step."
+    },
+    "skip_markduplicates": {
+        "optional": true,
+        "description": "(boolean)Skip picard MarkDuplicates step."
+    },
+    "skip_alignment": {
+        "optional": true,
+        "description": "(boolean)Skip all of the alignment-based processes within the pipeline."
+    },
+    "rseqc_modules": {
+        "optional": true,
+        "description": "(string:bam_stat,inner_distance,infer_experiment,junction_annotation,junction_saturation,read_distribution,read_duplication)Specify the RSeQC modules to run."
+    },
+    "deseq2_vst": {
+        "optional": true,
+        "description": "(boolean:true)Use vst transformation instead of rlog with DESeq2."
+    },
+    "skip_bigwig": {
+        "optional": true,
+        "description": "(boolean)Skip bigWig file creation."
+    },
+    "skip_stringtie": {
+        "optional": true,
+        "description": "(boolean)Skip StringTie."
+    },
+    "skip_fastqc": {
+        "optional": true,
+        "description": "(boolean)Skip FastQC."
+    },
+    "skip_preseq": {
+        "optional": true,
+        "description": "(boolean:true)Skip Preseq."
+    },
+    "skip_dupradar": {
+        "optional": true,
+        "description": "(boolean)Skip dupRadar."
+    },
+    "skip_qualimap": {
+        "optional": true,
+        "description": "(boolean)Skip Qualimap."
+    },
+    "skip_rseqc": {
+        "optional": true,
+        "description": "(boolean)Skip RSeQC."
+    },
+    "skip_biotype_qc": {
+        "optional": true,
+        "description": "(boolean)Skip additional featureCounts process for biotype QC."
+    },
+    "skip_deseq2_qc": {
+        "optional": true,
+        "description": "(boolean)Skip DESeq2 PCA and heatmap plotting."
+    },
+    "skip_multiqc": {
+        "optional": true,
+        "description": "(boolean)Skip MultiQC."
+    },
+    "skip_qc": {
+        "optional": true,
+        "description": "(boolean)Skip all QC steps except for MultiQC."
+    },
+    "custom_config_version": {
+        "optional": true,
+        "description": "(string)Git commit id for Institutional configs."
+    },
+    "custom_config_base": {
+        "optional": true,
+        "description": "(string)Base directory for Institutional configs."
+    },
+    "config_profile_name": {
+        "optional": true,
+        "description": "(string)Institutional config name."
+    },
+    "config_profile_description": {
+        "optional": true,
+        "description": "(string)Institutional config description."
+    },
+    "config_profile_contact": {
+        "optional": true,
+        "description": "(string)Institutional config contact information."
+    },
+    "config_profile_url": {
+        "optional": true,
+        "description": "(string)Institutional config URL link."
+    },
+    "max_cpus": {
+        "optional": true,
+        "description": "(integer:16)Maximum number of CPUs that can be requested for any single job."
+    },
+    "max_memory": {
+        "optional": true,
+        "description": "(string:128.GB)Maximum amount of memory that can be requested for any single job."
+    },
+    "max_time": {
+        "optional": true,
+        "description": "(string:240.h)Maximum amount of time that can be requested for any single job."
+    },
+    "help": {
+        "optional": true,
+        "description": "(boolean)Display help text."
+    },
+    "version": {
+        "optional": true,
+        "description": "(boolean)Display version and exit."
+    },
+    "publish_dir_mode": {
+        "optional": true,
+        "description": "(string[symlink|rellink|link|copy|copyNoFollow|move]:copy)Method used to save pipeline results to output directory."
+    },
+    "email": {
+        "optional": true,
+        "description": "(string)Email address for completion summary."
+    },
+    "email_on_fail": {
+        "optional": true,
+        "description": "(string)Email address for completion summary, only when pipeline fails."
+    },
+    "plaintext_email": {
+        "optional": true,
+        "description": "(boolean)Send plain-text email instead of HTML."
+    },
+    "max_multiqc_email_size": {
+        "optional": true,
+        "description": "(string:25.MB)File size limit when attaching MultiQC reports to summary emails."
+    },
+    "monochrome_logs": {
+        "optional": true,
+        "description": "(boolean:true)Do not use coloured log outputs."
+    },
+    "hook_url": {
+        "optional": true,
+        "description": "(string)Incoming hook URL for messaging service"
+    },
+    "multiqc_config": {
+        "optional": true,
+        "description": "(string)Custom config file to supply to MultiQC."
+    },
+    "multiqc_logo": {
+        "optional": true,
+        "description": "(string)Custom logo file to supply to MultiQC. File name must also be set in the MultiQC config file"
+    },
+    "multiqc_methods_description": {
+        "optional": true,
+        "description": "(string)Custom MultiQC yaml file containing HTML including a methods description."
+    },
+    "validate_params": {
+        "optional": true,
+        "description": "(boolean:true)Boolean whether to validate parameters against the schema at runtime"
+    },
+    "show_hidden_params": {
+        "optional": true,
+        "description": "(boolean)Show all params when using `--help`"
+    },
+    "aws_region": {
+        "description": "AWS region used for execution",
+        "optional": true
+    }
+}

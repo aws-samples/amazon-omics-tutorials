@@ -102,6 +102,7 @@ class NextflowWorkflow:
         self._nf_files = glob(path.join(project_path, '**/*.nf'), recursive=True)
         self.use_ecr_pull_through_cache = True
         self._container_substitutions = None
+        self._nf_config = path.join(project_path, 'nextflow.config')
 
         with open(path.join(path.realpath(path.dirname(__file__)), 'namespace_config.json'), 'r') as f:
             self._default_namespace_config = json.load(f)
@@ -133,6 +134,25 @@ class NextflowWorkflow:
                 uris.add(process.container)
         
         return sorted(list(uris))
+    
+    @property
+    def docker_registry(self) -> str:
+        """
+        returns the docker registry specified by the workflow definition
+        specified in its own line in a nextflow.config file as 
+        docker.registry = 'quay.io'
+        """
+        _docker_registry = None
+        try:
+            with open(self._nf_config, 'r') as _file:
+                for line in _file:
+                    if line.startswith('docker.registry'):
+                        _docker_registry = line.strip().split('=')[1].replace('\'', '').replace('"', '').strip()
+                        break
+        except FileNotFoundError as fnfe:
+            print(f"nextflow.config file not found in project directory: {self._project_path}")
+            raise fnfe
+        return _docker_registry
         
     def get_container_manifest(self, substitutions=None) -> list:
         """
@@ -142,6 +162,8 @@ class NextflowWorkflow:
         for uri in self.containers:
             if substitutions and uri in substitutions:
                 uri = substitutions.get(uri)
+            if self.docker_registry:
+                uri = "/".join([self.docker_registry, uri])
             uris.add(uri)
         
         return sorted(list(uris))
@@ -149,6 +171,9 @@ class NextflowWorkflow:
     def _get_ecr_image_name(self, uri, substitutions=None, namespace_config=None):
         if substitutions and uri in substitutions:
             uri = substitutions.get(uri)
+
+        if self.docker_registry:
+            uri = "/".join([self.docker_registry, uri])
 
         if namespace_config:
             uri_parts = uri.split('/')
