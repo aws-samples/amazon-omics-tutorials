@@ -51,10 +51,14 @@ def get_task_timings_data(tasks, time_units='min'):
     for i, task in enumerate(tasks):
         task['y'] = i
         task['color'] = TASK_COLORS[task['status']]
+        
         task['running_left'] = (task['startTime'] - tare).total_seconds() * time_scale_factor
         task['running_right'] = (task['stopTime'] - tare).total_seconds() * time_scale_factor
+        task['running_duration'] = task['running_right'] - task['running_left']
+
         task['queued_left'] = (task['creationTime'] - tare).total_seconds() * time_scale_factor
         task['queued_right'] = task['running_left']
+        task['queued_duration'] = task['queued_right'] - task['queued_left']
         
         task['label'] = f"({task['taskId']}) {task['name']}"
         task['text_x'] = ((task['stopTime'] - tare).total_seconds() + 30) * time_scale_factor
@@ -66,13 +70,29 @@ def get_task_timings_data(tasks, time_units='min'):
 
 def plot_timeline(tasks, title="", time_units='min', max_duration_hrs=5, show_plot=True):
     time_scale_factor = TIME_SCALE_FACTORS[time_units]
-    data = get_task_timings_data(tasks, time_units=time_units)
+    if isinstance(tasks, list):
+        data = get_task_timings_data(tasks, time_units=time_units)
+    elif isinstance(tasks, pd.DataFrame):
+        data = tasks
+    else:
+        raise ValueError("tasks must be a list or DataFrame")
+    
     source = ColumnDataSource(data)
 
-    p_run = figure(width=960, height=800, sizing_mode="stretch_both")
+    tooltips = [
+        ("taskId", "@taskId"),
+        ("name", "@name"),
+        ("cpus", "@cpus"),
+        ("memory", "@memory GiB"),
+        ("queued", f"@queued_duration {time_units}"),
+        ("duration", f"@running_duration {time_units}"),
+        ("status", "@status"),
+    ]
+
+    p_run = figure(width=960, height=800, sizing_mode="stretch_both", tooltips=tooltips)
     p_run.hbar(y='y', left='queued_left', right='queued_right', height=0.8, color='lightgrey', source=source, legend_label="queued")
     p_run.hbar(y='y', left='running_left', right='running_right', height=0.8, color='color', source=source, legend_label="running")
-    p_run.text(x='text_x', y='y', text='label', alpha=0.4, text_baseline='middle', text_font_size='1.5ex', source=source)
+    #p_run.text(x='text_x', y='y', text='label', alpha=0.4, text_baseline='middle', text_font_size='1.5ex', source=source)
     x_max = max_duration_hrs*3600 * time_scale_factor # max expected workflow duration in hours
     x_min = -(x_max * 0.05)
     p_run.x_range = Range1d(x_min, x_max)
@@ -85,16 +105,16 @@ def plot_timeline(tasks, title="", time_units='min', max_duration_hrs=5, show_pl
         f"wall time: {(data['stopTime'].max() - data['creationTime'].min()).total_seconds() * time_scale_factor:.2f} {time_units}"
     )
 
-    p_cpu = figure(width=160, y_range=p_run.y_range, sizing_mode="stretch_height")
+    p_cpu = figure(width=160, y_range=p_run.y_range, sizing_mode="stretch_height", tooltips=tooltips)
     p_cpu.hbar(y='y', right='cpus', height=0.8, color="darkgrey", source=source)
-    p_cpu.x_range = Range1d(-1, 32)
+    p_cpu.x_range = Range1d(-1, data['cpus'].max())
     p_cpu.xaxis.axis_label = "vcpus"
     p_cpu.yaxis.visible = False
     p_cpu.title.text = f"max cpus: {max(source.data['cpus'])}"
     
-    p_mem = figure(width=160, y_range=p_run.y_range, sizing_mode="stretch_height")
+    p_mem = figure(width=160, y_range=p_run.y_range, sizing_mode="stretch_height", tooltips=tooltips)
     p_mem.hbar(y='y', right='memory', height=0.8, color="darkgrey", source=source)
-    p_mem.x_range = Range1d(-1, 32)
+    p_mem.x_range = Range1d(-1, data['memory'].max())
     p_mem.xaxis.axis_label = "memory (GiB)"
     p_mem.yaxis.visible = False
     p_mem.title.text = f"max mem: {max(source.data['memory']):.2f} GiB"
