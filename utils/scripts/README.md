@@ -8,6 +8,9 @@ Python script that inspects a Nextflow workflow definition and generates resourc
 
 Specifically designed to handle NF-Core based workflows, but in theory could handle any Nextflow workflow definition.
 
+Prerequisites:
+- Python 3
+
 What it does:
 - look through all *.nf files
 - find `container` directives
@@ -43,6 +46,12 @@ optional arguments:
 
 Python script that computes the cost of a workflow run breaking out details for individual tasks and run storage.
 
+Prerequisites:
+- Python 3
+- Python packages
+  - boto3
+  - requests
+
 What it does:
 - retrieves regional AWS HealthOmics pricing using the [AWS Price List bulk API](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/using-ppslong.html)
 - retrieves workflow run details from AWS HealthOmics
@@ -62,4 +71,39 @@ optional arguments:
   --profile PROFILE    AWS profile to use
   --region REGION      AWS region to use
   --offering OFFERING  path to pricing offer JSON
+```
+
+
+## [timeline.py](./timeline.py)
+
+Python script that generates a timeline plot of a workflow run
+
+Prerequisites:
+- Python 3
+- Python packages
+  - boto3
+  - bokeh
+  - pandas
+
+What it does:
+- retrieves workflow run details from AWS HealthOmics
+- creates a csv file with task details
+- creates an html document with an interactive Bokeh plot that shows task timing with instance cpu and memory allocated per task
+
+Usage:
+```text
+usage: timeline.py [-h] [--profile PROFILE] [--region REGION] [-u {sec,min,hr,day}] [-o OUTPUT_DIR] [--no-show] runid
+
+positional arguments:
+  runid                 HealthOmics workflow run-id to plot
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --profile PROFILE     AWS profile to use (default: None)
+  --region REGION       AWS region to use (default: None)
+  -u {sec,min,hr,day}, --time-units {sec,min,hr,day}
+                        Time units to use for plot (default: min)
+  -o OUTPUT_DIR, --output-dir OUTPUT_DIR
+                        Directory to save output files (default: .)
+  --no-show             Do not show plot (default: False)
 ```
