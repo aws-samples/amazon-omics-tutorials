@@ -104,7 +104,7 @@ task UnpackIntervals {
     }
     String basestem_input = basename(archive, ".tar.gz")
     command {
-
+        set -e
         echo "Unpack Intervals" >&2
         tar xvfz ~{archive} --directory ./
     }

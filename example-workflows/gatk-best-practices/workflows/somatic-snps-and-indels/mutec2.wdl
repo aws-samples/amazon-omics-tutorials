@@ -360,7 +360,7 @@ task M2 {
 
     command <<<
         echo M2
-        set -x
+        set -ex
 
         # We need to create these files regardless, even if they stay empty
         touch bamout.bam

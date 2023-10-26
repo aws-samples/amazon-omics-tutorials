@@ -85,6 +85,7 @@ task CramToBamTask {
     runtime {
         docker: docker_image
         memory: machine_mem_size + " GiB"
+        cpu: 2
     }
 
     #Outputs a BAM and BAI with the same sample name
@@ -104,6 +105,7 @@ task ValidateSamFile {
     String output_name = basename(input_bam, ".bam") + ".validation_report"
     Int command_mem_size = machine_mem_size - 1
     command {
+        set -e
         echo "Validate" >&2
         echo "input_bam: ~{input_bam}" >&2
         echo "output_name: ~{output_name}" >&2
@@ -120,7 +122,7 @@ task ValidateSamFile {
     runtime {
         docker: docker_image
         memory: machine_mem_size + " GiB"
-        continueOnReturnCode: [0,1]
+        cpu: 2
     }
     #A text file is generated that will list errors or warnings that apply.
     output {
