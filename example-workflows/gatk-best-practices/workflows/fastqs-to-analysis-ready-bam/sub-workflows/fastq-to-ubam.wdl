@@ -83,6 +83,7 @@ task PairedFastQsToUnmappedBAM {
     String disk_usage_cmd = "echo storage remaining: $(df -Ph . | awk 'NR==2 {print $4}')"
 
     command {
+        set -e
         # determine scratch size used
         ~{disk_usage_cmd}
 
