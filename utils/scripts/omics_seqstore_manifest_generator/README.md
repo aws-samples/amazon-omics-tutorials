@@ -64,7 +64,7 @@ Fields for the JSON manifest when uploading through the console:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **subjectId** - subject name - *Required*  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **sourceFileType** - FASTQ, BAM, uBAM, or CRAM - *Required*  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **source1** - s3 URI for FASTQ R1, BAM, uBAM, or CRAM - *Required*  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **source2** - s3 URI for FASTQ R2 - *Optional* 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **source2** - s3 URI for FASTQ R2 - *Optional*  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **tags** - json string of any tags to be associated with the read set. - *Optional*   
 
 *tsv:*  
