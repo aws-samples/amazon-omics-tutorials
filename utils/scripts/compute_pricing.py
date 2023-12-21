@@ -95,10 +95,9 @@ def get_run_cost(run_id, storage_gib=MINIMUM_STORAGE_CAPACITY_GIB, client=None, 
             task['gpus'] = 0
         usd_per_hour = float(pricing[task['instanceType']]['priceDimensions']['pricePerUnit']['USD'])
         duration_hr = task['duration'].total_seconds() / 3600
-        if 'name' not in task.keys():
-            task['name']=''
+
         task_costs += [{
-            "name": task['name'],
+            "name": task.get('name'),
             "resources": {
                 "cpus": task['cpus'],
                 "memory_gib": task['memory'],
@@ -121,14 +120,11 @@ def get_run_cost(run_id, storage_gib=MINIMUM_STORAGE_CAPACITY_GIB, client=None, 
         
     storage_cost = run_duration_hr * storage_gib * STORAGE_USD_PER_GIB_PER_HR
     total_task_costs = sum([tc['cost'] for tc in task_costs])
-
-    if 'name' not in run.keys():
-        run['name']=''
     
     return {
         "info": {
             "runId": run['id'],
-            "name": run['name'],
+            "name": run.get('name'),
             "workflowId": run['workflowId']
         },
         "total": storage_cost + total_task_costs,
