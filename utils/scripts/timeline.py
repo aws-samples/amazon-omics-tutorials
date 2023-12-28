@@ -180,7 +180,7 @@ def main(args):
     data.to_csv(path.join(args.output_dir, f"{output_file_basename}.csv"), index=False)
 
     output_file(filename=path.join(args.output_dir, f"{output_file_basename}.html"), title=runid, mode="cdn")
-    title = f"arn: {run['arn']}, name: {run['name']}"
+    title = f"arn: {run['arn']}, name: {run.get('name')}"
     g = plot_timeline(tasks, title=title, time_units=args.time_units, max_duration_hrs=run_duration_hrs, show_plot=(not args.no_show), pricing=pricing)
 
 
