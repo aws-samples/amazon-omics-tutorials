@@ -20,7 +20,7 @@ Example workflows are in the following groupings (:open_file_folder:). Additiona
     - [AlphaFold](./protein-folding/workflows/alphafold/)
     - [ESMFold](./protein-folding/workflows/esmfold/)
 
-  - [Other WDL workflows](./other_WDL/)
+  - :open_file_folder: [Other WDL workflows](./other_WDL/)
     - [HISAT-Genotype HLA Caller](./other_WDL/workflows/HISAT-genotype/)
  
 - Nextflow workflows
