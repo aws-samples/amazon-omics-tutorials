@@ -6,7 +6,7 @@ These are provided AS-IS and are intended to demonstrate conventions, patterns, 
 
 ## What's available
 
-Example workflows are in the following groupings (:open_file_folder:). Additional details are in the READMEs for each grouping.
+Example workflows are in the following groupings ( :open_file_folder: ). Additional details are in the READMEs for each grouping.
 
 - WDL workflows
   - :open_file_folder: [GATK Best Practice workflows](./gatk-best-practices/)
