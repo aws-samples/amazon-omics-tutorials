@@ -7,15 +7,13 @@ These are provided AS-IS and are intended to demonstrate conventions, patterns, 
 ## Step 0: Assumptions and prerequisites
 - All steps below assume you are working from your `$HOME` directory on a Linux or macOS system and should take ~1hr to complete.
 - Source for the workflows and supporting assets in this example are in `$HOME/amazon-omics-tutorials/example-workflows/gatk-best-practices`
-- Source for the `omx-ecr-helper` CDK app is in `$HOME/amazon-omics-tutorials/utils/cdk/omx-ecr-helper`
+- The [Amazon ECR Helper for AWS HealthOmics](https://github.com/aws-samples/amazon-ecr-helper-for-aws-healthomics) CDK app has been deployed to your account
 - The following required software is available on your system
-    - [AWS CDK](https://aws.amazon.com/cdk/)
     - [AWS CLI v2](https://aws.amazon.com/cli/)
     - [jq](https://stedolan.github.io/jq/)
     - Python 3.9 or higher
     - Python packages: see `requirements.txt`
     - make
-    - CDK should be bootstrapped to your account and region. See https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html
 
 To install Python package requirements use:
 ```bash
@@ -45,11 +43,11 @@ make run-{workflow_name}  # substitute "{workflow_name}" accordingly
 
 If this is the first time running any workflow, `make` will perform the following build steps: 
 
-1. Configure and deploy the `omx-ecr-helper` CDK app
+1. Check if the Amazon ECR Helper for AWS HealthOmics CDK app has been deployed
 
-   Workflows that run in AWS HealthOmics must have containerized tooling sourced from ECR private image repositories. These workflows use 4 unique container images. The `omx-ecr-helper` is a CDK application that automates converting container images from public repositories like Quay.io, ECR-Public, and DockerHub to ECR private image repositories.
+   Workflows that run in AWS HealthOmics must have containerized tooling sourced from ECR private image repositories. These workflows use 4 unique container images. The Amazon ECR Helper for AWS HealthOmics is a CDK application that automates converting container images from public repositories like Quay.io, ECR-Public, and DockerHub to ECR private image repositories.
 
-2. Run a Step functions state machine from `omx-ecr-helper` to pull container images used by these workflows into ECR Private Repositories
+2. Run a Step functions state machine named `omx-container-puller` to pull container images used by these workflows into ECR Private Repositories
 3. Create AWS IAM roles and permissions policies required for workflow runs
 4. Create an Amazon S3 bucket for staging workflow definition bundles and workflow execution outputs
 5. Create a zip bundle for the workflow that is registered with AWS HealthOmics
@@ -69,7 +67,6 @@ make clean
 **Note**: this command does not delete any deployed AWS resources. You are expected to manage these as needed. Resources of note:
 
 - No cost resources:
-    - The `omx-ecr-helper` CDK app is serverless and does not incur costs when idle.
     - HealthOmics Workflows do not incur costs when not running
 
 - Resources with costs

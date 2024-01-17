@@ -35,14 +35,13 @@ Example workflows are in the following groupings ( :open_file_folder: ). Additio
     - [VEP](./other_nextflow/workflows/vep/)
 
 ## Prerequisites
+- The [Amazon ECR Helper for AWS HealthOmics](https://github.com/aws-samples/amazon-ecr-helper-for-aws-healthomics) CDK app has been deployed to your account
 - Required tooling:
-    - [AWS CDK](https://aws.amazon.com/cdk/)
     - [AWS CLI v2](https://aws.amazon.com/cli/)
     - [jq](https://stedolan.github.io/jq/)
     - Python 3.9 or higher
     - Python packages: see `_scripts/requirements.txt`
     - make
-    - CDK should be bootstrapped to your account and region. See https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html
 
 ```bash
 cd _scripts/
