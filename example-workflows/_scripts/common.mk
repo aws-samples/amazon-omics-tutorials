@@ -1,4 +1,5 @@
 SHELL = /bin/bash
+PYTHON = /usr/bin/env python
 
 scripts = ../_scripts
 assets = ../_scripts/assets
@@ -21,26 +22,27 @@ build/:
 	mkdir -p build
 
 build/config.json: build/
-	python3 ${scripts}/build.py -c $(config) config
+	$(PYTHON) ${scripts}/build.py -c $(config) config
 
-build/omx-ecr-helper: build/config.json
-	sed 's#{{staging_uri}}#$(staging_uri)#g' $(assets)/omx-ecr-helper-config.json > $(cdk_app_config)
-	export CDK_APP_CONFIG=$(cdk_app_config)
-	export CDK_DEPLOY_REGION=$(region)
-	if [[ $(profile) == $(default_profile_name) ]]; then \
-			cdk deploy --all --require-approval never  $(cdk_app) $(cdk_out); \
-	else \
-			cdk deploy --all --require-approval never --profile $(profile) $(cdk_app) $(cdk_out); \
+build/omx-container-%: build/config.json
+	@if [[ $(profile) == $(default_profile_name) ]]; then \
+		export PROFILE="--profile $(profile)"; \
+	fi
+	@if [[ "null" == $$(aws $$PROFILE --region $(region) stepfunctions list-state-machines --query 'stateMachines[?name==`omx-container-$*`] | [0]') ]]; then \
+		( \
+			echo "ECR Helper for HealthOmics not found. Refer to: https://github.com/aws-samples/amazon-ecr-helper-for-aws-healthomics"; \
+			exit 1 \
+		); \
 	fi
 
 build/workflow-%: build/config.json build/s3-staging-uri
-	python3 $(scripts)/build.py -c $(config) workflow $*
+	$(PYTHON) $(scripts)/build.py -c $(config) workflow $*
 
 build/s3-output-uri build/s3-staging-uri: build/config.json
-	python3 $(scripts)/build.py -c $(config) s3
+	$(PYTHON) $(scripts)/build.py -c $(config) s3
 
 build/iam-workflow-role: build/config.json
-	python3 $(scripts)/build.py -c $(config) iam
+	$(PYTHON) $(scripts)/build.py -c $(config) iam
 
 .PHONY: clean test
 
