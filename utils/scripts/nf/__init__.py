@@ -154,11 +154,8 @@ class NextflowWorkflow:
         """
         Detect private registry in format <awsaccountid>.dkr.ecr.<awsregion>.amazonaws.com
         """
-        tmp = _registry_name.split('.')
-        if re.match('[0-9]{12}\.dkr\.ecr\.[a-zA-Z0-9-]{1,}\.amazonaws\.com', _registry_name) is not None:
-            return True
-        return False
-
+        return re.match('[0-9]{12}\.dkr\.ecr\.[a-zA-Z0-9-]{1,}\.amazonaws\.com', _registry_name)
+           
     def get_container_manifest(self, substitutions=None) -> list:
         """
         generates a list of unique container image URIs to pull into an ECR Private registry
