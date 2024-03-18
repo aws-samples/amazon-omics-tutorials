@@ -155,7 +155,7 @@ class NextflowWorkflow:
         Detect private registry in format <awsaccountid>.dkr.ecr.<awsregion>.amazonaws.com
         """
         tmp = _registry_name.split('.')
-        if len(tmp) == 6 and tmp[1] == 'dkr' and tmp[2] == 'ecr' and tmp[4] == 'amazonaws' and tmp[5] == 'com':
+        if re.match('[0-9]{12}\.dkr\.ecr\.[a-zA-Z0-9-]{1,}\.amazonaws\.com', _registry_name) is not None:
             return True
         return False
 
