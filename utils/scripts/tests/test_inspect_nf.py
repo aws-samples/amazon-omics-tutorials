@@ -1,10 +1,29 @@
 from glob import glob
 from os import path
-
+import json
 import pytest
 
 from ..nf import *
 
+NAMESPACE="""{
+    "public.ecr.aws": { "namespace": "ecr-public", "pull_through": true },
+    "ecr-public": { "namespace": "ecr-public", "pull_through": true },
+
+    "quay.io": { "namespace": "quay", "pull_through": true },
+    "quay": { "namespace": "quay", "pull_through": true },
+    
+    "us.gcr.io": { "namespace": "gcr", "pull_through": false },
+    "eu.gcr.io": { "namespace": "gcr", "pull_through": false },
+    "asia.gcr.io": { "namespace": "gcr", "pull_through": false },
+    "pkg.dev": { "namespace": "gar", "pull_through": false },
+    "nvcr.io": { "namespace": "nvcr", "pull_through": false},
+    
+    "ghcr.io": { "namespace": "ghcr", "pull_through": false },
+    "mcr.microsoft.com": { "namespace": "mcr", "pull_through": false },
+    
+    "dockerhub": { "namespace": "dockerhub", "pull_through": false },
+    "": { "namespace": "dockerhub", "pull_through": false }
+}"""
 
 WORKING_DIR = path.dirname(path.realpath(__file__))
 
@@ -105,6 +124,13 @@ def test_find_docker_uri_quoted():
     uri = find_docker_uri(container)
     assert uri == 'image:tag'
 
+def test_ecr_private_repo_detection():
+    project_path = path.join(WORKING_DIR, 'workflow_with_config_and_private_ecr')
+    workflow = NextflowWorkflow(project_path)
+    
+    assert "111111111111.dkr.ecr.us-east-1.amazonaws.com/rnaseq-nf:1.1.1" in workflow.containers
+    assert workflow.is_ecr_private_repo("111111111111.dkr.ecr.us-east-1.amazonaws.com")
+    assert not workflow.is_ecr_private_repo("1234.dcr.ecr.us-east-1.amazonaws.com")
 
 def test_parse_workflow():
     project_path = path.join(WORKING_DIR, 'workflow')
