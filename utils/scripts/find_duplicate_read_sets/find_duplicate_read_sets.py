@@ -74,37 +74,37 @@ def find_duplicates(seq_store_ids, omics_client, output_path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('-s', '--seq_store_ids', type=str, required=True, dest='seqStoreIds', 
+    parser.add_argument('-s', '--seq-store-ids', type=str, required=True, 
                         help='A comma separated list of 1 or more sequence store IDs to check, all in the same region.')
-    parser.add_argument('-r', '--region', type=str, required=True, dest='region', 
-                        help='The region where the sequence stores are in. They must all be in the same region.')
-    parser.add_argument('-o', '--output', type=str, default='duplicate_read_sets.csv', dest='output', 
+    parser.add_argument('-r', '--region', type=str, required=False, 
+                        help='(optional) The region where the sequence stores are in. They must all be in the same region. If this is left \
+                        unspecified, the code will use the default configured region.')
+    parser.add_argument('-o', '--output', type=str, default='duplicate_read_sets.csv', 
                         help='(optional) The path and file name for the output csv file containing all the duplicate read sets. Include the file \
                         name and prefix (e.g. "~/path/to/out/duplicates.csv"). The default file name is duplicate_read_sets.csv and will write to \
                         the current directory.')
-    parser.add_argument('-p', '--profile-name', type=str, default='NA', dest='profileName', 
+    parser.add_argument('-p', '--profile-name', type=str, 
                         help='(optional) The profile name for boto3 to use if you do not want it to use the default profile configured.')
     
     args = parser.parse_args()
 
     # parse the input sequence store IDs so it's clear what will get passed to the function. 
-    parsed_seq_store_ids = [i.strip() for i in args.seqStoreIds.split(',')]
+    parsed_seq_store_ids = [i.strip() for i in args.seq_store_ids.split(',')]
     if len(parsed_seq_store_ids) == 0:
         sys.exit(f'\nERROR: could not parse sequence store ids input: {args.seqStoreIds}')
 
     print('\nArguments used:\nSequence Store IDs:', str(parsed_seq_store_ids))
-    print('Region:', args.region)
+    
     print('Output:', args.output)
-
     # print optional inputs only if they're specified
-    if args.profileName and args.profileName != 'NA':
-        print('Profile Name:', args.profileName,'\n')
+    if args.region:
+        print('Region:', args.region)
+    if args.profile_name:
+        print('Profile Name:', args.profile_name)
 
     # setup the boto3 client
-    if args.profileName and args.profileName != 'NA':
-        boto3.setup_default_session(profile_name=args.profileName)
-
-    omics_client = boto3.client('omics', region_name=args.region)
+    session = boto3.Session(region_name=args.region, profile_name=args.profile_name)
+    omics_client = session.client('omics')
     
     # identify duplicates
     df = find_duplicates(parsed_seq_store_ids, omics_client, args.output)
