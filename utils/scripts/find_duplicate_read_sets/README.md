@@ -22,13 +22,13 @@ usage: find_duplicate_read_sets.py usage: find_duplicate_read_setst.py [-h] -s S
   &nbsp;&nbsp;-s SEQUENCESTOREIDS, -seq-store-ids INPUT  
   *&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A comma separated list of 1 or more sequence store IDs to check, all in the same region. (e.g. 5068895345,1504776472")*  
 
-  &nbsp;&nbsp;-r REGION, --region REGION  
-  *&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(optional) The region where the sequence stores are in. They must all be in the same region. If this is left unspecified, the code will use the default configured region.*  
-
   &nbsp;&nbsp;-o OUTPUT, --output OUTPUT  
-  *&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(optional) The path and file name for the output csv file containing all the duplicate read sets. Include the file name and prefix (e.g. "~/path/to/out/duplicates.csv"). The default file name is duplicate_read_sets.csv and will write to the current directory.*  
+  *&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(optional) The path and file name for the output csv file containing all the duplicate read sets. Include the file name and prefix (e.g. "~/path/to/out/duplicates.csv"). The default file name is duplicate_read_sets.csv and will write to the current directory.*
 
-  &nbsp;&nbsp;-p PROFILENAME, --profile_name PROFILENAME  
+  &nbsp;&nbsp;--region REGION  
+  *&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(optional) The region where the sequence stores are in. They must all be in the same region. If this is left unspecified, the code will use the default configured region.*    
+
+  &nbsp;&nbsp;--profile PROFILE  
   *&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(optional) The profile name for boto3 to use if you do not want it to use the default profile configured. Profiles can be created through the AWS CLI using `aws configure` [docs](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)*    
 
 ## Usage
@@ -38,14 +38,14 @@ usage: find_duplicate_read_sets.py usage: find_duplicate_read_setst.py [-h] -s S
 To identify duplicate read sets within a single sequence store you can pass in a single sequence store ID. 
 
 ``` python
-python find_duplicate_read_sets.py -s "0123456789" -r "us-west-2" -o ~/scratch/duplicate_read_sets.csv
+python find_duplicate_read_sets.py -s "0123456789" -o ~/scratch/duplicate_read_sets.csv
 ```
 #### Multiple Sequence Store:
 
 To identify duplicate read sets across multiple sequence store you can pass in a comma separated list of sequence store ID. 
 
 ``` python
-python find_duplicate_read_sets.py -s "0123456789,6543210987,2134567890" -r "us-west-2" -o ~/scratch/duplicate_read_sets.csv
+python find_duplicate_read_sets.py -s "0123456789,6543210987,2134567890" -o ~/scratch/duplicate_read_sets.csv --region "us-west-2"
 ```
 ## AWS HealthOmics Sequence Store
 For detailed information on how semantic identity works with AWS HealthOmics sequence stores  please visit [ETag calculation and data provenance](https://docs.aws.amazon.com/omics/latest/dev/etags-and-provenance.html)

@@ -76,14 +76,14 @@ if __name__ == "__main__":
 
     parser.add_argument('-s', '--seq-store-ids', type=str, required=True, 
                         help='A comma separated list of 1 or more sequence store IDs to check, all in the same region.')
-    parser.add_argument('-r', '--region', type=str, required=False, 
-                        help='(optional) The region where the sequence stores are in. They must all be in the same region. If this is left \
-                        unspecified, the code will use the default configured region.')
     parser.add_argument('-o', '--output', type=str, default='duplicate_read_sets.csv', 
                         help='(optional) The path and file name for the output csv file containing all the duplicate read sets. Include the file \
                         name and prefix (e.g. "~/path/to/out/duplicates.csv"). The default file name is duplicate_read_sets.csv and will write to \
                         the current directory.')
-    parser.add_argument('-p', '--profile', type=str, 
+    parser.add_argument('--region', type=str, required=False, 
+                        help='(optional) The region where the sequence stores are in. They must all be in the same region. If this is left \
+                        unspecified, the code will use the default configured region.')
+    parser.add_argument('--profile', type=str, 
                         help='(optional) The profile name for boto3 to use if you do not want it to use the default profile configured.')
     
     args = parser.parse_args()
@@ -100,7 +100,7 @@ if __name__ == "__main__":
     if args.region:
         print('Region:', args.region)
     if args.profile:
-        print('Profile Name:', args.profile)
+        print('Profile:', args.profile)
 
     # setup the boto3 client
     session = boto3.Session(region_name=args.region, profile_name=args.profile)
