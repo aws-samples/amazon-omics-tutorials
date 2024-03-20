@@ -83,7 +83,7 @@ if __name__ == "__main__":
                         help='(optional) The path and file name for the output csv file containing all the duplicate read sets. Include the file \
                         name and prefix (e.g. "~/path/to/out/duplicates.csv"). The default file name is duplicate_read_sets.csv and will write to \
                         the current directory.')
-    parser.add_argument('-p', '--profile-name', type=str, 
+    parser.add_argument('-p', '--profile', type=str, 
                         help='(optional) The profile name for boto3 to use if you do not want it to use the default profile configured.')
     
     args = parser.parse_args()
@@ -99,11 +99,11 @@ if __name__ == "__main__":
     # print optional inputs only if they're specified
     if args.region:
         print('Region:', args.region)
-    if args.profile_name:
-        print('Profile Name:', args.profile_name)
+    if args.profile:
+        print('Profile Name:', args.profile)
 
     # setup the boto3 client
-    session = boto3.Session(region_name=args.region, profile_name=args.profile_name)
+    session = boto3.Session(region_name=args.region, profile_name=args.profile)
     omics_client = session.client('omics')
     
     # identify duplicates
