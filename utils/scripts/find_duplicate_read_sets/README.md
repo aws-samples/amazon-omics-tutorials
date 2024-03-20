@@ -8,15 +8,15 @@ This script was written to help in the identification of duplicate read sets sto
 
 To run this script, simply identify the sequence store IDs you want to search across in a region, specify the input parameters, and you receive a CSV with the read set sources that share an ETag. 
 
-This script makes a few prerequisits:
+### Prerequisits
 1. Python 3.10 or above is installed along with the AWS SDK for Python (`boto3`)
 2. AWS CLI v2 is installed and configured with a profile with read access to AWS HealthOmics sequence stores
 3. All library dependencies are outlined in the attached `requirements.txt` including the following libraries: `pandas, argparse, boto3`
 4. The sequence store IDs input all exist within the region identified.  If the region and sequence store IDs do not match, an error for `The specified sequence store does not exist`will be generated.
 
-usage: find_duplicate_read_sets.py usage: find_duplicate_read_setst.py [-h] -s SEQUENCESTOREIDS -r REGION [-o OUTPUT] [-p PROFILENAME]
+usage: find_duplicate_read_sets.py usage: find_duplicate_read_setst.py [-h] -s SEQUENCESTOREIDS [-o OUTPUT] [--region REGION] [--pofile PROFILE]
 
-### options:  
+### Options
   &nbsp;&nbsp;-h, --help  
 
   &nbsp;&nbsp;-s SEQUENCESTOREIDS, -seq-store-ids INPUT  
@@ -33,14 +33,14 @@ usage: find_duplicate_read_sets.py usage: find_duplicate_read_setst.py [-h] -s S
 
 ## Usage
 
-#### Single Sequence Store:
+#### Single Sequence Store
 
 To identify duplicate read sets within a single sequence store you can pass in a single sequence store ID. 
 
 ``` python
 python find_duplicate_read_sets.py -s "0123456789" -o ~/scratch/duplicate_read_sets.csv
 ```
-#### Multiple Sequence Store:
+#### Multiple Sequence Store
 
 To identify duplicate read sets across multiple sequence store you can pass in a comma separated list of sequence store ID. 
 
