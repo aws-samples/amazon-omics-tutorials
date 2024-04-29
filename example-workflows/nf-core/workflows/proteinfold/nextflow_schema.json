@@ -1,0 +1,671 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "https://raw.githubusercontent.com/nf-core/proteinfold/master/nextflow_schema.json",
+    "title": "nf-core/proteinfold pipeline parameters",
+    "description": "Protein 3D structure prediction pipeline",
+    "type": "object",
+    "definitions": {
+        "input_output_options": {
+            "title": "Global options",
+            "type": "object",
+            "fa_icon": "fas fa-coins",
+            "description": "Define where the pipeline should find input data and save output data.",
+            "required": ["input", "outdir"],
+            "properties": {
+                "input": {
+                    "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "mimetype": "text/csv",
+                    "pattern": "^\\S+\\.csv$",
+                    "schema": "assets/schema_input.json",
+                    "description": "Path to comma-separated file containing information about the samples in the experiment.",
+                    "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/proteinfold/usage#samplesheet-input).",
+                    "fa_icon": "fas fa-file-csv"
+                },
+                "outdir": {
+                    "type": "string",
+                    "format": "directory-path",
+                    "description": "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "mode": {
+                    "type": "string",
+                    "default": "alphafold2",
+                    "description": "Specifies the mode in which the pipeline will be run",
+                    "enum": ["alphafold2", "colabfold", "esmfold"],
+                    "fa_icon": "fas fa-cogs"
+                },
+                "use_gpu": {
+                    "type": "boolean",
+                    "description": "Run on CPUs (default) or GPUs",
+                    "fa_icon": "fas fa-microchip"
+                },
+                "email": {
+                    "type": "string",
+                    "description": "Email address for completion summary.",
+                    "fa_icon": "fas fa-envelope",
+                    "help_text": "Set this parameter to your e-mail address to get a summary e-mail with details of the run sent to you when the workflow exits. If set in your user config file (`~/.nextflow/config`) then you don't need to specify this on the command line for every run.",
+                    "pattern": "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$"
+                },
+                "multiqc_title": {
+                    "type": "string",
+                    "description": "MultiQC report title. Printed as page header, used for filename if not otherwise specified.",
+                    "fa_icon": "fas fa-file-signature"
+                }
+            }
+        },
+        "alphafold2_options": {
+            "title": "Alphafold2 options",
+            "type": "object",
+            "fa_icon": "fas fa-dna",
+            "description": "Alphafold2 options.",
+            "properties": {
+                "max_template_date": {
+                    "type": "string",
+                    "default": "2020-05-14",
+                    "description": "Maximum date of the PDB templates used by 'AlphaFold2' mode",
+                    "fa_icon": "fas fa-calendar-check"
+                },
+                "alphafold2_db": {
+                    "type": "string",
+                    "format": "path",
+                    "exists": true,
+                    "description": "Specifies the DB and PARAMS path used by 'AlphaFold2' mode",
+                    "fa_icon": "fas fa-database"
+                },
+                "full_dbs": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "If true uses the full version of the BFD database otherwise, otherwise it uses its reduced version, small bfd",
+                    "fa_icon": "fas fa-battery-full"
+                },
+                "alphafold2_mode": {
+                    "type": "string",
+                    "default": "standard",
+                    "description": "Specifies the mode in which Alphafold2 will be run",
+                    "enum": ["standard", "split_msa_prediction"],
+                    "fa_icon": "fas fa-exchange-alt"
+                },
+                "alphafold2_model_preset": {
+                    "type": "string",
+                    "default": "monomer",
+                    "description": "Model preset for 'AlphaFold2' mode",
+                    "enum": ["monomer", "monomer_casp14", "monomer_ptm", "multimer"],
+                    "fa_icon": "fas fa-stream"
+                }
+            }
+        },
+        "colabfold_options": {
+            "title": "Colabfold options",
+            "type": "object",
+            "fa_icon": "fas fa-coins",
+            "description": "Colabfold options.",
+            "properties": {
+                "colabfold_db": {
+                    "type": "string",
+                    "format": "path",
+                    "exists": true,
+                    "description": "Specifies the PARAMS and DB path used by 'colabfold'  mode",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "colabfold_server": {
+                    "type": "string",
+                    "default": "webserver",
+                    "description": "Specifies the MSA server used by Colabfold",
+                    "enum": ["webserver", "local"],
+                    "fa_icon": "fas fa-server"
+                },
+                "colabfold_model_preset": {
+                    "type": "string",
+                    "default": "alphafold2_ptm",
+                    "description": "Model preset for 'colabfold' mode",
+                    "enum": [
+                        "auto",
+                        "alphafold2",
+                        "alphafold2_ptm",
+                        "alphafold2_multimer_v1",
+                        "alphafold2_multimer_v2",
+                        "alphafold2_multimer_v3"
+                    ],
+                    "fa_icon": "fas fa-stream"
+                },
+                "num_recycle": {
+                    "type": "integer",
+                    "default": 3,
+                    "description": "Number of recycles",
+                    "fa_icon": "fas fa-recycle"
+                },
+                "use_amber": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Use Amber minimization to refine the predicted structures",
+                    "fa_icon": "fas fa-compress-alt"
+                },
+                "db_load_mode": {
+                    "type": "integer",
+                    "default": 0,
+                    "description": "Specify the way that MMSeqs2 will load the required databases in memory",
+                    "fa_icon": "fas fa-download",
+                    "enum": [0, 1, 2, 3]
+                },
+                "host_url": {
+                    "type": "string",
+                    "description": "Specify your custom MMSeqs2 API server url",
+                    "fa_icon": "fas fa-link"
+                },
+                "use_templates": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Use PDB templates",
+                    "fa_icon": "fas fa-paste"
+                },
+                "create_colabfold_index": {
+                    "type": "boolean",
+                    "description": "Create databases indexes when running colabfold_local mode",
+                    "fa_icon": "fas fa-bezier-curve"
+                }
+            }
+        },
+        "esmfold_options": {
+            "title": "Esmfold options",
+            "type": "object",
+            "fa_icon": "fas fa-coins",
+            "description": "Esmfold options.",
+            "properties": {
+                "esmfold_db": {
+                    "type": "string",
+                    "format": "path",
+                    "exists": true,
+                    "description": "Specifies the PARAMS path used by 'esmfold' mode",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "num_recycles": {
+                    "type": "integer",
+                    "default": 4,
+                    "description": "Specifies the number of recycles used by Esmfold",
+                    "fa_icon": "fas fa-server"
+                },
+                "esmfold_model_preset": {
+                    "type": "string",
+                    "description": "Specifies whether is a 'monomer' or 'multimer' prediction",
+                    "enum": ["monomer", "multimer"],
+                    "fa_icon": "fas fa-stream"
+                }
+            }
+        },
+        "institutional_config_options": {
+            "title": "Institutional config options",
+            "type": "object",
+            "fa_icon": "fas fa-university",
+            "description": "Parameters used to describe centralised config profiles. These should not be edited.",
+            "help_text": "The centralised nf-core configuration profiles use a handful of pipeline parameters to describe themselves. This information is then printed to the Nextflow log when you run a pipeline. You should not need to change these values when you run a pipeline.",
+            "properties": {
+                "custom_config_version": {
+                    "type": "string",
+                    "description": "Git commit id for Institutional configs.",
+                    "default": "master",
+                    "hidden": true,
+                    "fa_icon": "fas fa-users-cog"
+                },
+                "custom_config_base": {
+                    "type": "string",
+                    "description": "Base directory for Institutional configs.",
+                    "default": "https://raw.githubusercontent.com/nf-core/configs/master",
+                    "hidden": true,
+                    "help_text": "If you're running offline, Nextflow will not be able to fetch the institutional config files from the internet. If you don't need them, then this is not a problem. If you do need them, you should download the files from the repo and tell Nextflow where to find them with this parameter.",
+                    "fa_icon": "fas fa-users-cog"
+                },
+                "config_profile_name": {
+                    "type": "string",
+                    "description": "Institutional config name.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-users-cog"
+                },
+                "config_profile_description": {
+                    "type": "string",
+                    "description": "Institutional config description.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-users-cog"
+                },
+                "config_profile_contact": {
+                    "type": "string",
+                    "description": "Institutional config contact information.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-users-cog"
+                },
+                "config_profile_url": {
+                    "type": "string",
+                    "description": "Institutional config URL link.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-users-cog"
+                }
+            }
+        },
+        "max_job_request_options": {
+            "title": "Max job request options",
+            "type": "object",
+            "fa_icon": "fab fa-acquisitions-incorporated",
+            "description": "Set the top limit for requested resources for any single job.",
+            "help_text": "If you are running on a smaller system, a pipeline step requesting more resources than are available may cause the Nextflow to stop the run with an error. These options allow you to cap the maximum resources requested by any single job so that the pipeline will run on your system.\n\nNote that you can not _increase_ the resources requested by any job using these options. For that you will need your own configuration file. See [the nf-core website](https://nf-co.re/usage/configuration) for details.",
+            "properties": {
+                "max_cpus": {
+                    "type": "integer",
+                    "description": "Maximum number of CPUs that can be requested for any single job.",
+                    "default": 16,
+                    "fa_icon": "fas fa-microchip",
+                    "hidden": true,
+                    "help_text": "Use to set an upper-limit for the CPU requirement for each process. Should be an integer e.g. `--max_cpus 1`"
+                },
+                "max_memory": {
+                    "type": "string",
+                    "description": "Maximum amount of memory that can be requested for any single job.",
+                    "default": "128.GB",
+                    "fa_icon": "fas fa-memory",
+                    "pattern": "^\\d+(\\.\\d+)?\\.?\\s*(K|M|G|T)?B$",
+                    "hidden": true,
+                    "help_text": "Use to set an upper-limit for the memory requirement for each process. Should be a string in the format integer-unit e.g. `--max_memory '8.GB'`"
+                },
+                "max_time": {
+                    "type": "string",
+                    "description": "Maximum amount of time that can be requested for any single job.",
+                    "default": "240.h",
+                    "fa_icon": "far fa-clock",
+                    "pattern": "^(\\d+\\.?\\s*(s|m|h|d|day)\\s*)+$",
+                    "hidden": true,
+                    "help_text": "Use to set an upper-limit for the time requirement for each process. Should be a string in the format integer-unit e.g. `--max_time '2.h'`"
+                }
+            }
+        },
+        "alphafold2_dbs_and_parameters_link_options": {
+            "title": "Alphafold2 DBs and parameters links options",
+            "type": "object",
+            "fa_icon": "fas fa-database",
+            "description": "Parameters used to provide the links to the DBs and parameters public resources to Alphafold2.",
+            "properties": {
+                "bfd": {
+                    "type": "string",
+                    "default": "https://storage.googleapis.com/alphafold-databases/casp14_versions/bfd_metaclust_clu_complete_id30_c90_final_seq.sorted_opt.tar.gz",
+                    "description": "Link to BFD dababase",
+                    "fa_icon": "fas fa-link"
+                },
+                "small_bfd": {
+                    "type": "string",
+                    "default": "https://storage.googleapis.com/alphafold-databases/reduced_dbs/bfd-first_non_consensus_sequences.fasta.gz",
+                    "description": "Link to a reduced version of the BFD dababase",
+                    "fa_icon": "fas fa-link"
+                },
+                "alphafold2_params": {
+                    "type": "string",
+                    "default": "https://storage.googleapis.com/alphafold/alphafold_params_2022-12-06.tar",
+                    "description": "Link to the Alphafold2 parameters",
+                    "fa_icon": "fas fa-link"
+                },
+                "mgnify": {
+                    "type": "string",
+                    "default": "https://storage.googleapis.com/alphafold-databases/casp14_versions/mgy_clusters_2018_12.fa.gz",
+                    "description": "Link to the MGnify database",
+                    "fa_icon": "fas fa-link"
+                },
+                "pdb70": {
+                    "type": "string",
+                    "default": "http://wwwuser.gwdg.de/~compbiol/data/hhsuite/databases/hhsuite_dbs/old-releases/pdb70_from_mmcif_200916.tar.gz",
+                    "description": "Link to the PDB70 database",
+                    "fa_icon": "fas fa-link"
+                },
+                "pdb_mmcif": {
+                    "type": "string",
+                    "default": "rsync.rcsb.org::ftp_data/structures/divided/mmCIF/",
+                    "description": "Link to the PDB mmCIF database",
+                    "fa_icon": "fas fa-link"
+                },
+                "pdb_obsolete": {
+                    "type": "string",
+                    "default": "ftp://ftp.wwpdb.org/pub/pdb/data/status/obsolete.dat",
+                    "description": "Link to the PDV obsolete database",
+                    "fa_icon": "fas fa-link"
+                },
+                "uniref30_alphafold2": {
+                    "type": "string",
+                    "default": "https://storage.googleapis.com/alphafold-databases/v2.3/UniRef30_2021_03.tar.gz",
+                    "description": "Link to the Uniclust30 database",
+                    "fa_icon": "fas fa-link"
+                },
+                "uniref90": {
+                    "type": "string",
+                    "default": "ftp://ftp.uniprot.org/pub/databases/uniprot/uniref/uniref90/uniref90.fasta.gz",
+                    "description": "Link to the UniRef90 database",
+                    "fa_icon": "fas fa-link"
+                },
+                "pdb_seqres": {
+                    "type": "string",
+                    "default": "ftp://ftp.wwpdb.org/pub/pdb/derived_data/pdb_seqres.txt",
+                    "description": "Link to the PDB SEQRES database",
+                    "fa_icon": "fas fa-link"
+                },
+                "uniprot_sprot": {
+                    "type": "string",
+                    "default": "ftp://ftp.ebi.ac.uk/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz",
+                    "description": "Link to the SwissProt UniProt database",
+                    "fa_icon": "fas fa-link"
+                },
+                "uniprot_trembl": {
+                    "type": "string",
+                    "default": "ftp://ftp.ebi.ac.uk/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_trembl.fasta.gz",
+                    "description": "Link to the TrEMBL UniProt database",
+                    "fa_icon": "fas fa-link"
+                }
+            }
+        },
+        "alphafold2_dbs_and_parameters_path_options": {
+            "title": "Alphafold2 DBs and parameters links options",
+            "type": "object",
+            "fa_icon": "fas fa-database",
+            "description": "Parameters used to provide the paths to the DBs and parameters for Alphafold2.",
+            "properties": {
+                "bfd_path": {
+                    "type": "string",
+                    "description": "Path to BFD dababase",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "small_bfd_path": {
+                    "type": "string",
+                    "description": "Path to a reduced version of the BFD database",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "alphafold2_params_path": {
+                    "type": "string",
+                    "description": "Path to the Alphafold2 parameters",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "mgnify_path": {
+                    "type": "string",
+                    "description": "Path to the MGnify database",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "pdb70_path": {
+                    "type": "string",
+                    "description": "Path to the PDB70 database",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "pdb_mmcif_path": {
+                    "type": "string",
+                    "description": "Path to the PDB mmCIF database",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "uniref30_alphafold2_path": {
+                    "type": "string",
+                    "description": "Path to the Uniref30 database",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "uniref90_path": {
+                    "type": "string",
+                    "description": "Path to the UniRef90 database",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "pdb_seqres_path": {
+                    "type": "string",
+                    "description": "Path to the PDB SEQRES database",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "uniprot_path": {
+                    "type": "string",
+                    "description": "Path to UniProt database containing the SwissProt and the TrEMBL databases",
+                    "fa_icon": "fas fa-folder-open"
+                }
+            }
+        },
+        "colabfold_dbs_and_parameters_link_options": {
+            "title": "Colabfold DBs and parameters links options",
+            "type": "object",
+            "description": "Parameters used to provide the links to the DBs and parameters public resources to Colabfold.",
+            "fa_icon": "fas fa-database",
+            "properties": {
+                "colabfold_db_link": {
+                    "type": "string",
+                    "default": "http://wwwuser.gwdg.de/~compbiol/colabfold/colabfold_envdb_202108.tar.gz",
+                    "description": "Link to the Colabfold database",
+                    "fa_icon": "fas fa-link"
+                },
+                "uniref30_colabfold_link": {
+                    "type": "string",
+                    "default": "https://wwwuser.gwdg.de/~compbiol/colabfold/uniref30_2202.tar.gz",
+                    "description": "Link to the UniRef30 database",
+                    "fa_icon": "fas fa-link"
+                },
+                "colabfold_alphafold2_params": {
+                    "type": "string",
+                    "description": "Link to the Alphafold2 parameters for Colabfold",
+                    "fa_icon": "fas fa-link"
+                }
+            }
+        },
+        "colabfold_dbs_and_parameters_path_options": {
+            "title": "Colabfold DBs and parameters links options",
+            "type": "object",
+            "description": "Parameters used to provide the links to the DBs and parameters public resources to Colabfold.",
+            "fa_icon": "fas fa-database",
+            "properties": {
+                "colabfold_db_path": {
+                    "type": "string",
+                    "description": "Link to the Colabfold database",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "uniref30_colabfold_path": {
+                    "type": "string",
+                    "description": "Link to the UniRef30 database",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "colabfold_alphafold2_params_path": {
+                    "type": "string",
+                    "description": "Link to the Alphafold2 parameters for Colabfold",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "colabfold_alphafold2_params_tags": {
+                    "type": "string",
+                    "description": "Dictionary with Alphafold2 parameters tags",
+                    "fa_icon": "fas fa-stream"
+                }
+            }
+        },
+        "esmfold_parameters_link_options": {
+            "title": "Esmfold parameters links options",
+            "type": "object",
+            "description": "Parameters used to provide the links to the parameters public resources to Esmfold.",
+            "fa_icon": "fas fa-database",
+            "properties": {
+                "esmfold_3B_v1": {
+                    "type": "string",
+                    "default": "https://dl.fbaipublicfiles.com/fair-esm/models/esmfold_3B_v1.pt",
+                    "description": "Link to the Esmfold 3B-v1 model",
+                    "fa_icon": "fas fa-link"
+                },
+                "esm2_t36_3B_UR50D": {
+                    "type": "string",
+                    "default": "https://dl.fbaipublicfiles.com/fair-esm/models/esm2_t36_3B_UR50D.pt",
+                    "description": "Link to the Esmfold t36-3B-UR50D model",
+                    "fa_icon": "fas fa-link"
+                },
+                "esm2_t36_3B_UR50D_contact_regression": {
+                    "type": "string",
+                    "default": "https://dl.fbaipublicfiles.com/fair-esm/regression/esm2_t36_3B_UR50D-contact-regression.pt",
+                    "description": "Link to the Esmfold t36-3B-UR50D-contact-regression model",
+                    "fa_icon": "fas fa-link"
+                }
+            }
+        },
+        "esmfold_parameters_path_options": {
+            "title": "Esmfold parameters links options",
+            "type": "object",
+            "description": "Parameters used to provide the links to the parameters public resources to Esmfold.",
+            "fa_icon": "fas fa-database",
+            "properties": {
+                "esmfold_params_path": {
+                    "type": "string",
+                    "description": "Link to the Esmfold parameters",
+                    "fa_icon": "fas fa-folder-open"
+                }
+            }
+        },
+        "generic_options": {
+            "title": "Generic options",
+            "type": "object",
+            "fa_icon": "fas fa-file-import",
+            "description": "Less common options for the pipeline, typically set in a config file.",
+            "help_text": "These options are common to all nf-core pipelines and allow you to customise some of the core preferences for how the pipeline runs.\n\nTypically these options would be set in a Nextflow config file loaded for all pipeline runs, such as `~/.nextflow/config`.",
+            "properties": {
+                "help": {
+                    "type": "boolean",
+                    "description": "Display help text.",
+                    "fa_icon": "fas fa-question-circle",
+                    "hidden": true
+                },
+                "version": {
+                    "type": "boolean",
+                    "description": "Display version and exit.",
+                    "fa_icon": "fas fa-question-circle",
+                    "hidden": true
+                },
+                "publish_dir_mode": {
+                    "type": "string",
+                    "default": "copy",
+                    "description": "Method used to save pipeline results to output directory.",
+                    "help_text": "The Nextflow `publishDir` option specifies which intermediate files should be saved to the output directory. This option tells the pipeline what method should be used to move these files. See [Nextflow docs](https://www.nextflow.io/docs/latest/process.html#publishdir) for details.",
+                    "fa_icon": "fas fa-copy",
+                    "enum": ["symlink", "rellink", "link", "copy", "copyNoFollow", "move"],
+                    "hidden": true
+                },
+                "email_on_fail": {
+                    "type": "string",
+                    "description": "Email address for completion summary, only when pipeline fails.",
+                    "fa_icon": "fas fa-exclamation-triangle",
+                    "pattern": "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$",
+                    "help_text": "An email address to send a summary email to when the pipeline is completed - ONLY sent if the pipeline does not exit successfully.",
+                    "hidden": true
+                },
+                "plaintext_email": {
+                    "type": "boolean",
+                    "description": "Send plain-text email instead of HTML.",
+                    "fa_icon": "fas fa-remove-format",
+                    "hidden": true
+                },
+                "max_multiqc_email_size": {
+                    "type": "string",
+                    "description": "File size limit when attaching MultiQC reports to summary emails.",
+                    "pattern": "^\\d+(\\.\\d+)?\\.?\\s*(K|M|G|T)?B$",
+                    "default": "25.MB",
+                    "fa_icon": "fas fa-file-upload",
+                    "hidden": true
+                },
+                "monochrome_logs": {
+                    "type": "boolean",
+                    "description": "Do not use coloured log outputs.",
+                    "fa_icon": "fas fa-palette",
+                    "hidden": true
+                },
+                "hook_url": {
+                    "type": "string",
+                    "description": "Incoming hook URL for messaging service",
+                    "fa_icon": "fas fa-people-group",
+                    "help_text": "Incoming hook URL for messaging service. Currently, MS Teams and Slack are supported.",
+                    "hidden": true
+                },
+                "multiqc_config": {
+                    "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "mimetype": "text/plain",
+                    "description": "Custom config file to supply to MultiQC.",
+                    "fa_icon": "fas fa-cog",
+                    "hidden": true
+                },
+                "multiqc_logo": {
+                    "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "mimetype": "text/plain",
+                    "description": "Custom logo file to supply to MultiQC. File name must also be set in the MultiQC config file",
+                    "fa_icon": "fas fa-image",
+                    "hidden": true
+                },
+                "multiqc_methods_description": {
+                    "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "mimetype": "text/plain",
+                    "description": "Custom MultiQC yaml file containing HTML including a methods description.",
+                    "fa_icon": "fas fa-cog"
+                },
+                "validate_params": {
+                    "type": "boolean",
+                    "description": "Boolean whether to validate parameters against the schema at runtime",
+                    "default": true,
+                    "fa_icon": "fas fa-check-square",
+                    "hidden": true
+                },
+                "validationShowHiddenParams": {
+                    "type": "boolean",
+                    "fa_icon": "far fa-eye-slash",
+                    "description": "Show all params when using `--help`",
+                    "hidden": true,
+                    "help_text": "By default, parameters set as _hidden_ in the schema are not shown on the command line when a user runs with `--help`. Specifying this option will tell the pipeline to show all parameters."
+                },
+                "validationFailUnrecognisedParams": {
+                    "type": "boolean",
+                    "fa_icon": "far fa-check-circle",
+                    "description": "Validation of parameters fails when an unrecognised parameter is found.",
+                    "hidden": true,
+                    "help_text": "By default, when an unrecognised parameter is found, it returns a warinig."
+                },
+                "validationLenientMode": {
+                    "type": "boolean",
+                    "fa_icon": "far fa-check-circle",
+                    "description": "Validation of parameters in lenient more.",
+                    "hidden": true,
+                    "help_text": "Allows string values that are parseable as numbers or booleans. For further information see [JSONSchema docs](https://github.com/everit-org/json-schema#lenient-mode)."
+                }
+            }
+        }
+    },
+    "allOf": [
+        {
+            "$ref": "#/definitions/input_output_options"
+        },
+        {
+            "$ref": "#/definitions/alphafold2_options"
+        },
+        {
+            "$ref": "#/definitions/colabfold_options"
+        },
+        {
+            "$ref": "#/definitions/esmfold_options"
+        },
+        {
+            "$ref": "#/definitions/institutional_config_options"
+        },
+        {
+            "$ref": "#/definitions/max_job_request_options"
+        },
+        {
+            "$ref": "#/definitions/alphafold2_dbs_and_parameters_link_options"
+        },
+        {
+            "$ref": "#/definitions/alphafold2_dbs_and_parameters_path_options"
+        },
+        {
+            "$ref": "#/definitions/colabfold_dbs_and_parameters_link_options"
+        },
+        {
+            "$ref": "#/definitions/colabfold_dbs_and_parameters_path_options"
+        },
+        {
+            "$ref": "#/definitions/esmfold_parameters_link_options"
+        },
+        {
+            "$ref": "#/definitions/esmfold_parameters_path_options"
+        },
+        {
+            "$ref": "#/definitions/generic_options"
+        }
+    ]
+}
