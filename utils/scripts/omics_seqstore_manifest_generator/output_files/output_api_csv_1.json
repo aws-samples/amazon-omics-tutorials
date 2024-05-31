@@ -1,0 +1,63 @@
+{
+    "sequenceStoreId": "2222222222",
+    "roleArn": "arn:aws:iam::111111111111:role/omicsRole",
+    "sources": [
+        {
+            "name": "HG00100",
+            "referenceArn": "arn:aws:omics:us-east-1:111111111111:referenceStore/1111111111/reference/1111111111",
+            "sampleId": "HG00100",
+            "subjectId": "HG00100",
+            "sourceFileType": "BAM",
+            "description": "description1",
+            "generatedFrom": "1000Genomes",
+            "tags": {
+                "taga": "tagaValue 1"
+            },
+            "sourceFiles": {
+                "source1": "s3://s3bucket/codeTest/HG00100.chrom20.ILLUMINA.bwa.GBR.low_coverage.20101123.bam"
+            }
+        },
+        {
+            "name": "SRR233106",
+            "sampleId": "Normal",
+            "subjectId": "SRR233106",
+            "sourceFileType": "FASTQ",
+            "description": "description2",
+            "generatedFrom": "NA12878_20K",
+            "sourceFiles": {
+                "source1": "s3://s3bucket/codeTest/SRR233106_1.filt.fastq.gz",
+                "source2": "s3://s3bucket/codeTest/SRR233106_2.filt.fastq.gz"
+            }
+        },
+        {
+            "name": "HG00096",
+            "referenceArn": "arn:aws:omics:us-east-1:111111111111:referenceStore/1111111111/reference/1111111111",
+            "sampleId": "HG00096",
+            "subjectId": "HG00096",
+            "sourceFileType": "CRAM",
+            "description": "description3",
+            "generatedFrom": "1000Genomes",
+            "sourceFiles": {
+                "source1": "s3://s3bucket/codeTest/HG00096.alt_bwamem_GRCh38DH.20150718.GBR.low_coverage.cram"
+            }
+        },
+        {
+            "name": "NA12878",
+            "sampleId": "NA12878",
+            "subjectId": "NA12878",
+            "sourceFileType": "UBAM",
+            "description": "description4",
+            "generatedFrom": "1000Genomes",
+            "tags": {
+                "taga": "tagaValue 2",
+                "tagb": "tagbValue",
+                "tagc": "tagcvalue",
+                "tagd": "tagdvalue",
+                "tage": "tagevalue"
+            },
+            "sourceFiles": {
+                "source1": "s3://s3bucket/codeTest/NA12878_A.bam"
+            }
+        }
+    ]
+}

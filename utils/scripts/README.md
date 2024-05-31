@@ -82,8 +82,11 @@ Prerequisites:
 - Python 3
 - Python packages
   - boto3
-  - bokeh
+  - bokeh == 2.4.3
   - pandas
+  - requests
+- Other scripts
+  - compute_pricing.py
 
 What it does:
 - retrieves workflow run details from AWS HealthOmics

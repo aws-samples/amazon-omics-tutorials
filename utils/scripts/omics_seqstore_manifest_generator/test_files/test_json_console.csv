@@ -1,0 +1,5 @@
+name,sampleId,subjectId,sourceFileType,description,generatedFrom,source1,source2
+HG00100,HG00100,HG00100,BAM,description1,1000Genomes,s3://s3bucket/codeTest/HG00100.chrom20.ILLUMINA.bwa.GBR.low_coverage.20101123.bam,
+SRR233106,Normal,SRR233106,FASTQ,description2,NA12878_20K,s3://s3bucket/codeTest/SRR233106_1.filt.fastq.gz,s3://s3bucket/codeTest/SRR233106_2.filt.fastq.gz
+HG00096,HG00096,HG00096,CRAM,description3,1000Genomes,s3://s3bucket/codeTest/HG00096.alt_bwamem_GRCh38DH.20150718.GBR.low_coverage.cram,
+NA12878,NA12878,NA12878,UBAM,description4,1000Genomes,s3://s3bucket/codeTest/NA12878_A.bam,

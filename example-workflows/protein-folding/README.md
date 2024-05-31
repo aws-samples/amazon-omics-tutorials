@@ -6,16 +6,14 @@ These are provided AS-IS and are intended to demonstrate conventions, patterns, 
 
 ## Step 0: Assumptions and prerequisites
 - All steps below assume you are working from your `$HOME` directory on a Linux or macOS system and should take ~1hr to complete.
-- Source for the workflows and supporting assets in this example are in `$HOME/amazon-omics-tutorials/example-workflows/protein-folding`
-- Source for the `omx-ecr-helper` CDK app is in `$HOME/amazon-omics-tutorials/utils/cdk/omx-ecr-helper`
+- Source for the workflows and supporting assets in this example are in `$HOME/amazon-omics-tutorials/example-workflows/gatk-best-practices`
+- The [Amazon ECR Helper for AWS HealthOmics](https://github.com/aws-samples/amazon-ecr-helper-for-aws-healthomics) CDK app has been deployed to your account
 - The following required software is available on your system
-    - [AWS CDK](https://aws.amazon.com/cdk/)
     - [AWS CLI v2](https://aws.amazon.com/cli/)
     - [jq](https://stedolan.github.io/jq/)
     - Python 3.9 or higher
     - Python packages: see `requirements.txt`
     - make
-    - CDK should be bootstrapped to your account and region. See https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html
 
 To install Python package requirements use:
 ```bash
@@ -34,11 +32,11 @@ make build/sfn-container-builder
 
 This will do the following: 
 - Initialize `make`
-- Configure and deploy the `omx-ecr-helper` CDK app
+- Check if the Amazon ECR Helper for AWS HealthOmics CDK app has been deployed
 
-  Workflows that run in AWS HealthOmics must have containerized tooling sourced from ECR private image repositories. These workflows use 4 unique container images. The `omx-ecr-helper` is a CDK application that automates building container images from source.
+  Workflows that run in AWS HealthOmics must have containerized tooling sourced from ECR private image repositories. These workflows use 4 unique container images. The Amazon ECR Helper for AWS HealthOmics is a CDK application that automates building container images from source.
 
-- Copy container image source to a staging location in S3
+- Copy container image source to a staging location in S3. Note this staging location is defined in `_conf/default.ini` and should match one of the `source_uris` in the [`app-config.json`](https://github.com/aws-samples/amazon-ecr-helper-for-aws-healthomics?tab=readme-ov-file#building-containers) for Amazon ECR Helper for AWS HealthOmics.
 - Create a manifest of container images to build
 - Execute a Step Functions state machine to process the contaimer image manifest
 
@@ -115,66 +113,3 @@ The `test.parameters.json` file is a subset of the parameters used. Additional p
 
 are added and populated based on the AWS profile used during the build process (when you execute `make run-{workflow-name}`).
 
-
-### Manually configuring and running `omx-ecr-helper`'s `container-builder`
-
-If you want, you can run the `container-builder` state machine in `omx-ecr-helper` manually. To do this use the following steps:
-
-1. Create a staging bucket for container image source
-
-```bash
-aws s3 mb s3://my-staging-bucket
-```
-
-2. Sync container source
-
-```bash
-cd ~/protein-folding
-aws s3 sync ./containers s3://my-staging-bucket/containers
-```
-
-3. Create a `container_build_manifest.json` with contents like the following:
-
-```json
-{
-    "manifest": [
-        {
-            "source_uri": "s3://my-staging-bucket/containers/alphafold-data/",
-            "target_image": "alphafold-data:omics"
-        },
-        {
-            "source_uri": "s3://my-staging-bucket/containers/alphafold-predict/",
-            "target_image": "alphafold-predict:omics"
-        },
-        {
-            "source_uri": "s3://my-staging-bucket/containers/esmfold/",
-            "target_image": "esmfold:omics"
-        },
-        {
-            "source_uri": "s3://my-staging-bucket/containers/protein-utils/",
-            "target_image": "protein-utils:omics"
-        }
-    ]
-}
-```
-
-4. Create an `app-config.json` for `omx-ecr-helper` with contents like the following:
-
-```json
-{
-    "container_builder": {
-        "source_uris": [
-            "s3://my-staging-bucket/containers/"
-        ]
-    }
-}
-
-```
-
-5. Execute the following to build container images
-
-```bash
-aws stepfunctions start-execution \
-    --state-machine-arn arn:aws:states:<aws-region>:<aws-account-id>:stateMachine:omx-container-builder \
-    --input file://container_build_manifest.json
-```

@@ -265,6 +265,7 @@ task GetBwaVersion {
   runtime {
     docker: docker_image
     memory: "~{mem_size_gb} GiB"
+    cpu: 2
   }
   output {
     String version = read_string(stdout())
@@ -495,7 +496,7 @@ task CreateSequenceGroupingTSV {
   # It outputs to stdout where it is parsed into a wdl Array[Array[String]]
   # e.g. [["1"], ["2"], ["3", "4"], ["5"], ["6", "7", "8"]]
   command <<<
-
+    set -e
     echo CreateSequenceGroupingTSV >&2
 
     python <<CODE
