@@ -1,6 +1,6 @@
 # AWS HealthOmics Protein Workflows
 
-This folder contains example WDL based workflows that use AlphaFold and ESM Fold tooling for use with AWS HealthOmics.
+This folder contains example WDL based workflows that use AlphaFold2, AlphaFold-Multimer, and ESM Fold tooling for use with AWS HealthOmics.
 
 These are provided AS-IS and are intended to demonstrate conventions, patterns, and best practices for writing workflows for scale. They are intended as starting points that you can customize to fit your specific requirements.
 
