@@ -36,6 +36,10 @@ process HISAT2_ALIGN {
     if (meta.single_end) {
         def unaligned = params.save_unaligned ? "--un-gz ${prefix}.unmapped.fastq.gz" : ''
         """
+        mkdir -p "./tmp"
+        chmod 700 "./tmp"
+        ls "./tmp"
+        sed -i 's|temp_dir = "/tmp";|temp_dir = "./tmp";|g' /usr/local/bin/hisat2
         INDEX=`find -L ./ -name "*.1.ht2*" | sed 's/\\.1.ht2.*\$//'`
         hisat2 \\
             -x \$INDEX \\
@@ -58,6 +62,10 @@ process HISAT2_ALIGN {
     } else {
         def unaligned = params.save_unaligned ? "--un-conc-gz ${prefix}.unmapped.fastq.gz" : ''
         """
+        mkdir -p "./tmp"
+        chmod 700 "./tmp"
+        ls "./tmp"
+        sed -i 's|temp_dir = "/tmp";|temp_dir = "./tmp";|g' /usr/local/bin/hisat2
         INDEX=`find -L ./ -name "*.1.ht2*" | sed 's/\\.1.ht2.*\$//'`
         hisat2 \\
             -x \$INDEX \\
