@@ -154,6 +154,12 @@ class NextflowWorkflow:
             raise fnfe
         return _docker_registry
         
+    def is_ecr_private_repo(self, _registry_name):
+        """
+        Detect private registry in format <awsaccountid>.dkr.ecr.<awsregion>.amazonaws.com
+        """
+        return re.match('[0-9]{12}\.dkr\.ecr\.[a-zA-Z0-9-]{1,}\.amazonaws\.com', _registry_name)
+           
     def get_container_manifest(self, substitutions=None) -> list:
         """
         generates a list of unique container image URIs to pull into an ECR Private registry
@@ -187,6 +193,9 @@ class NextflowWorkflow:
             props = namespace_config.get(source_registry)
             if props:
                 uri = "/".join([props['namespace'], image_name])
+            else:
+                if self.is_ecr_private_repo(source_registry):
+                    uri = image_name
         
         return uri
             
