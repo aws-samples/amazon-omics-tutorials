@@ -2,6 +2,12 @@
 
 These are scripts that support using AWS HealthOmics
 
+- [Utility scripts for AWS HealthOmics](#utility-scripts-for-aws-healthomics)
+  - [inspect\_nf](#inspect_nf)
+  - [compute\_pricing.py](#compute_pricingpy)
+  - [timeline.py](#timelinepy)
+
+
 ## [inspect_nf](./inspect_nf.py)
 
 Python script that inspects a Nextflow workflow definition and generates resources to help migrate it to run on AWS HealthOmics.
@@ -43,6 +49,10 @@ optional arguments:
 ```
 
 ## [compute_pricing.py](./compute_pricing.py)
+
+> :warning: DEPRECATION NOTICE :warning:
+> This script is deprecated and may be removed in the future. The recommended alternative is the [Run Analyzer](https://github.com/awslabs/amazon-omics-tools#omics-run-analyzer) in [AWS HealthOmics Tools](https://github.com/awslabs/amazon-omics-tools). In addition to costs for a workflow run's tasks and storage, it provides compute utilization metrics (CPU, RAM, GPU actually used by tasks vs what was requested and provisioned), as well as cost optimization suggestions.
+
 
 Python script that computes the cost of a workflow run breaking out details for individual tasks and run storage.
 

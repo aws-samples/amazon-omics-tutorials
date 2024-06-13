@@ -1,4 +1,5 @@
 from glob import glob
+import json
 import re
 from os import path
 from textwrap import dedent
@@ -102,6 +103,9 @@ class NextflowWorkflow:
         self.use_ecr_pull_through_cache = True
         self._container_substitutions = None
         self._nf_config = path.join(project_path, 'nextflow.config')
+
+        with open(path.join(path.realpath(path.dirname(__file__)), 'namespace_config.json'), 'r') as f:
+            self._default_namespace_config = json.load(f)
     
     @property
     def _contents(self) -> dict:
@@ -208,6 +212,9 @@ class NextflowWorkflow:
             ecr = session.client('ecr')
             response = ecr.describe_registry()
             ecr_registry = f"{response['registryId']}.dkr.ecr.{session.region_name}.amazonaws.com"
+        
+        if not namespace_config:
+            namespace_config = self._default_namespace_config
 
         process_configs = []
         _tpl = "withName: '(.+:)?::process.name::' { container = '::process.container.uri::' }"
