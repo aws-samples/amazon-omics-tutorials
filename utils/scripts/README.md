@@ -2,6 +2,12 @@
 
 These are scripts that support using AWS HealthOmics
 
+- [Utility scripts for AWS HealthOmics](#utility-scripts-for-aws-healthomics)
+  - [inspect\_nf](#inspect_nf)
+  - [compute\_pricing.py](#compute_pricingpy)
+  - [timeline.py](#timelinepy)
+
+
 ## [inspect_nf](./inspect_nf.py)
 
 Python script that inspects a Nextflow workflow definition and generates resources to help migrate it to run on AWS HealthOmics.
