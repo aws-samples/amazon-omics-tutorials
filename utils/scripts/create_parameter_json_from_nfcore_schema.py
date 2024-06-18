@@ -5,21 +5,34 @@ Generates a parameter json for AWS HealthOmics workflows
 from NF-CORE nextflow schema JSON.
 """
 
-from argparse import ArgumentParser
+from argparse import ArgumentParser, FileType
 import json
 from pprint import pprint
 import logging
+import sys
 
 # Create a logger
 logging.basicConfig(format="%(name)s - %(asctime)s %(levelname)s: %(message)s")
 logger = logging.getLogger(__file__)
 logger.setLevel(logging.INFO)
 
-parser = ArgumentParser()
-parser.add_argument('--nfcore_schema_file', type=str, required=True,
+parser = ArgumentParser(description="A script to parse the nf-core nextflow_schema.json to \
+                        generate the parameter-temmplate.json required while creating an AWS HealthOmics workflow")
+parser.add_argument('nfcore_schema_file', 
+                    nargs='?',
+                    type=FileType('r'),
+                    default=sys.stdin,
                     help="nextflow schema JSON used in NF-CORE nextflow workflows")
-parser.add_argument('--output_file', type=str, required=True,
+parser.add_argument('output_file', 
+                    nargs='?',
+                    type=FileType('w'),
+                    default=sys.stdout,
                     help="output file name")
+args = parser.parse_args()
+
+if args.nfcore_schema_file.isatty():
+    parser.print_help()
+    exit(1)
     
 def create_param_json(schema):
     parameter_json_object = {}
@@ -56,12 +69,11 @@ def create_param_json(schema):
 if __name__ == "__main__":
     args = parser.parse_args()
     logger.info("opening schema file")
-    with open(args.nfcore_schema_file) as f:
-        schema = json.load(f)
+
+    schema = json.load(args.nfcore_schema_file)
     
     logger.info("creating parameter json")
     parameter_json_object = create_param_json(schema)
 
     logger.info("printing parameter json")
-    with open(args.output_file, "w") as f:
-        json.dump(parameter_json_object, f, indent=4)
+    json.dump(parameter_json_object, args.output_file, indent=4)
