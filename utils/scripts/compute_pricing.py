@@ -7,7 +7,7 @@ computes the cost of a workflow run and individual tasks
 from argparse import ArgumentParser
 import json
 from pprint import pprint
-
+import datetime
 import boto3
 import requests
 
@@ -17,6 +17,29 @@ parser.add_argument('--region', type=str, help="AWS region to use")
 parser.add_argument('--offering', type=str, help="path to pricing offer JSON")
 parser.add_argument('run_id', type=str, help="HealthOmics workflow run-id to analyze")
 
+def get_instance(cpus, mem):
+    """Return smallest matching instance type (str)"""
+    sizes = {
+        "": 2,
+        "x": 4,
+        "2x": 8,
+        "4x": 16,
+        "8x": 32,
+        "12x": 48,
+        "16x": 64,
+        "24x": 96,
+    }
+    families = {"c": 2, "m": 4, "r": 8}
+    for size in sorted(sizes, key=lambda x: sizes[x]):
+        ccount = sizes[size]
+        if ccount < cpus:
+            continue
+        for fam in sorted(families, key=lambda x: families[x]):
+            mcount = ccount * families[fam]
+            if mcount < mem:
+                continue
+            return f"omics.{fam}.{size}large"
+    return ""
 
 def get_pricing(offering=None, client=None):
     if offering:
@@ -68,9 +91,12 @@ def get_run_info(run_id, client=None):
     while response.get('nextToken'):
         response = client.list_run_tasks(id=run_id, startingToken=response.get('nextToken'))
         tasks += response['items']
-    
-    tasks = [{**task, "duration": task['stopTime'] - task['startTime']} for task in tasks]
 
+    for task in tasks:
+        if not task.get('stopTime'):
+            task.update({"duration": datetime.date.today() - datetime.date.today() })
+        else:
+            task.update({"duration": task['stopTime'] - task['startTime']})
     del run['ResponseMetadata']
 
     run['tasks'] = tasks
@@ -90,24 +116,40 @@ def get_run_cost(run_id, storage_gib=MINIMUM_STORAGE_CAPACITY_GIB, client=None, 
     run_duration_hr = run['duration'].total_seconds() / 3600
 
     task_costs = []
+
     for task in run['tasks']:
+
         if not task.get('gpus'):
             task['gpus'] = 0
-        usd_per_hour = float(pricing[task['instanceType']]['priceDimensions']['pricePerUnit']['USD'])
-        duration_hr = task['duration'].total_seconds() / 3600
 
-        task_costs += [{
+        if not task.get('cpus') or not task.get('memory'):
+            task_costs += [{
             "name": task.get('name'),
-            "resources": {
-                "cpus": task['cpus'],
-                "memory_gib": task['memory'],
-                "gpus": task['gpus']
-            },
-            "duration_hr": duration_hr,
-            "instance": task['instanceType'],
-            "usd_per_hour": usd_per_hour,
-            "cost": duration_hr * usd_per_hour
+            "resources": None,
+            "duration_hr": 0.0,
+            "instance": None,
+            "usd_per_hour": None,
+            "cost": 0.00
         }]
+        else:
+            if not task.get('instanceType'):
+                task['instanceType'] = get_instance(task['cpus'], task['memory'])
+
+            usd_per_hour = float(pricing[task['instanceType']]['priceDimensions']['pricePerUnit']['USD'])
+            duration_hr = task['duration'].total_seconds() / 3600
+
+            task_costs += [{
+                "name": task.get('name'),
+                "resources": {
+                    "cpus": task['cpus'],
+                    "memory_gib": task['memory'],
+                    "gpus": task['gpus']
+                },
+                "duration_hr": duration_hr,
+                "instance": task['instanceType'],
+                "usd_per_hour": usd_per_hour,
+                "cost": duration_hr * usd_per_hour
+            }]
     
     if not run.get('storageCapacity'):
         # assume the default storage capacity of 1200 GiB
@@ -136,6 +178,7 @@ def get_run_cost(run_id, storage_gib=MINIMUM_STORAGE_CAPACITY_GIB, client=None, 
                 "cost": storage_cost
             },
             "total_task_cost": total_task_costs,
+            "total_task_duration_hr": sum([tc['duration_hr'] for tc in task_costs]),
             "task_costs": task_costs
         }
     }
