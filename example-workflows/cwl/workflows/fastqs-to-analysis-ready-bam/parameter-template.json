@@ -1,0 +1,46 @@
+{
+    "ref_name": {
+        "description": "name of the reference, e.g., hg38",
+        "optional": false
+    },
+    "dbSNP_vcf": {
+        "description": "SNP database",
+        "optional": false
+    },
+    "gatk_repo": {
+        "description": "docker repository for gatk",
+        "optional": false
+    },
+    "known_indels_sites_VCFs": {
+        "description": "DB for known indels",
+        "optional": false
+    },
+    "gotc_repo": {
+        "description": "docker repository for gotc",
+        "optional": false
+    },
+    "ref_fasta": {
+        "description": "reference fasta (e.g. hg38)",
+        "optional": false
+    },
+    "python_repo": {
+        "description": "docker repository for python",
+        "optional": false
+    },
+    "sample_name": {
+        "description": "name for the fastq samples",
+        "optional": false
+    },
+    "fastq_pairs": {
+        "description": "An array of objects each of which contains a 'read_group' (the name of the read group that produced the fastq pair), fastq_1' and 'fastq_2' which are URIs of the pair of fastq files and 'platform' e.g. 'illumina' or 'solid'.",
+        "optional": false
+    },
+    "ecr_registry": {
+        "description": "aws ecr registry of the account",
+        "optional": false
+    },
+    "aws_region": {
+        "description": "aws region (e.g. us-east-1). must match were source data is located and where workflow is executed",
+        "optional": false
+    }
+}
