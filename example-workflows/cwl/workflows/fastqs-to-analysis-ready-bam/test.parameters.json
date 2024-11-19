@@ -1,0 +1,127 @@
+{
+  "sample_name": "my-sample",
+  "fastq_pairs": [
+    {
+      "read_group": "C0L01ACXX.1",
+      "fastq_1": {
+        "class": "File",
+        "location": "s3://omics-{{region}}/sample-inputs/3768383/C0L01ACXX.1.5-percent.R1.fastq.gz"
+      },
+      "fastq_2": {
+        "class": "File",
+        "location": "s3://omics-{{region}}/sample-inputs/3768383/C0L01ACXX.1.5-percent.R2.fastq.gz"
+      },
+      "platform": "illumina"
+    },
+    {
+      "read_group": "C0L01ACXX.2",
+      "fastq_1": {
+        "class": "File",
+        "location": "s3://omics-{{region}}/sample-inputs/3768383/C0L01ACXX.2.5-percent.R1.fastq.gz"
+      },
+      "fastq_2": {
+        "class": "File",
+        "location": "s3://omics-{{region}}/sample-inputs/3768383/C0L01ACXX.2.5-percent.R2.fastq.gz"
+      },
+      "platform": "illumina"
+    },
+    {
+      "read_group": "C0L01ACXX.3",
+      "fastq_1": {
+        "class": "File",
+        "location": "s3://omics-{{region}}/sample-inputs/3768383/C0L01ACXX.3.5-percent.R1.fastq.gz"
+      },
+      "fastq_2": {
+        "class": "File",
+        "location": "s3://omics-{{region}}/sample-inputs/3768383/C0L01ACXX.3.5-percent.R2.fastq.gz"
+      },
+      "platform": "illumina"
+    },
+    {
+      "read_group": "C0L01ACXX.7",
+      "fastq_1": {
+        "class": "File",
+        "location": "s3://omics-{{region}}/sample-inputs/3768383/C0M7LACXX.7.5-percent.R1.fastq.gz"
+      },
+      "fastq_2": {
+        "class": "File",
+        "location": "s3://omics-{{region}}/sample-inputs/3768383/C0M7LACXX.7.5-percent.R2.fastq.gz"
+      },
+      "platform": "illumina"
+    }
+  ],
+  "ref_name": "hg38",
+  "ref_fasta": {
+    "class": "File",
+    "location": "s3://omics-{{region}}/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta",
+    "secondaryFiles": [
+      {
+        "class": "File",
+        "location": "s3://omics-{{region}}/broad-references/hg38/v0/Homo_sapiens_assembly38.dict"
+      },
+      {
+        "class": "File",
+        "location": "s3://omics-{{region}}/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.fai"
+      },
+      {
+        "class": "File",
+        "location": "s3://omics-{{region}}/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.64.alt"
+      },
+      {
+        "class": "File",
+        "location": "s3://omics-{{region}}/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.64.amb"
+      },
+      {
+        "class": "File",
+        "location": "s3://omics-{{region}}/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.64.ann"
+      },
+      {
+        "class": "File",
+        "location": "s3://omics-{{region}}/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.64.bwt"
+      },
+      {
+        "class": "File",
+        "location": "s3://omics-{{region}}/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.64.pac"
+      },
+      {
+        "class": "File",
+        "location": "s3://omics-{{region}}/broad-references/hg38/v0/Homo_sapiens_assembly38.fasta.64.sa"
+      }
+    ]
+  },
+  "dbSNP_vcf": {
+    "class": "File",
+    "location": "s3://omics-{{region}}/broad-references/hg38/v0/Homo_sapiens_assembly38.dbsnp138.vcf",
+    "secondaryFiles": [
+      {
+        "class": "File",
+        "location": "s3://omics-{{region}}/broad-references/hg38/v0/Homo_sapiens_assembly38.dbsnp138.vcf.idx"
+      }
+    ]
+  },
+  "known_indels_sites_VCFs": [
+    {
+      "class": "File",
+      "location": "s3://omics-{{region}}/broad-references/hg38/v0/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz",
+      "secondaryFiles": [
+        {
+          "class": "File",
+          "location": "s3://omics-{{region}}/broad-references/hg38/v0/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi"
+        }
+      ]
+    },
+    {
+      "class": "File",
+      "location": "s3://omics-{{region}}/broad-references/hg38/v0/Homo_sapiens_assembly38.known_indels.vcf.gz",
+      "secondaryFiles": [
+        {
+          "class": "File",
+          "location": "s3://omics-{{region}}/broad-references/hg38/v0/Homo_sapiens_assembly38.known_indels.vcf.gz.tbi"
+        }
+      ]
+    }
+  ],
+  "python_repo": "/ecr-public/docker/library/python:3.9",
+  "gatk_repo": "/ecr-public/aws-genomics/broadinstitute/gatk:4.2.6.1-corretto-11",
+  "gotc_repo": "/ecr-public/aws-genomics/broadinstitute/genomes-in-the-cloud:2.5.7-2021-06-09_16-47-48Z-corretto-11"
+}
