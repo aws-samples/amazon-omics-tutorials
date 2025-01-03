@@ -27,7 +27,9 @@ CONFIG_DEFAULTS = {
     'output_uri': None,
     'workflow_role_name': None,
     'ecr_registry': None,
-    'omx_ecr_helper': '~/amazon-omics-tutorials/utils/cdk/omx-ecr-helper'
+    'omx_ecr_helper': '~/amazon-omics-tutorials/utils/cdk/omx-ecr-helper',
+    'run_storage_type': 'STATIC',
+    'run_storage_capacity': '1200'
 }
 
 class Builder:
@@ -341,6 +343,9 @@ class Builder:
         staging_uri = cfg['staging_uri']
         output_uri = cfg['output_uri']
         account_id = cfg['account_id']
+        run_storage_type = cfg['run_storage_type']
+        run_storage_capacity_string = cfg['run_storage_capacity']
+        run_storage_capacity = int(run_storage_capacity_string)
 
         with open(f'workflows/{workflow_name}/test.parameters.json', 'r') as f:
             test_parameters = f.read()
@@ -366,7 +371,9 @@ class Builder:
             name=f"test: {workflow_name}",
             roleArn=workflow_role_arn,
             outputUri=output_uri,
-            parameters=test_parameters
+            parameters=test_parameters,
+            storageCapacity=run_storage_capacity,
+            storageType=run_storage_type
         )
 
         # write out final test parameters for tracking
