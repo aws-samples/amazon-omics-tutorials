@@ -715,42 +715,71 @@ fi
 - Do you need to post-process the outputs?
 - Will you need to integrate the outputs with other systems?
 
-## Troubleshooting
+## Troubleshooting/ Debugging/ Error Diagnosis
 
 Common issues when working with AWS HealthOmics workflows:
 
-1. **Workflow Creation Failures**
+### Workflow Creation Failures
    - Check WDL syntax errors
     - If the `miniwdl` python package is installed you should check syntax with `miniwdl check`
    - Verify parameter template format
+
+
+### Diagnose Run Failures
    - Ensure container images are accessible to the service and in the same region
    - Ensure S3 URIs point to objects accessible to the service and in the same region
 
-2. **Workflow Run Failures**
-   - Check IAM role permissions
-   - Verify S3 bucket access
-   - Examine task and engine-level logs
-
-**Example Troubleshooting Commands:**
+#### Obtain the failure reason
 ```bash
-# Get detailed workflow information
-aws omics get-workflow --id $WORKFLOW_ID
-
 # Get detailed run information
 aws omics get-run --id $RUN_ID
-
-# List and examine task logs
-aws omics list-run-tasks --id $RUN_ID
-aws omics get-run-task --id $RUN_ID --task-id $TASK_ID
-
-# Check CloudWatch logs (if enabled)
-aws logs get-log-events --log-group-name /aws/omics/runs --log-stream-name $RUN_ID
 ```
 
-**Key Questions to Ask:**
-- Have you enabled logging for your workflows?
-- Do you have a process for debugging failed workflows?
-- Are there specific error patterns you're encountering?
+The `failureReason` field contains diagnostic information. Failure messages and descriptions are available from https://docs.aws.amazon.com/omics/latest/dev/workflows-run-errors.html
+
+#### Examine the engine log
+The engine logs will be located at an arn like `arn:aws:logs:us-east-1:123456789012:log-group:/aws/omics/WorkflowLog:log-stream:run/<run_id>/engine`
+```bash
+aws logs get-log-events --log-group-name /aws/omics/WorkflowLog --log-stream-name run/<run_id>/engine
+```
+
+If the stream is empty you can check if the stream exists using `aws logs describe-log-streams --log-group-name /aws/omics/WorkflowLog --log-stream-name run/<run_id>/engine` and use the `lastEventTimestamp` and `firstEventTimestamp` to refine the `get-log-events` call.
+
+Alternatively you can access the log stream from the head
+```bash
+aws logs get-log-events --log-group-name /aws/omics/WorkflowLog --log-stream-name run/<run-id>/engine --start-from-head
+```
+
+#### List and examine run tasks
+```bash
+# List and examine tasks
+aws omics list-run-tasks --id $RUN_ID
+aws omics get-run-task --id $RUN_ID --task-id $TASK_ID
+```
+
+If a task failed it is useful to examine the logs for the task:
+```bash
+aws logs get-log-events --log-group-name /aws/omics/WorkflowLog --log-stream-name run/<run_id>/task/<task_id>
+```
+
+If the stream is empty you can check if the stream exists using `aws logs describe-log-streams --log-group-name /aws/omics/WorkflowLog --log-stream-name run/<run_id>/task/<task_id>` and use the `lastEventTimestamp` and `firstEventTimestamp` to refine the `get-log-events` call.
+
+Alternatively you can access the log stream from the head
+```bash
+aws logs get-log-events --log-group-name /aws/omics/WorkflowLog --log-stream-name run/<run_id>/task/<task_id> --start-from-head
+
+#### Access the workflow definition
+To access the workflow definition for a run you will need the `workflowId` and you may need the `workflowOwnerId`
+```bash
+# Get workflow definition
+aws omics get-workflow --id $WORKFLOW_ID --export DEFINITION
+```
+The `definition` field of the response is a URL that can be used to access the `definition.zip`
+
+For specific workflow versions (if a `workflowVersion` is mentioned in the `get-run` response) then use:
+```bash
+aws omics get-workflow-version --workflow-id <workflow-id> --export DEFINITION --version-name <version-name>
+```
 
 ## Best Practices
 
