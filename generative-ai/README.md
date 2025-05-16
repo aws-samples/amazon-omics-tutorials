@@ -35,7 +35,7 @@ At any time you can quit Q CLI with `/quit`
 At this point you are ready to start exploring what Q Developer CLI can do for you. The exact set of steps you take is going to depend a lot on what you ask Q to do and how it responds. Generative AI is non-deterministic and the actions Q takes will depend on what you ask it to do and the context of your session so far. At times Q will ask you for permission to perform actions. You should review these before accepting (`y`). For your first few interactions it is better to not let it run automatically in trusted mode (`t`) so you can get a good feel for what the tool is doing.
 
 These are some suggestions of things you can ask it to do but feel free to diverge and explore:
-1. *"Create a WDL 1.1 workflow file as `main.wdl` that will run on HealthOmics. The workflow will take a reference genome as an input and pairs of fastq files. It will index the reference genome using BWA and then map each pair of fastq files to the reference. Finally to a single BAM file and output this file and it's bai index."*
+1. *"Create a WDL 1.1 workflow file as `main.wdl` that will run on HealthOmics. The workflow will take a reference genome as an input and pairs of fastq files. It will index the reference genome using BWA and then map each pair of fastq files to the reference. Finally merge each mapped BAM to a single BAM file and output this file and it's bai index."*
 2. *"Package the workflow and create it in HealthOmics"*
 3. *"Update the inputs.json file to use real files from my S3 bucket `my-bucket-with-genome-data`"* (You can give it a more specific location or you can let it explore)
 4. *"Find suitable containers in my ECR respositories and update inputs.json to use these"*
