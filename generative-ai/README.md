@@ -15,7 +15,7 @@ This document explains how you can use Agentic AI tools to create workflows and 
 Contexts can be used to give Q CLI access to additional information beyond what it's internal LLM model was trained on. The model has a good 'native' understanding of WDL, Nextflow and CWL. By giving Q access to contextual information about the HealthOmics service and how it operates, Q can improve it's ability to author workflows, create them in HealthOmics, run them, debug them and improve them. When you interact with Q it maintains a context of some or all of your current session. By creating a context we can ensure that Q always has access to this additional context throughout your session, including at the very start before you have issued any commands.
 
 ## Step 1: Create a context and profile
-Profiles allow you to switch between contexts. We will create a profile that contains context relevant HealthOmics. We will call the profile `aho` (short for aws HealthOmics) but you can use a different name if desired.
+Profiles allow you to switch between contexts. We will create a profile that contains context relevant HealthOmics. We will call the profile `aho` (short for AWS HealthOmics) but you can use a different name if desired.
 
 At any time you can quit Q CLI with `/quit`
 
