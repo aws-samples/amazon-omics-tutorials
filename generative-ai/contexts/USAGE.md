@@ -1,5 +1,0 @@
-# Providing AmazonQ Developer CLI Context
-
-The `AmazonQ.md` file in this directory provides contextual information that can be used by [Amazon Q Developer CLI](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/command-line.html) to assist in the generation, creation, running and monitoring of [AWS HealthOmics](https://aws.amazon.com/healthomics/)workflows.
-
-To use the context information, either copy this file into the root directory of the workflow project you are initiating or working on. Alternatively, you can add this file to a [profile and context](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/command-line-context-profiles.html) using the `/profile` and `/context` Amazon Q Developer CLI. Once installed you can interact with Amazon Q Developer CLI using natural language to create and run HealthOmics workflows.
