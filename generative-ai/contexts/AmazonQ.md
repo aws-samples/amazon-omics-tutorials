@@ -767,6 +767,7 @@ If the stream is empty you can check if the stream exists using `aws logs descri
 Alternatively you can access the log stream from the head
 ```bash
 aws logs get-log-events --log-group-name /aws/omics/WorkflowLog --log-stream-name run/<run_id>/task/<task_id> --start-from-head
+```
 
 #### Access the workflow definition
 To access the workflow definition for a run you will need the `workflowId` and you may need the `workflowOwnerId`
