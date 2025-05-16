@@ -19,14 +19,14 @@ The quickest setup to run example notebooks includes:
 
 
 ## Tutorials
+### Generative AI
+* [Rapidly generate and run and analyze](./generative-ai/README.md) workflows using natural langauge prompts and Amazon Q Developer CLI.
 ### Storage
 * [Using HealthOmics Storage with genomics references and readsets](./notebooks/200-omics_storage.ipynb): Get acquainted with HealthOmics storage by creating reference and sequence stores, importing data from FASTQ and CRAM files, and downloading readsets.
 ### Workflows
 * [Running WDL and Nextflow pipelines with HealthOmics Workflows](./notebooks/200-omics_workflows.ipynb): Learn how to create, run, and debug WDL and Nextflow based pipelines that process data from HealthOmics Storage and Amazon S3 using HealthOmics Workflows.
 ### Analytics
 * [Querying annotations and variants with HealthOmics Analytics](./notebooks/200-omics_analytics.ipynb): Get started with HealthOmics Analytics by importing variant and annotation data from VCF, TSV, and GFF files, and performing genome scale analysis queries using Amazon Athena.
-### Generative AI
-[Generate and run and analyze](./generative-ai/README.md) workflows using natural langauge and Amazon Q Developer CLI
 
 ## License
 
