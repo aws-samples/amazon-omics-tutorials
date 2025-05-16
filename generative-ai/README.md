@@ -17,7 +17,7 @@ Contexts can be used to give Q CLI access to additional information beyond what 
 ## Step 1: Create a context and profile
 Profiles allow you to switch between contexts. We will create a profile that contains context relevant HealthOmics. We will call the profile `aho` (short for aws HealthOmics) but you can use a different name if desired.
 
-At any time you can quit Q ClI with `/quit`
+At any time you can quit Q CLI with `/quit`
 
 1. Clone the repository or copy `contexts\` and `rules\` to your local machine. A good location is `~/.healthomics/` but it can be anywhere.
    ```bash
