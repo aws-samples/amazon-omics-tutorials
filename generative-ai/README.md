@@ -23,7 +23,7 @@ At any time you can quit Q ClI with `/quit`
 2. Start a Q chat session with `q chat`
 3. In the chat session type `/profile create aho`
 4. Your profile should now be created and your session set to this profile. You can use `/profile set aho` to set the profile when starting a later session.
-5. Add the content of `~/.healthomics/` to your context `/context add ~/.healthomics/*`
+5. Add the content of `~/.healthomics/` to your context `/context add ~/.healthomics/**/*`
 6. Verify your context now contains the location you added `/context show`
 
 
